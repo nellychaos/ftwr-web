@@ -1,0 +1,468 @@
+{
+  "categories": [
+    {
+      "id": "data",
+      "num": "§01",
+      "title": "Data Sources",
+      "desc": "APIs, feeds, and datasets for sports results, player stats, and tracking data. Coverage, freshness, and granularity vary across providers."
+    },
+    {
+      "id": "odds",
+      "num": "§02",
+      "title": "Odds & Markets",
+      "desc": "Bookmaker APIs, exchange interfaces, and historical odds databases. Useful for real-time pricing, market access, and retrospective odds research."
+    },
+    {
+      "id": "models",
+      "num": "§03",
+      "title": "Models & Methods",
+      "desc": "Open source implementations of statistical models for match prediction and ratings. Includes Poisson, Dixon-Coles, Elo, and related frameworks."
+    },
+    {
+      "id": "edge",
+      "num": "§04",
+      "title": "Edge Detection",
+      "desc": "Tools for measuring and tracking expected value, closing line value, and bookmaker margin. Useful for evaluating model output against market prices."
+    },
+    {
+      "id": "arbitrage",
+      "num": "§05",
+      "title": "Arbitrage & Scanning",
+      "desc": "Sure-bet and value-bet detection across multiple bookmakers. Includes commercial scanners with broad coverage and open source reference implementations."
+    },
+    {
+      "id": "markets",
+      "num": "§06",
+      "title": "Prediction Markets",
+      "desc": "Platforms and APIs for event contracts on sports, politics, and other topics. Pricing data and historical resolution records are available for research."
+    },
+    {
+      "id": "python",
+      "num": "§07",
+      "title": "Python Libraries",
+      "desc": "Statistical and scientific Python packages used in sports analytics work. Covers distributions, Bayesian inference, time series, and general machine learning."
+    },
+    {
+      "id": "viz",
+      "num": "§08",
+      "title": "Visualisation",
+      "desc": "Charting libraries, pitch plotting tools, and dashboarding frameworks for displaying model output and match data."
+    },
+    {
+      "id": "community",
+      "num": "§09",
+      "title": "FTWR Community",
+      "desc": "Repositories built under the FTWR organisation. MIT licensed. Open to contributions via pull request."
+    }
+  ],
+  "tools": [
+    {
+      "cat": "data",
+      "name": "football-data.org",
+      "desc": "Football results, fixtures, tables. Free tier covers 12+ leagues. No key required on lowest tier.",
+      "url": "https://www.football-data.org",
+      "tags": ["football", "free", "api"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "API-Football",
+      "desc": "Comprehensive fixtures, live scores, stats, standings, and lineups. 100 free calls/day via api-sports.io.",
+      "url": "https://www.api-football.com",
+      "tags": ["football", "free", "api"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "StatsBomb Open Data",
+      "desc": "Event-level tracking data for 30+ competitions. Includes Euros, WSL, La Liga. MIT licensed.",
+      "url": "https://github.com/statsbomb/open-data",
+      "tags": ["football", "open-source", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "tennis_atp (JeffSackmann)",
+      "desc": "ATP match-by-match results and rankings from 1968 to present. CSV files on GitHub.",
+      "url": "https://github.com/JeffSackmann/tennis_atp",
+      "tags": ["tennis", "open-source", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "tennis_wta (JeffSackmann)",
+      "desc": "WTA equivalent of tennis_atp. Match results, rankings, and stats back to 1968.",
+      "url": "https://github.com/JeffSackmann/tennis_wta",
+      "tags": ["tennis", "open-source", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "FBref.com",
+      "desc": "Football stats powered by StatsBomb data. Advanced metrics: xG, progressive passes, pressures, VAEP. No API -- scraping required.",
+      "url": "https://fbref.com",
+      "tags": ["football", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "understat.com",
+      "desc": "Expected goals for 7 top European leagues going back to 2014/15. Shot-level xG with x,y coordinates. No API -- scraper available.",
+      "url": "https://understat.com",
+      "tags": ["football", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "basketball-reference.com",
+      "desc": "NBA, NCAA, G-League, WNBA historical stats. Box scores, play-by-play, advanced metrics, and splits. No API.",
+      "url": "https://www.basketball-reference.com",
+      "tags": ["basketball", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "OpenLigaDB",
+      "desc": "German football data. Bundesliga results and tables via free JSON API. No authentication required.",
+      "url": "https://www.openligadb.de",
+      "tags": ["football", "free", "api"],
+      "edge": "data"
+    },
+    {
+      "cat": "data",
+      "name": "Sofascore (unofficial API)",
+      "desc": "Live scores, lineups, player ratings, and detailed match events. Unofficial endpoints, not formally supported.",
+      "url": "https://github.com/timvancann/sofascore-api",
+      "tags": ["multi-sport", "free", "open-source"],
+      "edge": "data"
+    },
+    {
+      "cat": "odds",
+      "name": "The Odds API",
+      "desc": "Real-time odds from 40+ bookmakers across 20+ sports. REST API with 500 free requests/month.",
+      "url": "https://the-odds-api.com",
+      "tags": ["multi-sport", "free", "api"],
+      "edge": "market"
+    },
+    {
+      "cat": "odds",
+      "name": "Betfair Exchange API",
+      "desc": "Exchange API with full market depth, live prices, betting, and historical data. Documented REST and streaming endpoints.",
+      "url": "https://developer.betfair.com",
+      "tags": ["multi-sport", "api"],
+      "edge": "execution"
+    },
+    {
+      "cat": "odds",
+      "name": "OddsPortal",
+      "desc": "Historical odds database across hundreds of leagues. Closing line data for model validation and CLV research. Scraping required.",
+      "url": "https://www.oddsportal.com",
+      "tags": ["multi-sport", "free"],
+      "edge": "market"
+    },
+    {
+      "cat": "odds",
+      "name": "OddsJam",
+      "desc": "Live odds comparison across 50+ sportsbooks with a value-bet scanner and REST API access. US market focus.",
+      "url": "https://oddsjam.com",
+      "tags": ["multi-sport", "api", "commercial"],
+      "edge": "market"
+    },
+    {
+      "cat": "odds",
+      "name": "betfair-python (betfairlightweight)",
+      "desc": "Python client for the Betfair API. Covers streaming, betting, accounts, and navigation endpoints.",
+      "url": "https://github.com/liambutler-lawrence/betfairlightweight",
+      "tags": ["multi-sport", "open-source", "api"],
+      "edge": "execution"
+    },
+    {
+      "cat": "models",
+      "name": "penaltyblog",
+      "desc": "Python: Dixon-Coles, Poisson, Bivariate Poisson, Bayesian, and simulation. Covers most standard football prediction model approaches.",
+      "url": "https://github.com/martineastwood/penaltyblog",
+      "tags": ["football", "open-source", "python"],
+      "edge": "model"
+    },
+    {
+      "cat": "models",
+      "name": "worldfootballR",
+      "desc": "R: Data wrapper for FBref, Understat, Transfermarkt, and Fotmob. Returns tidy data frames for analysis.",
+      "url": "https://github.com/JaseZiv/worldfootballR",
+      "tags": ["football", "open-source", "r"],
+      "edge": "data"
+    },
+    {
+      "cat": "models",
+      "name": "SoccermaticsForPython",
+      "desc": "Code companion to Soccermatics. Pitch control, tracking data, Expected Threat, and network analysis. Learning resource and working implementations.",
+      "url": "https://github.com/Friends-of-Tracking-Data-FoTD/SoccermaticsForPython",
+      "tags": ["football", "open-source", "python"],
+      "edge": "model"
+    },
+    {
+      "cat": "models",
+      "name": "statsbombpy",
+      "desc": "Python: Official StatsBomb data access library. Pull event data, freeze frames, and lineups directly into pandas DataFrames.",
+      "url": "https://github.com/statsbomb/statsbombpy",
+      "tags": ["football", "open-source", "python"],
+      "edge": "data"
+    },
+    {
+      "cat": "models",
+      "name": "ScraperFC",
+      "desc": "Python: Scrape FBref, Understat, Transfermarkt, Sofascore, and WhoScored. Minimal setup. Returns pandas DataFrames.",
+      "url": "https://github.com/oseymour/ScraperFC",
+      "tags": ["football", "open-source", "python"],
+      "edge": "data"
+    },
+    {
+      "cat": "models",
+      "name": "understat (amosbastian)",
+      "desc": "Python: Async client for understat expected goals data. Fixtures, shots, player xG, and team-level statistics.",
+      "url": "https://github.com/amosbastian/understat",
+      "tags": ["football", "open-source", "python"],
+      "edge": "data"
+    },
+    {
+      "cat": "models",
+      "name": "openELO",
+      "desc": "Python: Elo, Glicko, and TrueSkill implementations for head-to-head sports rating. Parameterised for any two-player or team sport.",
+      "url": "https://github.com/OpenFootball/openelo",
+      "tags": ["multi-sport", "open-source", "python"],
+      "edge": "model"
+    },
+    {
+      "cat": "edge",
+      "name": "pinnacle-api (community wrappers)",
+      "desc": "Python and Node.js wrappers for accessing Pinnacle pricing. Pinnacle closing lines are the market benchmark for CLV measurement.",
+      "url": "https://github.com/pinnacleapi",
+      "tags": ["multi-sport", "api"],
+      "edge": "market"
+    },
+    {
+      "cat": "edge",
+      "name": "Kelly Criterion (ftwr-core)",
+      "desc": "Expected value and Kelly stake sizing implementations. Full fractional Kelly, simultaneous bets, and Kelly with uncertainty. Part of ftwr-core.",
+      "url": "https://github.com/ftwr-dev/ftwr-core",
+      "tags": ["multi-sport", "open-source", "ftwr"],
+      "edge": "execution"
+    },
+    {
+      "cat": "edge",
+      "name": "Closing Line Value Framework",
+      "desc": "Methodology for measuring closing line value as a proxy for long-run profitability. Positive CLV is a common indicator that a model is pricing accurately.",
+      "url": "https://blog.ftwr.app",
+      "tags": ["multi-sport"],
+      "edge": "model"
+    },
+    {
+      "cat": "edge",
+      "name": "vig-free (margin removal)",
+      "desc": "Python: Remove bookmaker margin using Power, Shin, and multiplicative methods. Converts raw odds to true probabilities.",
+      "url": "https://github.com/martineastwood/penaltyblog",
+      "tags": ["multi-sport", "open-source", "python"],
+      "edge": "model"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "RebelBetting",
+      "desc": "Commercial value betting and arbitrage scanner. Tracks closing line value across 60+ bookmakers with per-bet CLV reporting.",
+      "url": "https://rebelbetting.com",
+      "tags": ["multi-sport", "commercial"],
+      "edge": "execution"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "OddsMonkey",
+      "desc": "UK-focused matched betting and arbitrage platform. Odds matcher, each-way arbitrage, and casino offers. Free tier available.",
+      "url": "https://www.oddsmonkey.com",
+      "tags": ["football", "free", "commercial"],
+      "edge": "execution"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "BetBurger",
+      "desc": "Real-time sure-bet and value-bet scanner across 100+ bookmakers. API access for automated monitoring and alert systems.",
+      "url": "https://betburger.com",
+      "tags": ["multi-sport", "api", "commercial"],
+      "edge": "execution"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "Trademate Sports",
+      "desc": "Value betting platform with a focus on CLV tracking and bankroll management. Transparent ROI tracking across all placed bets.",
+      "url": "https://tradematesports.com",
+      "tags": ["multi-sport", "commercial"],
+      "edge": "execution"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "arbitrage-scanner (open source)",
+      "desc": "Python: Build-your-own arbitrage scanner using The Odds API. Reference implementation for cross-market sure-bet detection.",
+      "url": "https://github.com/the-odds-api/samples-python",
+      "tags": ["multi-sport", "open-source", "python"],
+      "edge": "execution"
+    },
+    {
+      "cat": "markets",
+      "name": "Polymarket API",
+      "desc": "Crypto-based prediction markets on current events, sports, and elections. REST and WebSocket API with full market depth and order book access.",
+      "url": "https://docs.polymarket.com",
+      "tags": ["multi-sport", "api", "free"],
+      "edge": "market"
+    },
+    {
+      "cat": "markets",
+      "name": "Manifold Markets API",
+      "desc": "Free-to-play prediction markets. Full REST API with historical resolution data. Good for model calibration without real-money constraints.",
+      "url": "https://docs.manifold.markets/api",
+      "tags": ["multi-sport", "api", "free"],
+      "edge": "market"
+    },
+    {
+      "cat": "markets",
+      "name": "Metaculus API",
+      "desc": "Calibrated community forecasting with tracked resolution history. Long-range questions with publicly visible prediction distributions.",
+      "url": "https://www.metaculus.com/api2",
+      "tags": ["multi-sport", "api", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "markets",
+      "name": "Kalshi API",
+      "desc": "CFTC-regulated US event contracts. Sports, economics, weather, and policy. REST API with authenticated trading. Real money, legal in the US.",
+      "url": "https://trading-api.kalshi.com/trade-api/v2/openapi.json",
+      "tags": ["multi-sport", "api"],
+      "edge": "market"
+    },
+    {
+      "cat": "markets",
+      "name": "py-polymarket",
+      "desc": "Python: Community client for Polymarket trading and data. CLOB API wrapper with order placement and market data streaming.",
+      "url": "https://github.com/Polymarket/py-clob-client",
+      "tags": ["multi-sport", "open-source", "python"],
+      "edge": "execution"
+    },
+    {
+      "cat": "python",
+      "name": "scipy.stats",
+      "desc": "Distributions, statistical tests, continuous and discrete random variables. Includes Poisson, negative binomial, beta, and related distributions.",
+      "url": "https://docs.scipy.org/doc/scipy/reference/stats.html",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "python",
+      "name": "PyMC",
+      "desc": "Probabilistic programming and Bayesian inference. Markov Chain Monte Carlo for parameter estimation and model uncertainty quantification.",
+      "url": "https://www.pymc.io",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "python",
+      "name": "statsmodels",
+      "desc": "GLMs, time series, survival analysis, and diagnostics. Logistic regression and Poisson regression with proper statistical inference.",
+      "url": "https://www.statsmodels.org",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "python",
+      "name": "lifelines",
+      "desc": "Survival analysis for Python. Kaplan-Meier, Cox proportional hazards. Useful for modeling win streaks, tenure, and event timing.",
+      "url": "https://lifelines.readthedocs.io",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "python",
+      "name": "scikit-learn",
+      "desc": "Machine learning in Python. Gradient boosting, neural networks, and model evaluation pipelines. Broad coverage of classification and regression methods.",
+      "url": "https://scikit-learn.org",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "python",
+      "name": "sktime",
+      "desc": "Time series classification, regression, and forecasting. Useful for form analysis, sequential match data, and regime detection.",
+      "url": "https://www.sktime.net",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "model"
+    },
+    {
+      "cat": "viz",
+      "name": "mplsoccer",
+      "desc": "Python: Football pitch plots using Matplotlib. StatsBomb event data integration built in. Handles pitch drawing, heatmaps, and arrow plots.",
+      "url": "https://github.com/andrewRowlinson/mplsoccer",
+      "tags": ["football", "open-source", "python", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "viz",
+      "name": "kloppy",
+      "desc": "Python: Standardized tracking data processing. Reads Tracab, SkillCorner, StatsBomb, and more into a common format. Cross-provider analysis made possible.",
+      "url": "https://github.com/PySport/kloppy",
+      "tags": ["football", "open-source", "python", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "viz",
+      "name": "Plotly / Dash",
+      "desc": "Interactive Python charts deployable as web dashboards. Supports scatter, bar, line, and custom chart types with hover and filter controls.",
+      "url": "https://plotly.com/python",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "viz",
+      "name": "Matplotlib",
+      "desc": "Python scientific visualization library. Fine-grained control over chart layout and styling. Publication-quality static output.",
+      "url": "https://matplotlib.org",
+      "tags": ["multi-sport", "open-source", "python", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "viz",
+      "name": "Grafana",
+      "desc": "Open source metrics dashboarding. Connect to PostgreSQL, TimescaleDB, or InfluxDB for live model output monitoring and performance tracking.",
+      "url": "https://grafana.com",
+      "tags": ["multi-sport", "open-source", "free"],
+      "edge": "data"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-core",
+      "desc": "Python/TypeScript toolkit for sports data collection, odds comparison, and expected value calculation.",
+      "url": "https://github.com/ftwr-dev/ftwr-core",
+      "tags": ["multi-sport", "open-source", "ftwr"],
+      "edge": "community"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-models",
+      "desc": "Statistical models implemented cleanly: Poisson, Elo, Bradley-Terry, Dixon-Coles. Theory documented alongside code. Sport-agnostic by design.",
+      "url": "https://github.com/ftwr-dev/ftwr-models",
+      "tags": ["multi-sport", "open-source", "ftwr"],
+      "edge": "community"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-data-streams",
+      "desc": "Real-time data pipeline tools. Live odds streaming, match event feeds, and WebSocket connectors for time-critical analysis.",
+      "url": "https://github.com/ftwr-dev/ftwr-data-streams",
+      "tags": ["multi-sport", "open-source", "ftwr"],
+      "edge": "community"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-arbitrage",
+      "desc": "Cross-market scanning and arbitrage detection. Sure-bet identification, value-bet flagging, and real-time monitoring. MIT licensed.",
+      "url": "https://github.com/ftwr-dev/ftwr-arbitrage",
+      "tags": ["multi-sport", "open-source", "ftwr"],
+      "edge": "community"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+name: Tool suggestion
+description: Suggest a tool for The Map
+labels: ["tool-suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before submitting, read the [inclusion criteria in CONTRIBUTING.md](https://github.com/nellychaos/ftwr-web/blob/main/CONTRIBUTING.md#inclusion-criteria). Incomplete submissions will be closed without review.
+
+  - type: input
+    id: name
+    attributes:
+      label: Tool name
+      description: The name of the tool exactly as it should appear on The Map.
+      placeholder: e.g. penaltyblog
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: The primary URL for the tool (homepage, GitHub repo, or API docs).
+      placeholder: https://
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Which section of The Map does this belong in?
+      options:
+        - Data Sources
+        - Odds & Markets
+        - Models & Methods
+        - Edge Detection
+        - Arbitrage & Scanning
+        - Prediction Markets
+        - Python Libraries
+        - Visualisation
+        - Other (explain below)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: edge_type
+    attributes:
+      label: Edge type
+      description: What kind of edge or utility does this tool provide?
+      options:
+        - Data edge (access to data others don't have or can't easily get)
+        - Model edge (better or more accurate modelling approach)
+        - Market edge (pricing, odds, or market structure insight)
+        - Execution (betting, trading, or automation tooling)
+        - Community (FTWR project)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: type_flags
+    attributes:
+      label: Type
+      description: Select all that apply.
+      options:
+        - label: Open source (publicly accessible source code with an OSI-approved license)
+        - label: Free to use (no payment required for meaningful access)
+        - label: Has a documented public API
+
+  - type: input
+    id: sports
+    attributes:
+      label: Sport(s)
+      description: Which sports does this cover? Use "multi-sport" if it applies broadly.
+      placeholder: e.g. football, tennis, multi-sport
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        One to two sentences. Factual and specific. Describe what the tool does and any relevant constraints (rate limits, scraping required, paid tier only, etc.). No marketing language.
+      placeholder: e.g. "Python client for the Betfair Exchange API. Covers streaming, betting, accounts, and navigation endpoints."
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Specific use case
+      description: |
+        Describe a concrete scenario where you or someone else used this tool for sports analytics work. "I found it online" is not sufficient. What problem did it solve?
+      placeholder: e.g. "Used this to pull historical ATP match results into a pandas DataFrame for an Elo rating model."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your relationship to this tool
+      description: Declare any financial or professional interest.
+      options:
+        - No relationship -- I use it or have evaluated it
+        - I built it or contribute to it (open source, no financial interest)
+        - I work for or have a commercial interest in this product
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have read CONTRIBUTING.md
+          required: true
+        - label: This tool is not already listed on The Map
+          required: true
+        - label: The URL I provided works and shows the actual tool, not a sign-up wall
+          required: true
+        - label: My description contains no marketing language or superlatives
+          required: true

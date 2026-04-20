@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Map | FTWR -- Follow the White Rabbit</title>
+  <meta name="description" content="Every sports analytics tool worth knowing. Data sources, odds APIs, statistical models, arbitrage scanners, prediction markets, and open source libraries -- curated for finding edges."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --surface: #fcf9f8;
+      --surface-container-low: #f6f3f2;
+      --surface-container: #f0edec;
+      --surface-container-high: #ebe7e7;
+      --on-surface: #1c1b1b;
+      --on-surface-variant: #474747;
+      --outline: #777777;
+      --outline-variant: #c6c6c6;
+      --secondary: #006875;
+      --tertiary: #a900a9;
+      --cyan: #00daf3;
+      --error: #ba1a1a;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--surface);
+      color: var(--on-surface);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--secondary); color: white; }
+
+    /* ---- NAV ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(28,27,27,0.06);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--on-surface);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface);
+      opacity: 0.5;
+      text-decoration: none;
+      transition: opacity 0.15s, color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--secondary); }
+
+    /* ---- SPECTRAL BAR ---- */
+    .spectral-bar { width: 100%; height: 3px; background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%); }
+
+    /* ---- HERO ---- */
+    .hero {
+      padding: 3.5rem 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--secondary);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+    }
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--on-surface-variant);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    /* ---- STATS ROW ---- */
+    .stats-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(28,27,27,0.1);
+      border-right: none;
+      max-width: 1200px;
+      margin: 0 auto 0;
+    }
+    .stat {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      border-right: 1px solid rgba(28,27,27,0.1);
+    }
+    .stat-n {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -0.04em;
+      color: var(--secondary);
+    }
+    .stat-l {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.4;
+      margin-top: 0.2rem;
+    }
+
+    /* ---- CONTROLS ---- */
+    .controls-wrap {
+      position: sticky;
+      top: 53px;
+      background: var(--surface);
+      z-index: 50;
+      border-bottom: 1px solid rgba(28,27,27,0.08);
+    }
+    .controls {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .search-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    .search-prefix {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--secondary);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.6rem 0.75rem 0.6rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      border: 1px solid rgba(28,27,27,0.15);
+      background: white;
+      color: var(--on-surface);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input::placeholder { opacity: 0.35; }
+    .search-input:focus { border-color: var(--secondary); }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.4;
+      flex-shrink: 0;
+    }
+    .filter-btn {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid rgba(28,27,27,0.15);
+      background: transparent;
+      color: var(--on-surface);
+      opacity: 0.5;
+      cursor: pointer;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { opacity: 1; border-color: var(--on-surface); }
+    .filter-btn.active { background: var(--on-surface); color: var(--surface); opacity: 1; border-color: var(--on-surface); }
+    .filter-btn[data-type].active { background: var(--secondary); border-color: var(--secondary); color: white; }
+
+    .result-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* ---- MAIN CONTENT ---- */
+    .map-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* ---- CATEGORY SECTION ---- */
+    .cat-section {
+      margin-top: 3rem;
+    }
+    .cat-section.hidden { display: none; }
+    .cat-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--on-surface);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .cat-header-left { display: flex; align-items: baseline; gap: 1rem; }
+    .cat-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.35;
+    }
+    .cat-title {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .cat-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .cat-desc {
+      font-size: 13px;
+      color: var(--on-surface-variant);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      max-width: 640px;
+    }
+
+    /* ---- TOOL ROW ---- */
+    .tool-list { display: flex; flex-direction: column; }
+    .tool-row {
+      display: flex;
+      align-items: center;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(28,27,27,0.1);
+      border-top: none;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--on-surface);
+      transition: background 0.12s;
+      background: white;
+    }
+    .tool-row:first-child { border-top: 1px solid rgba(28,27,27,0.1); }
+    .tool-row:hover { background: var(--surface-container-high); }
+    .tool-row.hidden { display: none; }
+
+    .tool-edge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      width: 80px;
+      flex-shrink: 0;
+      padding: 0.25rem 0.4rem;
+      text-align: center;
+      border: 1px solid currentColor;
+    }
+    .tool-edge.data { color: var(--secondary); }
+    .tool-edge.model { color: var(--tertiary); }
+    .tool-edge.market { color: #006875; }
+    .tool-edge.execution { color: var(--on-surface-variant); }
+    .tool-edge.community { background: var(--on-surface); color: var(--surface); border-color: var(--on-surface); }
+
+    .tool-body { flex: 1; min-width: 0; }
+    .tool-name {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tool-desc {
+      font-size: 12px;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tool-tags { display: flex; gap: 0.35rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+    .tool-tag {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.4rem;
+      background: var(--surface-container-high);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+      white-space: nowrap;
+    }
+    .tool-tag.open-source { background: rgba(0,104,117,0.08); color: var(--secondary); border-color: rgba(0,104,117,0.3); }
+    .tool-tag.commercial { background: rgba(169,0,169,0.06); color: var(--tertiary); border-color: rgba(169,0,169,0.25); }
+    .tool-tag.free { background: rgba(0,104,117,0.05); color: var(--secondary); border-color: rgba(0,104,117,0.2); }
+    .tool-tag.ftwr { background: var(--on-surface); color: var(--surface); border-color: var(--on-surface); }
+
+    .tool-arrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.25;
+      flex-shrink: 0;
+      transition: opacity 0.15s;
+    }
+    .tool-row:hover .tool-arrow { opacity: 0.6; }
+
+    /* ---- EMPTY STATE ---- */
+    .empty-state {
+      padding: 3rem 0;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.35;
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--on-surface);
+      background: var(--surface-container-low);
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.4;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.4;
+      color: var(--on-surface);
+      text-decoration: none;
+      transition: color 0.15s, opacity 0.15s;
+    }
+    .footer-links a:hover { color: var(--tertiary); opacity: 1; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats-row { flex-wrap: wrap; }
+      .stat { min-width: 50%; }
+      .controls { gap: 0.5rem; }
+      .tool-edge { display: none; }
+      .tool-tags { display: none; }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      .result-count { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">FTWR</a>
+  <ul class="nav-links">
+    <li><a href="https://blog.ftwr.app">Blog</a></li>
+    <li><a href="map.html" class="active">Map</a></li>
+    <li><a href="https://ftwr.discourse.group">Community</a></li>
+    <li><a href="https://github.com/ftwr-dev">Source</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">The Map // Tools Directory</div>
+  <h1 class="hero-title">EVERY TOOL<br/>WORTH KNOWING.</h1>
+  <p class="hero-sub">
+    A curated map of sports analytics tooling -- data sources, odds APIs, statistical models, arbitrage scanners, and prediction markets. Filtered for signal. Updated as the ecosystem moves.
+  </p>
+  <div class="stats-row" id="stats-row">
+    <div class="stat"><div class="stat-n" id="stat-tools">--</div><div class="stat-l">Tools listed</div></div>
+    <div class="stat"><div class="stat-n">9</div><div class="stat-l">Categories</div></div>
+    <div class="stat"><div class="stat-n" id="stat-open">--</div><div class="stat-l">Open source</div></div>
+    <div class="stat"><div class="stat-n" id="stat-free">--</div><div class="stat-l">Free tier</div></div>
+  </div>
+</section>
+
+<div class="spectral-bar"></div>
+
+<!-- Controls -->
+<div class="controls-wrap">
+  <div class="controls">
+    <label class="search-wrap">
+      <span class="search-prefix">></span>
+      <input type="text" id="search-input" class="search-input" placeholder="search tools..." autocomplete="off" aria-label="Search tools"/>
+    </label>
+    <div class="filter-group">
+      <span class="filter-label">Cat</span>
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="data">Data</button>
+      <button class="filter-btn" data-cat="odds">Odds</button>
+      <button class="filter-btn" data-cat="models">Models</button>
+      <button class="filter-btn" data-cat="edge">Edge</button>
+      <button class="filter-btn" data-cat="arbitrage">Arb</button>
+      <button class="filter-btn" data-cat="markets">Markets</button>
+      <button class="filter-btn" data-cat="python">Python</button>
+      <button class="filter-btn" data-cat="viz">Viz</button>
+      <button class="filter-btn" data-cat="community">FTWR</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Type</span>
+      <button class="filter-btn" data-type="open-source">Open source</button>
+      <button class="filter-btn" data-type="free">Free</button>
+      <button class="filter-btn" data-type="api">API</button>
+    </div>
+    <div class="result-count" id="result-count"></div>
+  </div>
+</div>
+
+<!-- Map Body -->
+<div class="map-body" id="map-body">
+  <div id="empty-state" class="empty-state" style="display:none;">No tools match your filters.</div>
+</div>
+
+<!-- Footer -->
+<div class="spectral-bar"></div>
+<footer class="footer">
+  <div class="footer-copy">FTWR // Follow the White Rabbit</div>
+  <div class="footer-links">
+    <a href="https://blog.ftwr.app">Blog</a>
+    <a href="https://ftwr.discourse.group">Community</a>
+    <a href="https://github.com/ftwr-dev">GitHub</a>
+    <a href="https://x.com/ftwr_">X</a>
+  </div>
+</footer>
+
+<script>
+// ---- DATA ----
+const CATEGORIES = [
+  {
+    id: 'data',
+    num: '§01',
+    title: 'Data Sources',
+    desc: 'APIs, feeds, and datasets for sports results, player stats, and tracking data. Coverage, freshness, and granularity vary across providers.'
+  },
+  {
+    id: 'odds',
+    num: '§02',
+    title: 'Odds & Markets',
+    desc: 'Bookmaker APIs, exchange interfaces, and historical odds databases. Useful for real-time pricing, market access, and retrospective odds research.'
+  },
+  {
+    id: 'models',
+    num: '§03',
+    title: 'Models & Methods',
+    desc: 'Open source implementations of statistical models for match prediction and ratings. Includes Poisson, Dixon-Coles, Elo, and related frameworks.'
+  },
+  {
+    id: 'edge',
+    num: '§04',
+    title: 'Edge Detection',
+    desc: 'Tools for measuring and tracking expected value, closing line value, and bookmaker margin. Useful for evaluating model output against market prices.'
+  },
+  {
+    id: 'arbitrage',
+    num: '§05',
+    title: 'Arbitrage & Scanning',
+    desc: 'Sure-bet and value-bet detection across multiple bookmakers. Includes commercial scanners with broad coverage and open source reference implementations.'
+  },
+  {
+    id: 'markets',
+    num: '§06',
+    title: 'Prediction Markets',
+    desc: 'Platforms and APIs for event contracts on sports, politics, and other topics. Pricing data and historical resolution records are available for research.'
+  },
+  {
+    id: 'python',
+    num: '§07',
+    title: 'Python Libraries',
+    desc: 'Statistical and scientific Python packages used in sports analytics work. Covers distributions, Bayesian inference, time series, and general machine learning.'
+  },
+  {
+    id: 'viz',
+    num: '§08',
+    title: 'Visualisation',
+    desc: 'Charting libraries, pitch plotting tools, and dashboarding frameworks for displaying model output and match data.'
+  },
+  {
+    id: 'community',
+    num: '§09',
+    title: 'FTWR Community',
+    desc: 'Repositories built under the FTWR organisation. MIT licensed. Open to contributions via pull request.'
+  }
+];
+
+const TOOLS = [
+  // §01 Data Sources
+  { cat: 'data', name: 'football-data.org', desc: 'Football results, fixtures, tables. Free tier covers 12+ leagues. No key required on lowest tier.', url: 'https://www.football-data.org', tags: ['football', 'free', 'api'], edge: 'data' },
+  { cat: 'data', name: 'API-Football', desc: 'Comprehensive fixtures, live scores, stats, standings, and lineups. 100 free calls/day via api-sports.io.', url: 'https://www.api-football.com', tags: ['football', 'free', 'api'], edge: 'data' },
+  { cat: 'data', name: 'StatsBomb Open Data', desc: 'Event-level tracking data for 30+ competitions. Includes Euros, WSL, La Liga. MIT licensed.', url: 'https://github.com/statsbomb/open-data', tags: ['football', 'open-source', 'free'], edge: 'data' },
+  { cat: 'data', name: 'tennis_atp (JeffSackmann)', desc: 'ATP match-by-match results and rankings from 1968 to present. CSV files on GitHub.', url: 'https://github.com/JeffSackmann/tennis_atp', tags: ['tennis', 'open-source', 'free'], edge: 'data' },
+  { cat: 'data', name: 'tennis_wta (JeffSackmann)', desc: 'WTA equivalent of tennis_atp. Match results, rankings, and stats back to 1968.', url: 'https://github.com/JeffSackmann/tennis_wta', tags: ['tennis', 'open-source', 'free'], edge: 'data' },
+  { cat: 'data', name: 'FBref.com', desc: 'Football stats powered by StatsBomb data. Advanced metrics: xG, progressive passes, pressures, VAEP. No API -- scraping required.', url: 'https://fbref.com', tags: ['football', 'free'], edge: 'data' },
+  { cat: 'data', name: 'understat.com', desc: 'Expected goals for 7 top European leagues going back to 2014/15. Shot-level xG with x,y coordinates. No API -- scraper available.', url: 'https://understat.com', tags: ['football', 'free'], edge: 'data' },
+  { cat: 'data', name: 'basketball-reference.com', desc: 'NBA, NCAA, G-League, WNBA historical stats. Box scores, play-by-play, advanced metrics, and splits. No API.', url: 'https://www.basketball-reference.com', tags: ['basketball', 'free'], edge: 'data' },
+  { cat: 'data', name: 'OpenLigaDB', desc: 'German football data. Bundesliga results and tables via free JSON API. No authentication required.', url: 'https://www.openligadb.de', tags: ['football', 'free', 'api'], edge: 'data' },
+  { cat: 'data', name: 'Sofascore (unofficial API)', desc: 'Live scores, lineups, player ratings, and detailed match events. Unofficial endpoints, not formally supported.', url: 'https://github.com/timvancann/sofascore-api', tags: ['multi-sport', 'free', 'open-source'], edge: 'data' },
+
+  // §02 Odds & Markets
+  { cat: 'odds', name: 'The Odds API', desc: 'Real-time odds from 40+ bookmakers across 20+ sports. REST API with 500 free requests/month.', url: 'https://the-odds-api.com', tags: ['multi-sport', 'free', 'api'], edge: 'market' },
+  { cat: 'odds', name: 'Betfair Exchange API', desc: 'Exchange API with full market depth, live prices, betting, and historical data. Documented REST and streaming endpoints.', url: 'https://developer.betfair.com', tags: ['multi-sport', 'api'], edge: 'execution' },
+  { cat: 'odds', name: 'OddsPortal', desc: 'Historical odds database across hundreds of leagues. Closing line data for model validation and CLV research. Scraping required.', url: 'https://www.oddsportal.com', tags: ['multi-sport', 'free'], edge: 'market' },
+  { cat: 'odds', name: 'OddsJam', desc: 'Live odds comparison across 50+ sportsbooks with a value-bet scanner and REST API access. US market focus.', url: 'https://oddsjam.com', tags: ['multi-sport', 'api', 'commercial'], edge: 'market' },
+  { cat: 'odds', name: 'betfair-python (betfairlightweight)', desc: 'Python client for the Betfair API. Covers streaming, betting, accounts, and navigation endpoints.', url: 'https://github.com/liambutler-lawrence/betfairlightweight', tags: ['multi-sport', 'open-source', 'api'], edge: 'execution' },
+
+  // §03 Models & Methods
+  { cat: 'models', name: 'penaltyblog', desc: 'Python: Dixon-Coles, Poisson, Bivariate Poisson, Bayesian, and simulation. Covers most standard football prediction model approaches.', url: 'https://github.com/martineastwood/penaltyblog', tags: ['football', 'open-source', 'python'], edge: 'model' },
+  { cat: 'models', name: 'worldfootballR', desc: 'R: Data wrapper for FBref, Understat, Transfermarkt, and Fotmob. Returns tidy data frames for analysis.', url: 'https://github.com/JaseZiv/worldfootballR', tags: ['football', 'open-source', 'r'], edge: 'data' },
+  { cat: 'models', name: 'SoccermaticsForPython', desc: 'Code companion to "Soccermatics." Pitch control, tracking data, Expected Threat, and network analysis. Learning resource and working implementations.', url: 'https://github.com/Friends-of-Tracking-Data-FoTD/SoccermaticsForPython', tags: ['football', 'open-source', 'python'], edge: 'model' },
+  { cat: 'models', name: 'statsbombpy', desc: 'Python: Official StatsBomb data access library. Pull event data, freeze frames, and lineups directly into pandas DataFrames.', url: 'https://github.com/statsbomb/statsbombpy', tags: ['football', 'open-source', 'python'], edge: 'data' },
+  { cat: 'models', name: 'ScraperFC', desc: 'Python: Scrape FBref, Understat, Transfermarkt, Sofascore, and WhoScored. Minimal setup. Returns pandas DataFrames.', url: 'https://github.com/oseymour/ScraperFC', tags: ['football', 'open-source', 'python'], edge: 'data' },
+  { cat: 'models', name: 'understat (amosbastian)', desc: 'Python: Async client for understat expected goals data. Fixtures, shots, player xG, and team-level statistics.', url: 'https://github.com/amosbastian/understat', tags: ['football', 'open-source', 'python'], edge: 'data' },
+  { cat: 'models', name: 'openELO', desc: 'Python: Elo, Glicko, and TrueSkill implementations for head-to-head sports rating. Parameterised for any two-player or team sport.', url: 'https://github.com/OpenFootball/openelo', tags: ['multi-sport', 'open-source', 'python'], edge: 'model' },
+
+  // §04 Edge Detection
+  { cat: 'edge', name: 'pinnacle-api (community wrappers)', desc: 'Python and Node.js wrappers for accessing Pinnacle pricing. Pinnacle closing lines are the market benchmark for CLV measurement.', url: 'https://github.com/pinnacleapi', tags: ['multi-sport', 'api'], edge: 'market' },
+  { cat: 'edge', name: 'Kelly Criterion (ftwr-core)', desc: 'Expected value and Kelly stake sizing implementations. Full fractional Kelly, simultaneous bets, and Kelly with uncertainty. Part of ftwr-core.', url: 'https://github.com/ftwr-dev/ftwr-core', tags: ['multi-sport', 'open-source', 'ftwr'], edge: 'execution' },
+  { cat: 'edge', name: 'Closing Line Value Framework', desc: 'Methodology for measuring closing line value as a proxy for long-run profitability. Positive CLV is a common indicator that a model is pricing accurately.', url: 'https://blog.ftwr.app', tags: ['multi-sport'], edge: 'model' },
+  { cat: 'edge', name: 'vig-free (margin removal)', desc: 'Python: Remove bookmaker margin using Power, Shin, and multiplicative methods. Converts raw odds to true probabilities.', url: 'https://github.com/martineastwood/penaltyblog', tags: ['multi-sport', 'open-source', 'python'], edge: 'model' },
+
+  // §05 Arbitrage & Scanning
+  { cat: 'arbitrage', name: 'RebelBetting', desc: 'Commercial value betting and arbitrage scanner. Tracks closing line value across 60+ bookmakers with per-bet CLV reporting.', url: 'https://rebelbetting.com', tags: ['multi-sport', 'commercial'], edge: 'execution' },
+  { cat: 'arbitrage', name: 'OddsMonkey', desc: 'UK-focused matched betting and arbitrage platform. Odds matcher, each-way arbitrage, and casino offers. Free tier available.', url: 'https://www.oddsmonkey.com', tags: ['football', 'free', 'commercial'], edge: 'execution' },
+  { cat: 'arbitrage', name: 'BetBurger', desc: 'Real-time sure-bet and value-bet scanner across 100+ bookmakers. API access for automated monitoring and alert systems.', url: 'https://betburger.com', tags: ['multi-sport', 'api', 'commercial'], edge: 'execution' },
+  { cat: 'arbitrage', name: 'Trademate Sports', desc: 'Value betting platform with a focus on CLV tracking and bankroll management. Transparent ROI tracking across all placed bets.', url: 'https://tradematesports.com', tags: ['multi-sport', 'commercial'], edge: 'execution' },
+  { cat: 'arbitrage', name: 'arbitrage-scanner (open source)', desc: 'Python: Build-your-own arbitrage scanner using The Odds API. Reference implementation for cross-market sure-bet detection.', url: 'https://github.com/the-odds-api/samples-python', tags: ['multi-sport', 'open-source', 'python'], edge: 'execution' },
+
+  // §06 Prediction Markets
+  { cat: 'markets', name: 'Polymarket API', desc: 'Crypto-based prediction markets on current events, sports, and elections. REST and WebSocket API with full market depth and order book access.', url: 'https://docs.polymarket.com', tags: ['multi-sport', 'api', 'free'], edge: 'market' },
+  { cat: 'markets', name: 'Manifold Markets API', desc: 'Free-to-play prediction markets. Full REST API with historical resolution data. Good for model calibration without real-money constraints.', url: 'https://docs.manifold.markets/api', tags: ['multi-sport', 'api', 'free'], edge: 'market' },
+  { cat: 'markets', name: 'Metaculus API', desc: 'Calibrated community forecasting with tracked resolution history. Long-range questions with publicly visible prediction distributions.', url: 'https://www.metaculus.com/api2', tags: ['multi-sport', 'api', 'free'], edge: 'model' },
+  { cat: 'markets', name: 'Kalshi API', desc: 'CFTC-regulated US event contracts. Sports, economics, weather, and policy. REST API with authenticated trading. Real money, legal in the US.', url: 'https://trading-api.kalshi.com/trade-api/v2/openapi.json', tags: ['multi-sport', 'api'], edge: 'market' },
+  { cat: 'markets', name: 'py-polymarket', desc: 'Python: Community client for Polymarket trading and data. CLOB API wrapper with order placement and market data streaming.', url: 'https://github.com/Polymarket/py-clob-client', tags: ['multi-sport', 'open-source', 'python'], edge: 'execution' },
+
+  // §07 Python Libraries
+  { cat: 'python', name: 'scipy.stats', desc: 'Distributions, statistical tests, continuous and discrete random variables. Includes Poisson, negative binomial, beta, and related distributions.', url: 'https://docs.scipy.org/doc/scipy/reference/stats.html', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'model' },
+  { cat: 'python', name: 'PyMC', desc: 'Probabilistic programming and Bayesian inference. Markov Chain Monte Carlo for parameter estimation and model uncertainty quantification.', url: 'https://www.pymc.io', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'model' },
+  { cat: 'python', name: 'statsmodels', desc: 'GLMs, time series, survival analysis, and diagnostics. Logistic regression and Poisson regression with proper statistical inference.', url: 'https://www.statsmodels.org', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'model' },
+  { cat: 'python', name: 'lifelines', desc: 'Survival analysis for Python. Kaplan-Meier, Cox proportional hazards. Useful for modeling win streaks, tenure, and event timing.', url: 'https://lifelines.readthedocs.io', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'model' },
+  { cat: 'python', name: 'scikit-learn', desc: 'Machine learning in Python. Gradient boosting, neural networks, and model evaluation pipelines. Broad coverage of classification and regression methods.', url: 'https://scikit-learn.org', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'model' },
+  { cat: 'python', name: 'sktime', desc: 'Time series classification, regression, and forecasting. Useful for form analysis, sequential match data, and regime detection.', url: 'https://www.sktime.net', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'model' },
+
+  // §08 Visualisation
+  { cat: 'viz', name: 'mplsoccer', desc: 'Python: Football pitch plots using Matplotlib. StatsBomb event data integration built in. Handles pitch drawing, heatmaps, and arrow plots.', url: 'https://github.com/andrewRowlinson/mplsoccer', tags: ['football', 'open-source', 'python', 'free'], edge: 'data' },
+  { cat: 'viz', name: 'kloppy', desc: 'Python: Standardized tracking data processing. Reads Tracab, SkillCorner, StatsBomb, and more into a common format. Cross-provider analysis made possible.', url: 'https://github.com/PySport/kloppy', tags: ['football', 'open-source', 'python', 'free'], edge: 'data' },
+  { cat: 'viz', name: 'Plotly / Dash', desc: 'Interactive Python charts deployable as web dashboards. Supports scatter, bar, line, and custom chart types with hover and filter controls.', url: 'https://plotly.com/python', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'data' },
+  { cat: 'viz', name: 'Matplotlib', desc: 'Python scientific visualization library. Fine-grained control over chart layout and styling. Publication-quality static output.', url: 'https://matplotlib.org', tags: ['multi-sport', 'open-source', 'python', 'free'], edge: 'data' },
+  { cat: 'viz', name: 'Grafana', desc: 'Open source metrics dashboarding. Connect to PostgreSQL, TimescaleDB, or InfluxDB for live model output monitoring and performance tracking.', url: 'https://grafana.com', tags: ['multi-sport', 'open-source', 'free'], edge: 'data' },
+
+  // §09 FTWR Community
+  { cat: 'community', name: 'ftwr-core', desc: 'Python/TypeScript toolkit for sports data collection, odds comparison, and expected value calculation.', url: 'https://github.com/ftwr-dev/ftwr-core', tags: ['multi-sport', 'open-source', 'ftwr'], edge: 'community' },
+  { cat: 'community', name: 'ftwr-models', desc: 'Statistical models implemented cleanly: Poisson, Elo, Bradley-Terry, Dixon-Coles. Theory documented alongside code. Sport-agnostic by design.', url: 'https://github.com/ftwr-dev/ftwr-models', tags: ['multi-sport', 'open-source', 'ftwr'], edge: 'community' },
+  { cat: 'community', name: 'ftwr-data-streams', desc: 'Real-time data pipeline tools. Live odds streaming, match event feeds, and WebSocket connectors for time-critical analysis.', url: 'https://github.com/ftwr-dev/ftwr-data-streams', tags: ['multi-sport', 'open-source', 'ftwr'], edge: 'community' },
+  { cat: 'community', name: 'ftwr-arbitrage', desc: 'Cross-market scanning and arbitrage detection. Sure-bet identification, value-bet flagging, and real-time monitoring. MIT licensed.', url: 'https://github.com/ftwr-dev/ftwr-arbitrage', tags: ['multi-sport', 'open-source', 'ftwr'], edge: 'community' }
+];
+
+// ---- RENDER ----
+function renderAll() {
+  const body = document.getElementById('map-body');
+
+  // Update stats
+  document.getElementById('stat-tools').textContent = TOOLS.length;
+  document.getElementById('stat-open').textContent = TOOLS.filter(t => t.tags.includes('open-source')).length;
+  document.getElementById('stat-free').textContent = TOOLS.filter(t => t.tags.includes('free') || t.tags.includes('open-source')).length;
+
+  CATEGORIES.forEach(cat => {
+    const tools = TOOLS.filter(t => t.cat === cat.id);
+    const section = document.createElement('section');
+    section.className = 'cat-section';
+    section.dataset.catId = cat.id;
+
+    section.innerHTML = `
+      <div class="cat-header">
+        <div class="cat-header-left">
+          <div class="cat-num">${cat.num}</div>
+          <h2 class="cat-title">${cat.title}</h2>
+        </div>
+        <div class="cat-count"><span class="cat-count-n" data-cat-count="${cat.id}">${tools.length}</span> tools</div>
+      </div>
+      <p class="cat-desc">${cat.desc}</p>
+      <div class="tool-list" data-cat-list="${cat.id}"></div>
+    `;
+
+    const list = section.querySelector('.tool-list');
+    tools.forEach(tool => {
+      const a = document.createElement('a');
+      a.className = 'tool-row';
+      a.href = tool.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.dataset.name = tool.name.toLowerCase();
+      a.dataset.desc = tool.desc.toLowerCase();
+      a.dataset.cat = tool.cat;
+      a.dataset.tags = tool.tags.join(' ');
+
+      const edgeLabel = { data: 'data edge', model: 'model edge', market: 'market edge', execution: 'execution', community: 'ftwr' }[tool.edge] || tool.edge;
+      const tagsHtml = tool.tags
+        .filter(t => ['open-source', 'commercial', 'free', 'ftwr'].includes(t))
+        .map(t => `<span class="tool-tag ${t}">${t}</span>`)
+        .join('');
+      const sportTagsHtml = tool.tags
+        .filter(t => ['football', 'tennis', 'basketball', 'multi-sport', 'r', 'python'].includes(t))
+        .map(t => `<span class="tool-tag">${t}</span>`)
+        .join('');
+
+      a.innerHTML = `
+        <div class="tool-edge ${tool.edge}">${edgeLabel}</div>
+        <div class="tool-body">
+          <div class="tool-name">${tool.name}</div>
+          <div class="tool-desc">${tool.desc}</div>
+        </div>
+        <div class="tool-tags">${sportTagsHtml}${tagsHtml}</div>
+        <div class="tool-arrow">--></div>
+      `;
+
+      list.appendChild(a);
+    });
+
+    body.appendChild(section);
+  });
+}
+
+// ---- FILTER ----
+let activeCat = 'all';
+let activeType = null;
+let searchQuery = '';
+
+function applyFilters() {
+  let visibleTotal = 0;
+
+  CATEGORIES.forEach(cat => {
+    const section = document.querySelector(`[data-cat-id="${cat.id}"]`);
+    const rows = section.querySelectorAll('.tool-row');
+    let sectionVisible = 0;
+
+    // Hide whole section if category filter is active and doesn't match
+    if (activeCat !== 'all' && activeCat !== cat.id) {
+      section.classList.add('hidden');
+      return;
+    } else {
+      section.classList.remove('hidden');
+    }
+
+    rows.forEach(row => {
+      const nameMatch = row.dataset.name.includes(searchQuery);
+      const descMatch = row.dataset.desc.includes(searchQuery);
+      const typeMatch = !activeType || row.dataset.tags.includes(activeType);
+
+      if ((nameMatch || descMatch) && typeMatch) {
+        row.classList.remove('hidden');
+        sectionVisible++;
+        visibleTotal++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+
+    // Hide section if all tools filtered out
+    if (sectionVisible === 0) {
+      section.classList.add('hidden');
+    }
+
+    // Update count
+    const countEl = section.querySelector(`[data-cat-count="${cat.id}"]`);
+    if (countEl) countEl.textContent = sectionVisible;
+  });
+
+  document.getElementById('result-count').textContent = `${visibleTotal} tool${visibleTotal === 1 ? '' : 's'}`;
+
+  const emptyState = document.getElementById('empty-state');
+  emptyState.style.display = visibleTotal === 0 ? 'block' : 'none';
+}
+
+// ---- EVENTS ----
+document.addEventListener('DOMContentLoaded', () => {
+  renderAll();
+  applyFilters();
+
+  // Category filter
+  document.querySelectorAll('.filter-btn[data-cat]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCat = btn.dataset.cat;
+      document.querySelectorAll('.filter-btn[data-cat]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+
+      // Scroll to section
+      if (activeCat !== 'all') {
+        const section = document.querySelector(`[data-cat-id="${activeCat}"]`);
+        if (section) {
+          const offset = section.getBoundingClientRect().top + window.scrollY - 120;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // Type filter (toggle)
+  document.querySelectorAll('.filter-btn[data-type]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (activeType === btn.dataset.type) {
+        activeType = null;
+        btn.classList.remove('active');
+      } else {
+        activeType = btn.dataset.type;
+        document.querySelectorAll('.filter-btn[data-type]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      applyFilters();
+    });
+  });
+
+  // Search
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    applyFilters();
+  });
+});
+</script>
+</body>
+</html>

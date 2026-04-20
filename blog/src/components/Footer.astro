@@ -1,0 +1,58 @@
+<footer class="footer">
+  <div class="footer-copy">FTWR // Follow the White Rabbit</div>
+  <div class="footer-links">
+    <a href="/">Blog</a>
+    <a href="https://ftwr.discourse.group">Community</a>
+    <a href="https://github.com/ftwr-dev">GitHub</a>
+    <a href="https://x.com/ftwr_">X</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--on-surface);
+    background: var(--surface-container-low);
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+    color: var(--on-surface);
+    text-decoration: none;
+    transition: color 0.15s, opacity 0.15s;
+  }
+
+  .footer-links a:hover {
+    color: var(--tertiary);
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  }
+</style>

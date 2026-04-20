@@ -1,0 +1,181 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TagList from '../components/TagList.astro';
+import SpectralBar from '../components/SpectralBar.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  publishedDate: Date;
+  updatedDate?: Date;
+  author: string;
+  tags: string[];
+  category: string;
+  ogImage?: string;
+}
+
+const { title, description, publishedDate, updatedDate, author, tags, category, ogImage } = Astro.props;
+
+const formattedDate = publishedDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedUpdated = updatedDate?.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const categoryLabel = category.replace(/-/g, ' ');
+
+// Estimate reading time from content
+const content = await Astro.slots.render('default');
+const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 250));
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  type="article"
+  publishedDate={publishedDate}
+  author={author}
+>
+  <article class="post">
+    <header class="post-header">
+      <div class="post-category">{categoryLabel}</div>
+      <h1 class="post-title">{title}</h1>
+      <div class="post-meta">
+        <span>{formattedDate}</span>
+        <span>{author}</span>
+        <span>{readingTime} min read</span>
+      </div>
+      {formattedUpdated && (
+        <div class="post-updated">Updated {formattedUpdated}</div>
+      )}
+      <TagList tags={tags} />
+    </header>
+
+    <SpectralBar />
+
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .post-header {
+    padding: 3rem 0 2rem;
+  }
+
+  .post-category {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+
+  .post-title {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-updated {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 0 4rem;
+  }
+
+  /* Prose typography */
+  .post-content :global(p) {
+    margin-bottom: 1.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .post-content :global(h2) {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+
+  .post-content :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content :global(h4) {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content :global(blockquote) {
+    margin: 2rem 0;
+  }
+
+  .post-content :global(pre) {
+    margin: 1.5rem 0;
+  }
+
+  .post-content :global(img) {
+    margin: 2rem 0;
+    border: 1px solid rgba(28, 27, 27, 0.12);
+  }
+
+  .post-content :global(table) {
+    margin: 1.5rem 0;
+  }
+
+  .post-content :global(hr) {
+    margin: 3rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .post-meta {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

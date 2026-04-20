@@ -1,0 +1,77 @@
+---
+title: "What Is FTWR"
+description: "An introduction to Follow the White Rabbit: open source sports data intelligence, built by builders, for builders. No tips. No paywalls. Just methods."
+publishedDate: 2026-04-09
+author: "FTWR"
+tags: ["meta", "open-source", "community"]
+category: "meta"
+---
+
+Most people in sports analytics are selling something. Picks, courses, VIP channels, premium tiers. The incentives are clear: tell people what they want to hear, gate the good stuff behind a paywall, optimize for subscriber retention over honest analysis.
+
+FTWR exists because that model is broken.
+
+## The premise
+
+Sports betting markets are inefficient. Not always, not everywhere, but often enough that systematic approaches can find edges the market misses. A mispriced line here. A stale model there. An overlooked data source that nobody else is pulling from.
+
+The interesting question is never "what's the pick." It's "why does this edge exist, how long will it last, and can we build a system to find the next one?"
+
+That's what FTWR is about.
+
+## What we actually build
+
+FTWR is an open source developer community. The core output is code, not content. Content explains the code. The code does the work.
+
+**ftwr-core** is a Python and TypeScript toolkit for sports data collection, odds comparison, and expected value calculation. It is the anchor. If you want to pull odds from multiple bookmakers, calculate implied probabilities, or compute expected value on a market, this is where you start.
+
+**ftwr-models** is a collection of statistical models implemented cleanly with documentation explaining the theory behind each one. Poisson distributions for goal scoring. Elo ratings for team strength. Bradley-Terry for pairwise comparison. Dixon-Coles for correcting low-score bias. Every model is sport-agnostic by design.
+
+**ftwr-arbitrage** is cross-market scanning and arbitrage detection. Sure-bet identification, value-bet flagging, real-time monitoring. This is the part most people want but almost nobody open sources.
+
+Everything is on [GitHub](https://github.com/ftwr-dev). Everything is MIT licensed. Fork it, break it, improve it, ship it.
+
+## Why open source
+
+Individual edges erode. You find a mispriced line, trade it, the market corrects. That edge is gone. Hoarding it behind a paywall only delays the inevitable.
+
+But the ability to *find* edges compounds. Better tools find edges faster. Better models identify inefficiencies earlier. Better data pipelines catch opportunities that manual analysis misses.
+
+Open source compounds that rate of discovery. One person building alone hits a ceiling. A hundred people contributing tools, sharing methods, stress-testing each other's models -- that's a different game entirely.
+
+The community is the moat. Not gated content.
+
+## How this is different
+
+There are no paid tiers. There will never be paid tiers. No premium channels, no courses, no affiliate links, no consulting funnel. The moment money enters the equation, incentives shift. You start optimizing for subscriber retention instead of honest analysis. You start gatekeeping code that should be open.
+
+The value of FTWR is the community itself: the shared tooling, the collective knowledge, the conversations between people who think carefully about these problems. That value compounds when it is open and free. It dies the moment you put a price on it.
+
+If the project needs infrastructure funding, that is a community conversation handled transparently through GitHub Sponsors or Open Collective. The work itself stays free and open.
+
+## The stack
+
+```
+Data Layer       Sports APIs, scrapers, PostgreSQL, Redis
+Processing       Python (pandas, scipy), TypeScript, Kafka
+Models           Poisson, Elo, Bradley-Terry, Dixon-Coles
+Output           Static blog, Discourse forum, GitHub repos
+```
+
+The technical architecture is described in detail in the strategy docs on GitHub. The short version: Python for modelling, TypeScript for real-time tooling, static sites for content, Discourse for community. No vendor lock-in on any critical piece.
+
+## How to get involved
+
+The simplest entry point is the [GitHub org](https://github.com/ftwr-dev). Browse the repos, read the code, open an issue if something is broken or unclear. If you want to contribute, look for issues tagged "good first issue."
+
+The [forum](https://ftwr.discourse.group) is where deeper discussion happens. Post your own analysis in Show Your Work. Ask questions in Code Help. Dive into methodology debates in Models and Methods.
+
+If you want to follow along, [@ftwr_](https://x.com/ftwr_) on X is the broadcast channel.
+
+## What comes next
+
+The 90-day plan is public. Weeks 1 through 3 are foundation: getting repos seeded with real working code, the forum configured, and the blog publishing. Weeks 4 through 6 are soft launch: daily posts on X, weekly blog posts, meaningful GitHub commits. Weeks 7 through 12 are community activation: good-first-issue tags, community challenges, featuring community work.
+
+The single best signal at month 6: has anyone outside the project shipped code to an FTWR repo or shared original analysis on the forum? If yes, the community is real. If no, it is still a personal project with an audience.
+
+Only one way to find out how deep the rabbit hole goes.

@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+const tagCounts = new Map<string, number>();
+allPosts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    const normalized = tag.toLowerCase();
+    tagCounts.set(normalized, (tagCounts.get(normalized) || 0) + 1);
+  });
+});
+
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout
+  title="All Tags"
+  description="Browse all tags on the FTWR blog."
+>
+  <section class="tags-page">
+    <div class="tags-header">
+      <h1 class="tags-title">Tags</h1>
+      <span class="tags-module">[ {sortedTags.length} Total ]</span>
+    </div>
+
+    <div class="tags-grid">
+      {sortedTags.map(([tag, count]) => (
+        <a href={`/tags/${tag}`} class="tag-card">
+          <span class="tag-name">{tag}</span>
+          <span class="tag-count">{count}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tags-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .tags-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--on-surface);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .tags-title {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .tags-module {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.4;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(28, 27, 27, 0.12);
+    background: white;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .tag-card:hover {
+    background: var(--on-surface);
+    color: var(--surface);
+    text-decoration: none;
+  }
+
+  .tag-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: inherit;
+  }
+
+  .tag-count {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    opacity: 0.4;
+    color: inherit;
+  }
+
+  .tag-card:hover .tag-count {
+    opacity: 0.6;
+  }
+</style>

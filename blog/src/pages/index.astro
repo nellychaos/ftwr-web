@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Analysis & Methods"
+  description="Sports data intelligence. Open source tooling. Permissionless contribution."
+>
+  <section class="blog-index">
+    <div class="blog-header">
+      <h1 class="blog-title">Analysis & Methods</h1>
+      <span class="blog-module">[ Latest Posts ]</span>
+    </div>
+
+    <div class="post-list">
+      {posts.length === 0 && (
+        <p class="empty-state">No posts yet. Check back soon.</p>
+      )}
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          publishedDate={post.data.publishedDate}
+          category={post.data.category}
+          tags={post.data.tags}
+          slug={post.id}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-index {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .blog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--on-surface);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .blog-title {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .blog-module {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.4;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .post-list > :global(a + a) {
+    border-top: none;
+  }
+
+  .empty-state {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3rem 0;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+  const tagMap = new Map<string, typeof allPosts>();
+  allPosts.forEach((post) => {
+    post.data.tags.forEach((tag) => {
+      const normalized = tag.toLowerCase();
+      if (!tagMap.has(normalized)) {
+        tagMap.set(normalized, []);
+      }
+      tagMap.get(normalized)!.push(post);
+    });
+  });
+
+  return [...tagMap.entries()].map(([tag, posts]) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts.sort(
+        (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
+      ),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`Posts tagged "${tag}"`}
+  description={`All FTWR blog posts tagged with "${tag}".`}
+>
+  <section class="tag-page">
+    <div class="tag-header">
+      <h1 class="tag-title">{tag}</h1>
+      <span class="tag-module">[ {posts.length} {posts.length === 1 ? 'Post' : 'Posts'} ]</span>
+    </div>
+
+    <div class="post-list">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          publishedDate={post.data.publishedDate}
+          category={post.data.category}
+          tags={post.data.tags}
+          slug={post.id}
+        />
+      ))}
+    </div>
+
+    <a href="/tags" class="back-link">&larr; All Tags</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .tag-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .tag-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--on-surface);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag-title {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .tag-module {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.4;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .post-list > :global(a + a) {
+    border-top: none;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--secondary);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>

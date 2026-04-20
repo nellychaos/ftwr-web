@@ -1,0 +1,73 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav">
+  <a href="https://ftwr.app" class="nav-logo">FTWR</a>
+  <ul class="nav-links">
+    <li><a href="/" class:list={[{ active: currentPath === '/' || currentPath.startsWith('/tags') }]}>Blog</a></li>
+    <li><a href="https://ftwr.discourse.group">Community</a></li>
+    <li><a href="https://github.com/ftwr-dev">Source</a></li>
+  </ul>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(28, 27, 27, 0.06);
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 50;
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: var(--on-surface);
+    text-decoration: none;
+  }
+
+  .nav-logo:hover {
+    text-decoration: none;
+    color: var(--secondary);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--on-surface);
+    opacity: 0.5;
+    text-decoration: none;
+    transition: opacity 0.15s, color 0.15s;
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+    color: var(--secondary);
+    text-decoration: none;
+  }
+
+  .nav-links a.active {
+    opacity: 1;
+    color: var(--secondary);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+</style>

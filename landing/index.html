@@ -150,13 +150,13 @@
       background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%);
     }
 
-    /* ---- DATA VIZ SECTION ---- */
-    .dataviz-section {
+    /* ---- CONSTELLATION SECTION ---- */
+    .constellation-section {
       padding: 4rem 1.5rem 5rem;
       max-width: 1200px;
       margin: 0 auto;
     }
-    .dataviz-header {
+    .constellation-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
@@ -179,78 +179,95 @@
       text-transform: uppercase;
     }
 
-    /* ---- BENTO GRID ---- */
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 0;
-    }
-    .bento-card {
+    /* ---- NODE GRAPH ---- */
+    .graph-wrap {
+      width: 100%;
+      background: white;
       border: 1px solid rgba(28,27,27,0.12);
+      overflow: hidden;
+      position: relative;
+    }
+    .model-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .node-group { cursor: pointer; }
+
+    /* ---- DETAIL PANEL ---- */
+    .model-detail {
+      border: 1px solid rgba(28,27,27,0.12);
+      border-top: none;
+      background: var(--surface-container-low);
+      padding: 1rem 1.5rem;
+      min-height: 68px;
+    }
+    .model-detail-inner {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .model-detail-badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+    .model-detail-badge.model   { color: var(--tertiary); border-color: var(--tertiary); }
+    .model-detail-badge.market  { color: var(--secondary); border-color: var(--secondary); }
+    .model-detail-badge.execution { color: var(--on-surface-variant); border-color: var(--on-surface-variant); }
+    .model-detail-badge.default { color: var(--outline); border-color: var(--outline); }
+    .model-detail-name {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .model-detail-desc {
+      font-size: 13px;
+      color: var(--on-surface-variant);
+      line-height: 1.6;
+      flex: 1;
+      min-width: 200px;
+    }
+    .model-detail-param {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.45;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    /* ---- BOTTOM TWO PANELS ---- */
+    .constellation-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .c-panel {
+      border: 1px solid rgba(28,27,27,0.12);
+      border-top: none;
       padding: 1.5rem;
       background: white;
-      position: relative;
-      overflow: hidden;
     }
-    .bento-card + .bento-card { border-left: none; }
+    .c-panel + .c-panel { border-left: none; }
     .bento-label {
       font-family: var(--font-mono);
       font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       opacity: 0.4;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
-    .bento-value {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 1.8rem;
-      letter-spacing: -0.03em;
-    }
-    .bento-delta {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-    }
-    .bento-delta.positive { color: var(--secondary); }
-    .bento-delta.negative { color: var(--error); }
-    .bento-delta.neutral { color: var(--tertiary); }
-
-    /* ---- PROBABILITY DISTRIBUTION ---- */
-    .dist-container {
-      grid-column: span 8;
-      min-height: 380px;
-      display: flex;
-      flex-direction: column;
-    }
-    .dist-chart {
-      flex: 1;
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      padding-top: 2rem;
-    }
-    .dist-bar {
-      flex: 1;
-      min-width: 0;
-      transition: opacity 0.2s;
-    }
-    .dist-bar:hover { opacity: 1 !important; }
-    .dist-axis {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 0.75rem;
-      font-family: var(--font-mono);
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.35;
-    }
+    .prob-canvas { width: 100%; height: 160px; display: block; }
     .dist-legend {
       display: flex;
       gap: 1.5rem;
-      margin-top: auto;
-      padding-top: 1rem;
+      margin-top: 0.75rem;
     }
     .dist-legend-item {
       display: flex;
@@ -261,122 +278,91 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      flex-shrink: 0;
-    }
+    .legend-dot { width: 8px; height: 8px; flex-shrink: 0; }
 
-    /* ---- SIDE STATS ---- */
-    .side-stats {
-      grid-column: span 4;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .side-stats .bento-card { border-left: none; flex: 1; }
-    .side-stats .bento-card + .bento-card { border-top: none; }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(28,27,27,0.05);
-    }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-key {
+    /* ---- LAMBDA TUNER ---- */
+    .lambda-label {
+      display: block;
       font-family: var(--font-mono);
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      opacity: 0.5;
+      opacity: 0.6;
+      margin-bottom: 0.6rem;
     }
-    .stat-val {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
+    .lambda-val-display { color: var(--secondary); font-weight: 700; opacity: 1; }
+    .lambda-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 2px;
+      background: var(--outline-variant);
+      outline: none;
+      cursor: pointer;
+      margin-bottom: 1rem;
     }
-
-    /* ---- SPARKLINE BARS ---- */
-    .spark {
+    .lambda-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px; height: 12px;
+      background: var(--secondary);
+      cursor: pointer;
+    }
+    .lambda-slider::-moz-range-thumb {
+      width: 12px; height: 12px;
+      background: var(--secondary);
+      border: none; cursor: pointer;
+    }
+    .interactive-dist {
       display: flex;
       align-items: flex-end;
-      gap: 2px;
-      height: 32px;
+      gap: 3px;
+      height: 108px;
+      margin-bottom: 0.4rem;
     }
-    .spark-bar {
-      width: 4px;
-      min-height: 2px;
-      transition: height 0.3s;
-    }
-
-    /* ---- BOTTOM ROW: 3-ACROSS ---- */
-    .bottom-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: none;
-    }
-    .bottom-row .bento-card {
-      border-top: none;
-    }
-    .bottom-row .bento-card:first-child { border-left: 1px solid rgba(28,27,27,0.12); }
-
-    /* ---- HEATMAP ---- */
-    .heatmap {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: repeat(7, 1fr);
-      gap: 2px;
-      height: 140px;
-    }
-    .heat-cell {
-      min-width: 0;
-      min-height: 0;
-    }
-
-    /* ---- MATCH TABLE ---- */
-    .match-table-wrap {
-      grid-column: span 12;
-      border-top: none;
-    }
-    .match-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .match-table th {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      opacity: 0.4;
-      text-align: left;
-      padding: 0.75rem 1rem;
-      border-bottom: 2px solid var(--on-surface);
-      font-weight: 400;
-    }
-    .match-table th:last-child { text-align: right; }
-    .match-table td {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      padding: 1rem;
-      border-bottom: 1px solid rgba(28,27,27,0.06);
-    }
-    .match-table tr:hover { background: var(--surface-container-low); }
-    .match-table .edge-col { text-align: right; font-weight: 700; }
-    .prob-bar-wrap {
+    .idist-bar { flex: 1; min-height: 2px; transition: height 0.15s ease; }
+    .dist-axis {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      justify-content: space-between;
+      padding-top: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.35;
     }
-    .prob-bar-track {
-      width: 80px;
-      height: 4px;
-      background: var(--surface-container-high);
-      overflow: hidden;
+    .lambda-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
     }
-    .prob-bar-fill { height: 100%; }
-    .prob-bar-val { font-size: 10px; white-space: nowrap; }
+    .lambda-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .lambda-stat-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.4;
+    }
+    .lambda-stat-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes travel {
+      from { stroke-dashoffset: 30; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes pulseRing {
+      0%   { opacity: 0.5; }
+      100% { opacity: 0; }
+    }
 
     /* ---- FOOTER ---- */
     .footer {
@@ -413,14 +399,11 @@
     /* ---- RESPONSIVE ---- */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .bento { grid-template-columns: 1fr; }
-      .dist-container { grid-column: span 1; min-height: 280px; }
-      .side-stats { grid-column: span 1; }
-      .bottom-row { grid-template-columns: 1fr; }
-      .bottom-row .bento-card { border-left: 1px solid rgba(28,27,27,0.12) !important; }
-      .bottom-row .bento-card + .bento-card { border-top: none; }
-      .match-table-wrap { grid-column: span 1; }
-      .bento-card + .bento-card { border-left: 1px solid rgba(28,27,27,0.12); border-top: none; }
+      .constellation-bottom { grid-template-columns: 1fr; }
+      .c-panel + .c-panel { border-left: 1px solid rgba(28,27,27,0.12); border-top: none; }
+      .graph-wrap { overflow-x: auto; }
+      .model-svg { min-width: 560px; }
+      .model-detail-inner { flex-direction: column; gap: 0.5rem; }
       .terminal-links { max-width: 100%; }
       .footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
@@ -469,107 +452,67 @@
 
   <div class="spectral-bar"></div>
 
-  <!-- Data Viz Section -->
-  <section class="dataviz-section">
-    <div class="dataviz-header">
-      <h2 class="dataviz-title">Live Model Output</h2>
-      <span class="dataviz-module">[ Demo // Poisson Distribution Model ]</span>
+  <!-- Constellation Section -->
+  <section class="constellation-section">
+    <div class="constellation-header">
+      <h2 class="dataviz-title">The Constellation</h2>
+      <span class="dataviz-module">[ Interactive // Prediction Model Families ]</span>
     </div>
 
-    <!-- Main Bento Grid -->
-    <div class="bento">
+    <!-- Node Graph -->
+    <div class="graph-wrap">
+      <svg id="model-svg" class="model-svg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" aria-label="Interactive map of sports prediction model families"></svg>
+    </div>
 
-      <!-- Probability Distribution Chart -->
-      <div class="bento-card dist-container">
-        <div class="bento-label">Probability Distribution // Home Goals Scored</div>
-        <div class="dist-chart" id="dist-chart"></div>
-        <div class="dist-axis">
-          <span>0 Goals</span>
-          <span>Expected: 1.62</span>
-          <span>6+ Goals</span>
-        </div>
+    <!-- Detail Panel -->
+    <div class="model-detail" id="model-detail">
+      <div class="model-detail-inner">
+        <div class="model-detail-badge default" id="detail-badge">Explore</div>
+        <div class="model-detail-name" id="detail-name">Click any node to explore a model family</div>
+        <div class="model-detail-desc" id="detail-desc">Eight model families. Ten connections. The graph shows how methods relate -- from raw statistical foundations through to execution and edge measurement.</div>
+        <div class="model-detail-param" id="detail-param"></div>
+      </div>
+    </div>
+
+    <!-- Bottom: Probability Field + Tuner -->
+    <div class="constellation-bottom">
+      <div class="c-panel">
+        <div class="bento-label">Probability Field // Three Models, Drifting</div>
+        <canvas id="prob-canvas" class="prob-canvas"></canvas>
         <div class="dist-legend">
-          <div class="dist-legend-item"><div class="legend-dot" style="background:var(--secondary)"></div> Model Output</div>
-          <div class="dist-legend-item"><div class="legend-dot" style="background:var(--tertiary)"></div> Market Implied</div>
-          <div class="dist-legend-item"><div class="legend-dot" style="background:var(--cyan)"></div> Historical Avg</div>
+          <div class="dist-legend-item"><div class="legend-dot" style="background:var(--secondary)"></div>Model A</div>
+          <div class="dist-legend-item"><div class="legend-dot" style="background:var(--tertiary)"></div>Model B</div>
+          <div class="dist-legend-item"><div class="legend-dot" style="background:var(--cyan)"></div>Historical</div>
         </div>
       </div>
-
-      <!-- Side Stats -->
-      <div class="side-stats">
-        <div class="bento-card">
-          <div class="bento-label">Expected Value</div>
-          <div class="bento-value" style="color:var(--secondary)">+6.4%</div>
-          <div style="margin-top:0.75rem">
-            <div class="bento-label" style="margin-bottom:0.25rem">Edge Confidence</div>
-            <div style="display:flex;gap:2px">
-              <div style="flex:1;height:4px;background:var(--secondary)"></div>
-              <div style="flex:1;height:4px;background:var(--secondary)"></div>
-              <div style="flex:1;height:4px;background:var(--secondary)"></div>
-              <div style="flex:1;height:4px;background:var(--surface-container-high)"></div>
-              <div style="flex:1;height:4px;background:var(--surface-container-high)"></div>
-            </div>
+      <div class="c-panel">
+        <div class="bento-label">Poisson Tuner // Adjust Attack Strength</div>
+        <label class="lambda-label" for="lambda-slider">
+          Lambda <span class="lambda-val-display" id="lambda-display">1.62</span>
+        </label>
+        <input type="range" id="lambda-slider" class="lambda-slider" min="0.3" max="4.5" step="0.01" value="1.62"/>
+        <div class="interactive-dist" id="interactive-dist"></div>
+        <div class="dist-axis">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6+</span>
+        </div>
+        <div class="lambda-stats">
+          <div class="lambda-stat">
+            <span class="lambda-stat-label">Expected Goals</span>
+            <span class="lambda-stat-val" id="stat-eg" style="color:var(--secondary)">1.62</span>
+          </div>
+          <div class="lambda-stat">
+            <span class="lambda-stat-label">Modal Score</span>
+            <span class="lambda-stat-val" id="stat-mode">1</span>
+          </div>
+          <div class="lambda-stat">
+            <span class="lambda-stat-label">P(Over 2.5)</span>
+            <span class="lambda-stat-val" id="stat-over">42.3%</span>
+          </div>
+          <div class="lambda-stat">
+            <span class="lambda-stat-label">P(0 Goals)</span>
+            <span class="lambda-stat-val" id="stat-zero">19.8%</span>
           </div>
         </div>
-        <div class="bento-card">
-          <div class="bento-label">Model Parameters</div>
-          <div class="stat-row"><span class="stat-key">Lambda</span><span class="stat-val">1.62</span></div>
-          <div class="stat-row"><span class="stat-key">Sample_N</span><span class="stat-val">2,847</span></div>
-          <div class="stat-row"><span class="stat-key">P_Value</span><span class="stat-val" style="color:var(--secondary)">0.003</span></div>
-          <div class="stat-row"><span class="stat-key">Method</span><span class="stat-val">Poisson-MLE</span></div>
-          <div class="stat-row"><span class="stat-key">Last_Run</span><span class="stat-val" id="last-run"></span></div>
-        </div>
-        <div class="bento-card" style="background:var(--on-surface);color:var(--surface)">
-          <div class="bento-label" style="opacity:0.5;color:var(--surface)">Kelly Criterion</div>
-          <div class="bento-value" style="color:white">2.8%</div>
-          <div style="font-family:var(--font-mono);font-size:10px;opacity:0.4;margin-top:0.5rem;text-transform:uppercase;letter-spacing:0.1em">Recommended Stake</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Row: 3 viz panels -->
-    <div class="bottom-row">
-      <div class="bento-card">
-        <div class="bento-label">Model Accuracy // Last 30 Days</div>
-        <div style="display:flex;align-items:baseline;gap:0.75rem;margin-bottom:1rem">
-          <div class="bento-value">71.2%</div>
-          <div class="bento-delta positive">+3.1pp vs baseline</div>
-        </div>
-        <div class="spark" id="accuracy-spark"></div>
-      </div>
-
-      <div class="bento-card">
-        <div class="bento-label">Spectral Heatmap // Goal Probability by Minute</div>
-        <div class="heatmap" id="heatmap"></div>
-        <div class="dist-axis" style="padding-top:0.5rem">
-          <span>0'</span>
-          <span>45'</span>
-          <span>90'</span>
-        </div>
-      </div>
-
-      <div class="bento-card">
-        <div class="bento-label">Edge Distribution // By League</div>
-        <div id="league-bars" style="display:flex;flex-direction:column;gap:6px;margin-top:0.5rem"></div>
-      </div>
-    </div>
-
-    <!-- Match Table -->
-    <div class="bento" style="margin-top:0">
-      <div class="bento-card match-table-wrap">
-        <div class="bento-label" style="margin-bottom:1rem">Current Value Bets // Model vs Market</div>
-        <table class="match-table">
-          <thead>
-            <tr>
-              <th>Match</th>
-              <th>Market</th>
-              <th>Model_Prob</th>
-              <th>Market_Prob</th>
-              <th style="text-align:right">Edge</th>
-            </tr>
-          </thead>
-          <tbody id="match-table-body"></tbody>
-        </table>
       </div>
     </div>
   </section>
@@ -588,195 +531,358 @@
   </footer>
 
   <script>
-    // ---- POISSON DISTRIBUTION ----
-    function poisson(k, lambda) {
-      let result = Math.exp(-lambda);
-      for (let i = 1; i <= k; i++) result *= lambda / i;
-      return result;
+    // ---- POISSON ----
+    function poisson(k, lam) {
+      let r = Math.exp(-lam);
+      for (let i = 1; i <= k; i++) r *= lam / i;
+      return r;
     }
 
-    function buildDistChart() {
-      const container = document.getElementById('dist-chart');
-      const modelLambda = 1.62;
-      const marketLambda = 1.45;
-      const histLambda = 1.38;
-      const maxK = 7;
+    // ---- MODEL DATA ----
+    const MODELS = [
+      { id: 'poisson',      name: 'Poisson',             label: 'BASE MODEL',    edge: 'model',
+        x: 148, y: 148,
+        desc: 'Goals modelled as independent Poisson processes. Attack and defense strengths estimated via maximum likelihood. The baseline from which almost all football prediction work starts.',
+        param: 'Key param: Lambda (expected goals per side)' },
+      { id: 'dixon-coles',  name: 'Dixon-Coles',          label: 'CORRECTION',    edge: 'model',
+        x: 400, y: 96,
+        desc: 'Extends Poisson with a correction factor rho for low-score outcomes. Fixes the systematic underestimation of 0-0 draws and 1-0, 0-1 results that basic Poisson produces.',
+        param: 'Key param: rho (low-score correction)' },
+      { id: 'bayesian',     name: ['Bayesian', 'Hierarch.'], label: 'PROBABILISTIC', edge: 'model',
+        x: 730, y: 130,
+        desc: 'Hierarchical priors on attack and defense strength parameters. Shrinks new or sparse team estimates toward the league mean. Handles promoted and relegated teams naturally.',
+        param: 'Key param: Hyperprior variance on team strengths' },
+      { id: 'elo',          name: 'Elo',                  label: 'RATING',        edge: 'model',
+        x: 90,  y: 320,
+        desc: 'Rating system adapted from chess. Team strength updated incrementally from each result. Simple, robust, and competitive with complex models over short match samples.',
+        param: 'Key param: K-factor (learning rate per match)' },
+      { id: 'xgboost',      name: 'XGBoost',              label: 'ML',            edge: 'model',
+        x: 372, y: 296,
+        desc: 'Gradient boosted decision trees over engineered features: recent form, head-to-head record, Elo delta, rest days, squad depth. Captures non-linear feature interactions.',
+        param: 'Key param: Feature set composition and max tree depth' },
+      { id: 'clv',          name: 'CLV',                  label: 'VALIDATION',   edge: 'market',
+        x: 598, y: 278,
+        desc: 'Closing Line Value. Compare your bet price to the sharpest closing price. Positive CLV over large samples is the strongest available proxy for long-run model quality.',
+        param: 'Key metric: Average CLV% vs Pinnacle closing line' },
+      { id: 'kelly',        name: ['Kelly', 'Criterion'],  label: 'EXECUTION',    edge: 'execution',
+        x: 806, y: 364,
+        desc: 'Optimal stake sizing under log utility. Given edge (EV) and decimal odds, Kelly gives the growth-maximising fraction to stake. Fractional Kelly (0.25-0.5x) used in practice.',
+        param: 'Formula: f = (bp - q) / b' },
+      { id: 'market',       name: ['Pinnacle', 'Market'],  label: 'GROUND TRUTH', edge: 'market',
+        x: 502, y: 418,
+        desc: 'Pinnacle closing prices as the benchmark for model quality. The sharpest publicly available signal. Consistently beating this line is the operational definition of a real edge.',
+        param: 'Benchmark: Deviation from closing line at kick-off' },
+    ];
+
+    const CONNECTIONS = [
+      ['poisson', 'dixon-coles'],
+      ['poisson', 'bayesian'],
+      ['poisson', 'xgboost'],
+      ['dixon-coles', 'clv'],
+      ['bayesian', 'clv'],
+      ['elo', 'xgboost'],
+      ['xgboost', 'kelly'],
+      ['clv', 'kelly'],
+      ['clv', 'market'],
+      ['market', 'kelly'],
+    ];
+
+    const EDGE_COLORS = { model: '#a900a9', market: '#006875', execution: '#474747' };
+    let activeModel = null;
+
+    function getM(id) { return MODELS.find(m => m.id === id); }
+
+    // ---- RENDER SVG ----
+    function renderGraph() {
+      const svg = document.getElementById('model-svg');
+      const ns = 'http://www.w3.org/2000/svg';
+
+      // Grid pattern
+      const defs = document.createElementNS(ns, 'defs');
+      const pat = document.createElementNS(ns, 'pattern');
+      pat.setAttribute('id', 'cgrid'); pat.setAttribute('width', '48'); pat.setAttribute('height', '48');
+      pat.setAttribute('patternUnits', 'userSpaceOnUse');
+      const pl = document.createElementNS(ns, 'path');
+      pl.setAttribute('d', 'M 48 0 L 0 0 0 48');
+      pl.setAttribute('fill', 'none'); pl.setAttribute('stroke', 'rgba(28,27,27,0.035)'); pl.setAttribute('stroke-width', '1');
+      pat.appendChild(pl); defs.appendChild(pat); svg.appendChild(defs);
+
+      const bgRect = document.createElementNS(ns, 'rect');
+      bgRect.setAttribute('width', '960'); bgRect.setAttribute('height', '480');
+      bgRect.setAttribute('fill', 'url(#cgrid)'); svg.appendChild(bgRect);
+
+      // Hint text
+      const hint = document.createElementNS(ns, 'text');
+      hint.setAttribute('x', '480'); hint.setAttribute('y', '464');
+      hint.setAttribute('text-anchor', 'middle');
+      hint.setAttribute('font-family', "'JetBrains Mono', monospace");
+      hint.setAttribute('font-size', '9'); hint.setAttribute('fill', 'rgba(28,27,27,0.25)');
+      hint.setAttribute('letter-spacing', '0.2em'); hint.textContent = 'CLICK ANY NODE TO EXPLORE';
+      svg.appendChild(hint);
+
+      // Connection lines
+      CONNECTIONS.forEach((conn, i) => {
+        const a = getM(conn[0]); const b = getM(conn[1]);
+
+        // Static dim line
+        const base = document.createElementNS(ns, 'line');
+        base.setAttribute('x1', a.x); base.setAttribute('y1', a.y);
+        base.setAttribute('x2', b.x); base.setAttribute('y2', b.y);
+        base.setAttribute('stroke', 'rgba(28,27,27,0.08)'); base.setAttribute('stroke-width', '1');
+        svg.appendChild(base);
+
+        // Animated signal
+        const sig = document.createElementNS(ns, 'line');
+        sig.setAttribute('x1', a.x); sig.setAttribute('y1', a.y);
+        sig.setAttribute('x2', b.x); sig.setAttribute('y2', b.y);
+        sig.setAttribute('stroke', '#006875'); sig.setAttribute('stroke-width', '1.5');
+        sig.setAttribute('stroke-dasharray', '4 26'); sig.setAttribute('opacity', '0.45');
+        sig.style.animation = `travel ${2.2 + i * 0.25}s linear infinite`;
+        sig.dataset.conn = `${conn[0]}|${conn[1]}`;
+        svg.appendChild(sig);
+      });
+
+      // Nodes
+      MODELS.forEach(m => {
+        const g = document.createElementNS(ns, 'g');
+        g.dataset.modelId = m.id; g.style.cursor = 'pointer';
+
+        // Pulse ring (hidden by default, shown when active)
+        const ring = document.createElementNS(ns, 'rect');
+        ring.setAttribute('class', 'pulse-ring');
+        ring.setAttribute('x', m.x - 46); ring.setAttribute('y', m.y - 22);
+        ring.setAttribute('width', '92'); ring.setAttribute('height', '44');
+        ring.setAttribute('fill', 'none');
+        ring.setAttribute('stroke', EDGE_COLORS[m.edge] || '#474747');
+        ring.setAttribute('stroke-width', '1'); ring.setAttribute('opacity', '0');
+        g.appendChild(ring);
+
+        // Background rect
+        const rect = document.createElementNS(ns, 'rect');
+        rect.setAttribute('class', 'node-bg');
+        rect.setAttribute('x', m.x - 40); rect.setAttribute('y', m.y - 18);
+        rect.setAttribute('width', '80'); rect.setAttribute('height', '36');
+        rect.setAttribute('fill', 'white');
+        rect.setAttribute('stroke', 'rgba(28,27,27,0.18)'); rect.setAttribute('stroke-width', '1');
+        g.appendChild(rect);
+
+        // Top color bar
+        const bar = document.createElementNS(ns, 'rect');
+        bar.setAttribute('x', m.x - 40); bar.setAttribute('y', m.y - 18);
+        bar.setAttribute('width', '80'); bar.setAttribute('height', '4');
+        bar.setAttribute('fill', EDGE_COLORS[m.edge] || '#474747');
+        g.appendChild(bar);
+
+        // Name (single or two lines)
+        const names = Array.isArray(m.name) ? m.name : [m.name];
+        names.forEach((line, li) => {
+          const t = document.createElementNS(ns, 'text');
+          t.setAttribute('class', 'node-label');
+          t.setAttribute('x', m.x); t.setAttribute('y', m.y + (names.length === 1 ? 5 : li === 0 ? 0 : 10));
+          t.setAttribute('text-anchor', 'middle');
+          t.setAttribute('font-family', "'JetBrains Mono', monospace");
+          t.setAttribute('font-size', names.length === 1 ? '9.5' : '8.5');
+          t.setAttribute('font-weight', '700');
+          t.setAttribute('fill', '#1c1b1b');
+          t.setAttribute('letter-spacing', '0');
+          t.setAttribute('pointer-events', 'none');
+          t.textContent = line;
+          g.appendChild(t);
+        });
+
+        // Interaction
+        g.addEventListener('click', () => selectNode(m.id));
+        g.addEventListener('mouseenter', () => {
+          if (activeModel !== m.id) rect.setAttribute('fill', '#f0edec');
+        });
+        g.addEventListener('mouseleave', () => {
+          if (activeModel !== m.id) rect.setAttribute('fill', 'white');
+        });
+
+        svg.appendChild(g);
+      });
+    }
+
+    // ---- SELECT NODE ----
+    function selectNode(id) {
+      // Reset all
+      MODELS.forEach(m => {
+        const g = document.querySelector(`[data-model-id="${m.id}"]`);
+        if (!g) return;
+        g.querySelector('.node-bg').setAttribute('fill', 'white');
+        g.querySelector('.node-bg').setAttribute('stroke', 'rgba(28,27,27,0.18)');
+        g.querySelector('.node-bg').setAttribute('stroke-width', '1');
+        g.querySelectorAll('.node-label').forEach(t => t.setAttribute('fill', '#1c1b1b'));
+        const ring = g.querySelector('.pulse-ring');
+        ring.setAttribute('opacity', '0'); ring.style.animation = '';
+      });
+      document.querySelectorAll('[data-conn]').forEach(line => {
+        line.setAttribute('stroke', '#006875'); line.setAttribute('opacity', '0.45');
+      });
+
+      if (activeModel === id) { activeModel = null; resetDetail(); return; }
+      activeModel = id;
+      const m = getM(id);
+
+      // Highlight selected node
+      const g = document.querySelector(`[data-model-id="${id}"]`);
+      g.querySelector('.node-bg').setAttribute('fill', '#1c1b1b');
+      g.querySelector('.node-bg').setAttribute('stroke', '#1c1b1b');
+      g.querySelectorAll('.node-label').forEach(t => t.setAttribute('fill', 'white'));
+
+      // Pulse ring
+      const ring = g.querySelector('.pulse-ring');
+      ring.setAttribute('opacity', '0.5');
+      ring.style.animation = 'pulseRing 1.6s ease-out infinite';
+
+      // Highlight connected lines
+      const connected = new Set([id]);
+      CONNECTIONS.forEach(conn => {
+        if (conn[0] === id || conn[1] === id) {
+          connected.add(conn[0]); connected.add(conn[1]);
+          const line = document.querySelector(`[data-conn="${conn[0]}|${conn[1]}"]`);
+          if (line) { line.setAttribute('stroke', '#a900a9'); line.setAttribute('opacity', '1'); }
+        } else {
+          const line = document.querySelector(`[data-conn="${conn[0]}|${conn[1]}"]`);
+          if (line) line.setAttribute('opacity', '0.1');
+        }
+      });
+
+      // Dim unconnected nodes
+      MODELS.forEach(n => {
+        if (n.id !== id && !connected.has(n.id)) {
+          const ng = document.querySelector(`[data-model-id="${n.id}"]`);
+          ng.querySelector('.node-bg').setAttribute('fill', '#f8f6f5');
+          ng.querySelectorAll('.node-label').forEach(t => t.setAttribute('fill', 'rgba(28,27,27,0.3)'));
+        }
+      });
+
+      // Update detail panel
+      document.getElementById('detail-badge').textContent = m.label;
+      document.getElementById('detail-badge').className = `model-detail-badge ${m.edge}`;
+      document.getElementById('detail-name').textContent = Array.isArray(m.name) ? m.name.join(' ') : m.name;
+      document.getElementById('detail-desc').textContent = m.desc;
+      document.getElementById('detail-param').textContent = m.param;
+    }
+
+    function resetDetail() {
+      document.getElementById('detail-badge').textContent = 'Explore';
+      document.getElementById('detail-badge').className = 'model-detail-badge default';
+      document.getElementById('detail-name').textContent = 'Click any node to explore a model family';
+      document.getElementById('detail-desc').textContent = 'Eight model families. Ten connections. The graph shows how methods relate -- from raw statistical foundations through to execution and edge measurement.';
+      document.getElementById('detail-param').textContent = '';
+    }
+
+    // ---- ANIMATED PROBABILITY FIELD (canvas) ----
+    function initProbCanvas() {
+      const canvas = document.getElementById('prob-canvas');
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const W = canvas.offsetWidth, H = canvas.offsetHeight;
+
+      function drawCurve(ctx, pts, r, g, b, alpha) {
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length - 1; i++) {
+          const mx = (pts[i].x + pts[i+1].x) / 2;
+          const my = (pts[i].y + pts[i+1].y) / 2;
+          ctx.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
+        }
+        ctx.lineTo(pts[pts.length-1].x, pts[pts.length-1].y);
+        ctx.lineTo(pts[pts.length-1].x, H);
+        ctx.lineTo(pts[0].x, H);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length - 1; i++) {
+          const mx = (pts[i].x + pts[i+1].x) / 2;
+          const my = (pts[i].y + pts[i+1].y) / 2;
+          ctx.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
+        }
+        ctx.lineTo(pts[pts.length-1].x, pts[pts.length-1].y);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${Math.min(alpha * 2.2, 1)})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      function frame(t) {
+        ctx.clearRect(0, 0, W, H);
+        const lA = 1.62 + 0.55 * Math.sin(t * 0.00045);
+        const lB = 1.44 + 0.40 * Math.sin(t * 0.00038 + 1.3);
+        const lC = 1.35 + 0.30 * Math.sin(t * 0.00055 + 2.7);
+        const maxK = 8;
+        const peakP = poisson(Math.round(lA), lA);
+        const scale = (H * 0.82) / peakP;
+        const step = W / maxK;
+
+        [[lA, 0,104,117], [lB, 169,0,169], [lC, 0,218,243]].forEach(([lam, r, g, b], ci) => {
+          const pts = [];
+          for (let k = 0; k <= maxK; k++) {
+            const p = poisson(k, lam);
+            pts.push({ x: k * step + step * 0.5, y: H - p * scale });
+          }
+          pts.unshift({ x: 0, y: H });
+          pts.push({ x: W, y: H });
+          drawCurve(ctx, pts, r, g, b, ci === 0 ? 0.18 : ci === 1 ? 0.14 : 0.12);
+        });
+
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // ---- INTERACTIVE POISSON TUNER ----
+    function buildInteractiveDist(lam) {
+      const container = document.getElementById('interactive-dist');
+      container.innerHTML = '';
+      const maxK = 6;
+      const maxP = poisson(Math.max(0, Math.round(lam) - 1), lam);
+      const scale = 100 / Math.max(maxP, 0.001);
+
+      let over25 = 0, pZero = poisson(0, lam);
+      for (let k = 3; k <= 20; k++) over25 += poisson(k, lam);
 
       for (let k = 0; k <= maxK; k++) {
-        const modelP = poisson(k, modelLambda);
-        const marketP = poisson(k, marketLambda);
-        const histP = poisson(k, histLambda);
-        const maxP = Math.max(modelP, marketP, histP);
-        const scale = 0.95 / poisson(1, modelLambda);
-
-        const group = document.createElement('div');
-        group.style.cssText = 'flex:1;display:flex;align-items:flex-end;gap:1px;height:100%;min-width:0;position:relative';
-
-        const bar1 = document.createElement('div');
-        bar1.className = 'dist-bar';
-        bar1.style.cssText = `flex:1;background:var(--secondary);height:${modelP * scale * 100}%;opacity:0.85;min-width:0`;
-        bar1.title = `Model: ${(modelP * 100).toFixed(1)}%`;
-
-        const bar2 = document.createElement('div');
-        bar2.className = 'dist-bar';
-        bar2.style.cssText = `flex:1;background:var(--tertiary);height:${marketP * scale * 100}%;opacity:0.7;min-width:0`;
-        bar2.title = `Market: ${(marketP * 100).toFixed(1)}%`;
-
-        const bar3 = document.createElement('div');
-        bar3.className = 'dist-bar';
-        bar3.style.cssText = `flex:1;background:var(--cyan);height:${histP * scale * 100}%;opacity:0.6;min-width:0`;
-        bar3.title = `Historical: ${(histP * 100).toFixed(1)}%`;
-
-        const label = document.createElement('div');
-        label.style.cssText = 'position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:var(--font-mono);font-size:9px;opacity:0.35;white-space:nowrap';
-        label.textContent = k === maxK ? '6+' : k;
-
-        group.append(bar1, bar2, bar3, label);
-        container.appendChild(group);
-      }
-    }
-
-    // ---- ACCURACY SPARKLINE ----
-    function buildAccuracySpark() {
-      const container = document.getElementById('accuracy-spark');
-      const seed = [62, 68, 71, 65, 74, 69, 78, 72, 80, 76, 71, 68, 73, 77, 82, 75, 70, 74, 79, 83, 77, 72, 68, 71, 76, 80, 73, 69, 74, 71];
-
-      seed.forEach((v, i) => {
+        const p = k < maxK ? poisson(k, lam) : (1 - Array.from({length: maxK}, (_, i) => poisson(i, lam)).reduce((a,b) => a+b, 0));
+        const pct = Math.max(p * scale, 1.5);
+        const intensity = p / Math.max(maxP, 0.001);
+        const r = Math.round(0 + intensity * 0);
+        const g = Math.round(104 - intensity * 30);
+        const bl = Math.round(117 - intensity * 20);
         const bar = document.createElement('div');
-        bar.className = 'spark-bar';
-        const h = ((v - 55) / 35) * 100;
-        const hue = v > 72 ? `var(--secondary)` : v > 65 ? `var(--tertiary)` : `var(--error)`;
-        bar.style.cssText = `flex:1;height:${h}%;background:${hue};opacity:${0.4 + (v - 55) / 50}`;
+        bar.className = 'idist-bar';
+        bar.title = `${k === maxK ? '6+' : k} goals: ${(p * 100).toFixed(1)}%`;
+        bar.style.cssText = `height:${pct}%;background:rgb(${r},${g},${bl});opacity:${0.5 + intensity * 0.5}`;
         container.appendChild(bar);
-      });
-    }
-
-    // ---- HEATMAP ----
-    function buildHeatmap() {
-      const container = document.getElementById('heatmap');
-      const rows = 7;
-      const cols = 12;
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const cell = document.createElement('div');
-          cell.className = 'heat-cell';
-          // Higher probability near 45' and 90' (cols 5-6 and 10-11)
-          let intensity = Math.random() * 0.4;
-          if (c >= 4 && c <= 6) intensity += 0.3 + Math.random() * 0.3;
-          if (c >= 9 && c <= 11) intensity += 0.25 + Math.random() * 0.3;
-          if (r >= 2 && r <= 4) intensity += 0.1;
-          intensity = Math.min(intensity, 1);
-
-          // Map to spectral colors
-          let color;
-          if (intensity < 0.3) {
-            const a = intensity / 0.3;
-            color = `rgba(0,104,117,${0.08 + a * 0.2})`;
-          } else if (intensity < 0.6) {
-            const a = (intensity - 0.3) / 0.3;
-            color = `rgba(169,0,169,${0.2 + a * 0.4})`;
-          } else {
-            const a = (intensity - 0.6) / 0.4;
-            color = `rgba(169,0,169,${0.6 + a * 0.4})`;
-          }
-          cell.style.background = color;
-          container.appendChild(cell);
-        }
       }
+
+      const modeK = Math.max(0, Math.round(lam) - 1);
+      document.getElementById('stat-eg').textContent   = lam.toFixed(2);
+      document.getElementById('stat-mode').textContent  = modeK;
+      document.getElementById('stat-over').textContent  = (over25 * 100).toFixed(1) + '%';
+      document.getElementById('stat-zero').textContent  = (pZero * 100).toFixed(1) + '%';
     }
 
-    // ---- LEAGUE EDGE BARS ----
-    function buildLeagueBars() {
-      const container = document.getElementById('league-bars');
-      const leagues = [
-        { name: 'Premier League', edge: 4.2, color: 'var(--secondary)' },
-        { name: 'La Liga', edge: 3.1, color: 'var(--secondary)' },
-        { name: 'Serie A', edge: 5.8, color: 'var(--tertiary)' },
-        { name: 'Bundesliga', edge: 2.4, color: 'var(--secondary)' },
-        { name: 'Ligue 1', edge: 6.1, color: 'var(--tertiary)' },
-        { name: 'Eredivisie', edge: 7.9, color: 'var(--tertiary)' },
-        { name: 'J-League', edge: 3.7, color: 'var(--secondary)' },
-      ];
-
-      const maxEdge = Math.max(...leagues.map(l => l.edge));
-      leagues.forEach(l => {
-        const row = document.createElement('div');
-        row.style.cssText = 'display:flex;align-items:center;gap:8px';
-
-        const label = document.createElement('div');
-        label.style.cssText = 'font-family:var(--font-mono);font-size:9px;width:100px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.05em;opacity:0.6';
-        label.textContent = l.name;
-
-        const track = document.createElement('div');
-        track.style.cssText = 'flex:1;height:6px;background:var(--surface-container-high);overflow:hidden';
-
-        const fill = document.createElement('div');
-        fill.style.cssText = `height:100%;width:${(l.edge / maxEdge) * 100}%;background:${l.color};transition:width 0.5s`;
-        track.appendChild(fill);
-
-        const val = document.createElement('div');
-        val.style.cssText = `font-family:var(--font-mono);font-size:10px;font-weight:700;width:40px;text-align:right;color:${l.color}`;
-        val.textContent = `+${l.edge}%`;
-
-        row.append(label, track, val);
-        container.appendChild(row);
-      });
-    }
-
-    // ---- MATCH TABLE ----
-    function buildMatchTable() {
-      const tbody = document.getElementById('match-table-body');
-      const matches = [
-        { match: 'Arsenal vs Chelsea', market: 'Over 2.5', modelProb: 0.68, marketProb: 0.58, edge: 10.0 },
-        { match: 'Barcelona vs Atletico', market: 'BTTS Yes', modelProb: 0.72, marketProb: 0.64, edge: 8.0 },
-        { match: 'Bayern vs Dortmund', market: 'Home Win', modelProb: 0.61, marketProb: 0.55, edge: 6.0 },
-        { match: 'PSG vs Lyon', market: 'Over 3.5', modelProb: 0.44, marketProb: 0.35, edge: 9.0 },
-        { match: 'Inter vs Napoli', market: 'Under 2.5', modelProb: 0.53, marketProb: 0.48, edge: 5.0 },
-        { match: 'Ajax vs PSV', market: 'BTTS Yes', modelProb: 0.81, marketProb: 0.71, edge: 10.0 },
-      ];
-
-      matches.forEach(m => {
-        const tr = document.createElement('tr');
-        const edgeColor = m.edge >= 8 ? 'var(--tertiary)' : 'var(--secondary)';
-        const probColor = m.modelProb > m.marketProb ? 'var(--secondary)' : 'var(--error)';
-
-        tr.innerHTML = `
-          <td style="font-weight:700">${m.match}</td>
-          <td style="opacity:0.7">${m.market}</td>
-          <td>
-            <div class="prob-bar-wrap">
-              <div class="prob-bar-track"><div class="prob-bar-fill" style="width:${m.modelProb * 100}%;background:${probColor}"></div></div>
-              <span class="prob-bar-val">${(m.modelProb * 100).toFixed(1)}%</span>
-            </div>
-          </td>
-          <td>
-            <div class="prob-bar-wrap">
-              <div class="prob-bar-track"><div class="prob-bar-fill" style="width:${m.marketProb * 100}%;background:var(--outline-variant)"></div></div>
-              <span class="prob-bar-val">${(m.marketProb * 100).toFixed(1)}%</span>
-            </div>
-          </td>
-          <td class="edge-col" style="color:${edgeColor}">+${m.edge.toFixed(1)}%</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // ---- TIMESTAMP ----
-    function setTimestamp() {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById('last-run').textContent = `${h}:${m} UTC`;
+    function bindLambdaSlider() {
+      const slider = document.getElementById('lambda-slider');
+      const display = document.getElementById('lambda-display');
+      function update() {
+        const v = parseFloat(slider.value);
+        display.textContent = v.toFixed(2);
+        buildInteractiveDist(v);
+      }
+      slider.addEventListener('input', update);
+      update();
     }
 
     // ---- INIT ----
-    buildDistChart();
-    buildAccuracySpark();
-    buildHeatmap();
-    buildLeagueBars();
-    buildMatchTable();
-    setTimestamp();
+    renderGraph();
+    initProbCanvas();
+    bindLambdaSlider();
   </script>
 </body>
 </html>

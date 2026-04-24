@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Map | FTWR -- Follow the White Rabbit</title>
-  <meta name="description" content="Every sports analytics tool worth knowing. Data sources, odds APIs, statistical models, arbitrage scanners, prediction markets, and open source libraries -- curated for finding edges."/>
+  <meta name="description" content="The Map: FTWR's curated, PR-driven directory of sports modelling tools. Data sources, odds APIs, statistical models, arbitrage scanners, prediction markets, and open source libraries. Attributed, dated, re-verified."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet"/>
@@ -134,6 +134,99 @@
       margin-top: 0.2rem;
     }
 
+    /* ---- JUMP NAV ---- */
+    .jump-nav-wrap {
+      background: var(--surface);
+      border-bottom: 1px solid rgba(28,27,27,0.08);
+      border-top: 1px solid rgba(28,27,27,0.08);
+    }
+    .jump-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .jump-nav::-webkit-scrollbar { display: none; }
+    .jump-chip {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid rgba(28,27,27,0.12);
+      background: transparent;
+      color: var(--on-surface);
+      opacity: 0.65;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.12s;
+    }
+    .jump-chip:hover { opacity: 1; border-color: var(--on-surface); color: var(--secondary); }
+    .jump-chip .jump-num {
+      color: var(--secondary);
+      opacity: 0.75;
+      margin-right: 0.35em;
+    }
+    @media (min-width: 960px) {
+      .jump-nav-wrap { position: sticky; top: 53px; z-index: 60; }
+    }
+
+    /* ---- FEATURED / START HERE STRIP ---- */
+    .featured-wrap { max-width: 1200px; margin: 2.25rem auto 0; padding: 0 1.5rem; }
+    .featured-wrap.empty { display: none; }
+    .featured-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .featured-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--secondary);
+    }
+    .featured-label {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+    }
+    .featured-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: white;
+      border: 1px solid rgba(28,27,27,0.1);
+      text-decoration: none;
+      color: var(--on-surface);
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .featured-card:hover { background: var(--surface-container-high); border-color: var(--on-surface); }
+    .featured-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .featured-card-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+    .featured-card-note {
+      font-size: 12px;
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+
     /* ---- CONTROLS ---- */
     .controls-wrap {
       position: sticky;
@@ -142,6 +235,21 @@
       z-index: 50;
       border-bottom: 1px solid rgba(28,27,27,0.08);
     }
+    @media (min-width: 960px) {
+      .controls-wrap { top: 95px; }
+    }
+    .sort-select {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.5rem;
+      border: 1px solid rgba(28,27,27,0.15);
+      background: transparent;
+      color: var(--on-surface);
+      cursor: pointer;
+    }
+    .sort-select:focus { outline: none; border-color: var(--secondary); }
     .controls {
       max-width: 1200px;
       margin: 0 auto;
@@ -231,8 +339,10 @@
 
     /* ---- CATEGORY SECTION ---- */
     .cat-section {
-      margin-top: 3rem;
+      margin-top: 4.5rem;
+      scroll-margin-top: 140px;
     }
+    .cat-section:first-of-type { margin-top: 3rem; }
     .cat-section.hidden { display: none; }
     .cat-header {
       display: flex;
@@ -241,14 +351,19 @@
       border-bottom: 1px solid var(--on-surface);
       padding-bottom: 0.75rem;
       margin-bottom: 1rem;
+      gap: 1rem;
     }
-    .cat-header-left { display: flex; align-items: baseline; gap: 1rem; }
+    .cat-header-left { display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap; }
     .cat-num {
       font-family: var(--font-mono);
+      font-weight: 700;
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
-      opacity: 0.35;
+      letter-spacing: 0.18em;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--outline-variant);
+      color: var(--secondary);
+      background: var(--surface-container);
     }
     .cat-title {
       font-family: var(--font-mono);
@@ -325,6 +440,30 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+    .tool-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      color: var(--on-surface);
+      opacity: 0.45;
+      margin-top: 0.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tool-meta .stale-chip {
+      display: inline-block;
+      padding: 0.05rem 0.35rem;
+      margin-right: 0.4rem;
+      background: rgba(186,26,26,0.08);
+      color: var(--error);
+      border: 1px solid rgba(186,26,26,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 9px;
+      font-weight: 700;
+      opacity: 1;
     }
 
     .tool-tags { display: flex; gap: 0.35rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
@@ -415,29 +554,44 @@
 <nav class="nav">
   <a href="index.html" class="nav-logo">FTWR</a>
   <ul class="nav-links">
-    <li><a href="https://blog.ftwr.app">Blog</a></li>
-    <li><a href="map.html" class="active">Map</a></li>
-    <li><a href="https://ftwr.discourse.group">Community</a></li>
-    <li><a href="https://github.com/ftwr-dev">Source</a></li>
+    <li><a href="map.html" class="active">The Map</a></li>
+    <li><a href="https://community.ftwr.app">Forum</a></li>
+    <li><a href="https://blog.ftwr.app">Archive</a></li>
+    <li><a href="https://github.com/ftwr-dev">Registry</a></li>
+    <li><a href="https://opencollective.com/ftwr">Ledger</a></li>
   </ul>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
-  <div class="hero-eyebrow">The Map // Tools Directory</div>
-  <h1 class="hero-title">EVERY TOOL<br/>WORTH KNOWING.</h1>
+  <div class="hero-eyebrow">§00 // The Map // Curated directory of sports modelling tools</div>
+  <h1 class="hero-title">THE MAP.</h1>
   <p class="hero-sub">
-    A curated map of sports analytics tooling -- data sources, odds APIs, statistical models, arbitrage scanners, and prediction markets. Filtered for signal. Updated as the ecosystem moves.
+    Curated by the commons, PR-driven, attribution-first. Every entry is a tool or resource a working modeller would reach for, verified on a published date by a named handle. Contributions welcome.
   </p>
   <div class="stats-row" id="stats-row">
-    <div class="stat"><div class="stat-n" id="stat-tools">--</div><div class="stat-l">Tools listed</div></div>
-    <div class="stat"><div class="stat-n">9</div><div class="stat-l">Categories</div></div>
+    <div class="stat"><div class="stat-n" id="stat-tools">--</div><div class="stat-l">Entries // quality-filtered</div></div>
+    <div class="stat"><div class="stat-n">9</div><div class="stat-l">Sections</div></div>
     <div class="stat"><div class="stat-n" id="stat-open">--</div><div class="stat-l">Open source</div></div>
     <div class="stat"><div class="stat-n" id="stat-free">--</div><div class="stat-l">Free tier</div></div>
   </div>
 </section>
 
 <div class="spectral-bar"></div>
+
+<!-- Jump nav: category anchors -->
+<div class="jump-nav-wrap">
+  <nav class="jump-nav" id="jump-nav" aria-label="Jump to category"></nav>
+</div>
+
+<!-- Featured / Start Here strip (collapses if no entries are flagged featured) -->
+<section class="featured-wrap empty" id="featured-wrap" aria-label="Start here">
+  <div class="featured-header">
+    <span class="featured-eyebrow">§00.1</span>
+    <span class="featured-label">Start Here</span>
+  </div>
+  <div class="featured-grid" id="featured-grid"></div>
+</section>
 
 <!-- Controls -->
 <div class="controls-wrap">
@@ -465,28 +619,958 @@
       <button class="filter-btn" data-type="free">Free</button>
       <button class="filter-btn" data-type="api">API</button>
     </div>
+    <div class="filter-group">
+      <span class="filter-label">Sort</span>
+      <select id="sort-select" class="sort-select" aria-label="Sort entries">
+        <option value="default">Default</option>
+        <option value="added">Recently added</option>
+        <option value="verified">Recently verified</option>
+        <option value="name">Alphabetical</option>
+      </select>
+    </div>
     <div class="result-count" id="result-count"></div>
   </div>
 </div>
 
 <!-- Map Body -->
-<div class="map-body" id="map-body">
-  <div id="empty-state" class="empty-state" style="display:none;">No tools match your filters.</div>
-</div>
+<div class="map-body" id="map-body"></div>
+<div id="empty-state" class="empty-state" style="display:none;">No tools match your filters.</div>
 
 <!-- Footer -->
 <div class="spectral-bar"></div>
 <footer class="footer">
-  <div class="footer-copy">FTWR // Follow the White Rabbit</div>
+  <div class="footer-copy">FTWR // A commons for sports data modelling // MIT-licensed // Anonymously stewarded</div>
   <div class="footer-links">
-    <a href="https://blog.ftwr.app">Blog</a>
-    <a href="https://ftwr.discourse.group">Community</a>
-    <a href="https://github.com/ftwr-dev">GitHub</a>
-    <a href="https://x.com/ftwr_">X</a>
+    <a href="map.html">The Map</a>
+    <a href="https://community.ftwr.app">Forum</a>
+    <a href="https://blog.ftwr.app">Archive</a>
+    <a href="https://github.com/ftwr-dev">Registry</a>
+    <a href="https://opencollective.com/ftwr">Ledger</a>
   </div>
 </footer>
 
+<!--
+  The Map's data is embedded inline below so the page works from any URL scheme
+  (file://, offline, static host) with no network fetch. tools.json remains the
+  canonical source; this block is regenerated by:
+    python3 landing/scripts/sync-map-embed.py
+  CI enforces that the embedded block matches tools.json on every PR.
+-->
+<script type="application/json" id="map-data">
+{
+  "categories": [
+    {
+      "id": "data",
+      "num": "§01",
+      "title": "Data Sources",
+      "desc": "APIs, feeds, and datasets for sports results, player stats, and tracking data. Coverage, freshness, and granularity vary across providers."
+    },
+    {
+      "id": "odds",
+      "num": "§02",
+      "title": "Odds & Markets",
+      "desc": "Bookmaker APIs, exchange interfaces, and historical odds databases. Useful for real-time pricing, market access, and retrospective odds research."
+    },
+    {
+      "id": "models",
+      "num": "§03",
+      "title": "Models & Methods",
+      "desc": "Open source implementations of statistical models for match prediction and ratings. Includes Poisson, Dixon-Coles, Elo, and related frameworks."
+    },
+    {
+      "id": "edge",
+      "num": "§04",
+      "title": "Edge Detection",
+      "desc": "Tools for measuring and tracking expected value, closing line value, and bookmaker margin. Useful for evaluating model output against market prices."
+    },
+    {
+      "id": "arbitrage",
+      "num": "§05",
+      "title": "Arbitrage & Scanning",
+      "desc": "Sure-bet and value-bet detection across multiple bookmakers. Includes commercial scanners with broad coverage and open source reference implementations."
+    },
+    {
+      "id": "markets",
+      "num": "§06",
+      "title": "Prediction Markets",
+      "desc": "Platforms and APIs for event contracts on sports, politics, and other topics. Pricing data and historical resolution records are available for research."
+    },
+    {
+      "id": "python",
+      "num": "§07",
+      "title": "Python Libraries",
+      "desc": "Statistical and scientific Python packages used in sports analytics work. Covers distributions, Bayesian inference, time series, and general machine learning."
+    },
+    {
+      "id": "viz",
+      "num": "§08",
+      "title": "Visualisation",
+      "desc": "Charting libraries, pitch plotting tools, and dashboarding frameworks for displaying model output and match data."
+    },
+    {
+      "id": "community",
+      "num": "§09",
+      "title": "FTWR Community",
+      "desc": "Repositories built under the FTWR organisation. MIT licensed. Open to contributions via pull request."
+    }
+  ],
+  "tools": [
+    {
+      "cat": "data",
+      "name": "football-data.org",
+      "desc": "Football results, fixtures, tables. Free tier covers 12+ leagues. No key required on lowest tier.",
+      "url": "https://www.football-data.org",
+      "tags": [
+        "football",
+        "free",
+        "api"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "API-Football",
+      "desc": "Comprehensive fixtures, live scores, stats, standings, and lineups. 100 free calls/day via api-sports.io.",
+      "url": "https://www.api-football.com",
+      "tags": [
+        "football",
+        "free",
+        "api"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "StatsBomb Open Data",
+      "desc": "Event-level tracking data for 30+ competitions. Includes Euros, WSL, La Liga. MIT licensed.",
+      "url": "https://github.com/statsbomb/open-data",
+      "tags": [
+        "football",
+        "open-source",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "tennis_atp (JeffSackmann)",
+      "desc": "ATP match-by-match results and rankings from 1968 to present. CSV files on GitHub.",
+      "url": "https://github.com/JeffSackmann/tennis_atp",
+      "tags": [
+        "tennis",
+        "open-source",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "tennis_wta (JeffSackmann)",
+      "desc": "WTA equivalent of tennis_atp. Match results, rankings, and stats back to 1968.",
+      "url": "https://github.com/JeffSackmann/tennis_wta",
+      "tags": [
+        "tennis",
+        "open-source",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "FBref.com",
+      "desc": "Football stats powered by StatsBomb data. Advanced metrics: xG, progressive passes, pressures, VAEP. No API -- scraping required.",
+      "url": "https://fbref.com",
+      "tags": [
+        "football",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "understat.com",
+      "desc": "Expected goals for 7 top European leagues going back to 2014/15. Shot-level xG with x,y coordinates. No API -- scraper available.",
+      "url": "https://understat.com",
+      "tags": [
+        "football",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "basketball-reference.com",
+      "desc": "NBA, NCAA, G-League, WNBA historical stats. Box scores, play-by-play, advanced metrics, and splits. No API.",
+      "url": "https://www.basketball-reference.com",
+      "tags": [
+        "basketball",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "OpenLigaDB",
+      "desc": "German football data. Bundesliga results and tables via free JSON API. No authentication required.",
+      "url": "https://www.openligadb.de",
+      "tags": [
+        "football",
+        "free",
+        "api"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "Sofascore (unofficial API)",
+      "desc": "Live scores, lineups, player ratings, and detailed match events. Unofficial endpoints, not formally supported.",
+      "url": "https://github.com/timvancann/sofascore-api",
+      "tags": [
+        "multi-sport",
+        "free",
+        "open-source"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "data",
+      "name": "courtspeed.com",
+      "desc": "Tennis court pace index (CPI) database. Surface-speed ratings per tournament and year, 2012 onward. Useful for adjusting match models to court conditions.",
+      "url": "https://courtspeed.com",
+      "tags": [
+        "tennis",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-23",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "odds",
+      "name": "The Odds API",
+      "desc": "Real-time odds from 40+ bookmakers across 20+ sports. REST API with 500 free requests/month.",
+      "url": "https://the-odds-api.com",
+      "tags": [
+        "multi-sport",
+        "free",
+        "api"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "odds",
+      "name": "Betfair Exchange API",
+      "desc": "Exchange API with full market depth, live prices, betting, and historical data. Documented REST and streaming endpoints.",
+      "url": "https://developer.betfair.com",
+      "tags": [
+        "multi-sport",
+        "api"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "odds",
+      "name": "OddsPortal",
+      "desc": "Historical odds database across hundreds of leagues. Closing line data for model validation and CLV research. Scraping required.",
+      "url": "https://www.oddsportal.com",
+      "tags": [
+        "multi-sport",
+        "free"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "odds",
+      "name": "OddsJam",
+      "desc": "Live odds comparison across 50+ sportsbooks with a value-bet scanner and REST API access. US market focus.",
+      "url": "https://oddsjam.com",
+      "tags": [
+        "multi-sport",
+        "api",
+        "commercial"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "odds",
+      "name": "betfair-python (betfairlightweight)",
+      "desc": "Python client for the Betfair API. Covers streaming, betting, accounts, and navigation endpoints.",
+      "url": "https://github.com/liambutler-lawrence/betfairlightweight",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "api"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "penaltyblog",
+      "desc": "Python: Dixon-Coles, Poisson, Bivariate Poisson, Bayesian, and simulation. Covers most standard football prediction model approaches.",
+      "url": "https://github.com/martineastwood/penaltyblog",
+      "tags": [
+        "football",
+        "open-source",
+        "python"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "worldfootballR",
+      "desc": "R: Data wrapper for FBref, Understat, Transfermarkt, and Fotmob. Returns tidy data frames for analysis.",
+      "url": "https://github.com/JaseZiv/worldfootballR",
+      "tags": [
+        "football",
+        "open-source",
+        "r"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "SoccermaticsForPython",
+      "desc": "Code companion to Soccermatics. Pitch control, tracking data, Expected Threat, and network analysis. Learning resource and working implementations.",
+      "url": "https://github.com/Friends-of-Tracking-Data-FoTD/SoccermaticsForPython",
+      "tags": [
+        "football",
+        "open-source",
+        "python"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "statsbombpy",
+      "desc": "Python: Official StatsBomb data access library. Pull event data, freeze frames, and lineups directly into pandas DataFrames.",
+      "url": "https://github.com/statsbomb/statsbombpy",
+      "tags": [
+        "football",
+        "open-source",
+        "python"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "ScraperFC",
+      "desc": "Python: Scrape FBref, Understat, Transfermarkt, Sofascore, and WhoScored. Minimal setup. Returns pandas DataFrames.",
+      "url": "https://github.com/oseymour/ScraperFC",
+      "tags": [
+        "football",
+        "open-source",
+        "python"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "understat (amosbastian)",
+      "desc": "Python: Async client for understat expected goals data. Fixtures, shots, player xG, and team-level statistics.",
+      "url": "https://github.com/amosbastian/understat",
+      "tags": [
+        "football",
+        "open-source",
+        "python"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "openELO",
+      "desc": "Python: Elo, Glicko, and TrueSkill implementations for head-to-head sports rating. Parameterised for any two-player or team sport.",
+      "url": "https://github.com/OpenFootball/openelo",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "edge",
+      "name": "pinnacle-api (community wrappers)",
+      "desc": "Python and Node.js wrappers for accessing Pinnacle pricing. Pinnacle closing lines are the market benchmark for CLV measurement.",
+      "url": "https://github.com/pinnacleapi",
+      "tags": [
+        "multi-sport",
+        "api"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "edge",
+      "name": "Kelly Criterion (ftwr-core)",
+      "desc": "Expected value and Kelly stake sizing implementations. Full fractional Kelly, simultaneous bets, and Kelly with uncertainty. Part of ftwr-core.",
+      "url": "https://github.com/ftwr-dev/ftwr-core",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "ftwr"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "edge",
+      "name": "Closing Line Value Framework",
+      "desc": "Methodology for measuring closing line value as a proxy for long-run profitability. Positive CLV is a common indicator that a model is pricing accurately.",
+      "url": "https://blog.ftwr.app",
+      "tags": [
+        "multi-sport"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "edge",
+      "name": "vig-free (margin removal)",
+      "desc": "Python: Remove bookmaker margin using Power, Shin, and multiplicative methods. Converts raw odds to true probabilities.",
+      "url": "https://github.com/martineastwood/penaltyblog",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "edge",
+      "name": "rust-bet-tracker",
+      "desc": "Desktop bet tracker with 21 calculators, Kelly and fixed sizing, EV/CLV analytics, and per-book bankroll tracking. Local SQLite, no cloud sync. Rust + Tauri + Svelte.",
+      "url": "https://walrusquant.github.io/rust-bet-tracker/",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "free"
+      ],
+      "edge": "execution",
+      "contributor": "@walrusquant",
+      "added": "2026-04-24",
+      "last_verified": "2026-04-24"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "RebelBetting",
+      "desc": "Commercial value betting and arbitrage scanner. Tracks closing line value across 60+ bookmakers with per-bet CLV reporting.",
+      "url": "https://rebelbetting.com",
+      "tags": [
+        "multi-sport",
+        "commercial"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "OddsMonkey",
+      "desc": "UK-focused matched betting and arbitrage platform. Odds matcher, each-way arbitrage, and casino offers. Free tier available.",
+      "url": "https://www.oddsmonkey.com",
+      "tags": [
+        "football",
+        "free",
+        "commercial"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "BetBurger",
+      "desc": "Real-time sure-bet and value-bet scanner across 100+ bookmakers. API access for automated monitoring and alert systems.",
+      "url": "https://betburger.com",
+      "tags": [
+        "multi-sport",
+        "api",
+        "commercial"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "Trademate Sports",
+      "desc": "Value betting platform with a focus on CLV tracking and bankroll management. Transparent ROI tracking across all placed bets.",
+      "url": "https://tradematesports.com",
+      "tags": [
+        "multi-sport",
+        "commercial"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "arbitrage",
+      "name": "arbitrage-scanner (open source)",
+      "desc": "Python: Build-your-own arbitrage scanner using The Odds API. Reference implementation for cross-market sure-bet detection.",
+      "url": "https://github.com/the-odds-api/samples-python",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "markets",
+      "name": "Polymarket API",
+      "desc": "Crypto-based prediction markets on current events, sports, and elections. REST and WebSocket API with full market depth and order book access.",
+      "url": "https://docs.polymarket.com",
+      "tags": [
+        "multi-sport",
+        "api",
+        "free"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "markets",
+      "name": "Manifold Markets API",
+      "desc": "Free-to-play prediction markets. Full REST API with historical resolution data. Good for model calibration without real-money constraints.",
+      "url": "https://docs.manifold.markets/api",
+      "tags": [
+        "multi-sport",
+        "api",
+        "free"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "markets",
+      "name": "Metaculus API",
+      "desc": "Calibrated community forecasting with tracked resolution history. Long-range questions with publicly visible prediction distributions.",
+      "url": "https://www.metaculus.com/api2",
+      "tags": [
+        "multi-sport",
+        "api",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "markets",
+      "name": "Kalshi API",
+      "desc": "CFTC-regulated US event contracts. Sports, economics, weather, and policy. REST API with authenticated trading. Real money, legal in the US.",
+      "url": "https://trading-api.kalshi.com/trade-api/v2/openapi.json",
+      "tags": [
+        "multi-sport",
+        "api"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "markets",
+      "name": "py-polymarket",
+      "desc": "Python: Community client for Polymarket trading and data. CLOB API wrapper with order placement and market data streaming.",
+      "url": "https://github.com/Polymarket/py-clob-client",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "scipy.stats",
+      "desc": "Distributions, statistical tests, continuous and discrete random variables. Includes Poisson, negative binomial, beta, and related distributions.",
+      "url": "https://docs.scipy.org/doc/scipy/reference/stats.html",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "PyMC",
+      "desc": "Probabilistic programming and Bayesian inference. Markov Chain Monte Carlo for parameter estimation and model uncertainty quantification.",
+      "url": "https://www.pymc.io",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "statsmodels",
+      "desc": "GLMs, time series, survival analysis, and diagnostics. Logistic regression and Poisson regression with proper statistical inference.",
+      "url": "https://www.statsmodels.org",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "lifelines",
+      "desc": "Survival analysis for Python. Kaplan-Meier, Cox proportional hazards. Useful for modeling win streaks, tenure, and event timing.",
+      "url": "https://lifelines.readthedocs.io",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "scikit-learn",
+      "desc": "Machine learning in Python. Gradient boosting, neural networks, and model evaluation pipelines. Broad coverage of classification and regression methods.",
+      "url": "https://scikit-learn.org",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "sktime",
+      "desc": "Time series classification, regression, and forecasting. Useful for form analysis, sequential match data, and regime detection.",
+      "url": "https://www.sktime.net",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "viz",
+      "name": "mplsoccer",
+      "desc": "Python: Football pitch plots using Matplotlib. StatsBomb event data integration built in. Handles pitch drawing, heatmaps, and arrow plots.",
+      "url": "https://github.com/andrewRowlinson/mplsoccer",
+      "tags": [
+        "football",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "viz",
+      "name": "kloppy",
+      "desc": "Python: Standardized tracking data processing. Reads Tracab, SkillCorner, StatsBomb, and more into a common format. Cross-provider analysis made possible.",
+      "url": "https://github.com/PySport/kloppy",
+      "tags": [
+        "football",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "viz",
+      "name": "Plotly / Dash",
+      "desc": "Interactive Python charts deployable as web dashboards. Supports scatter, bar, line, and custom chart types with hover and filter controls.",
+      "url": "https://plotly.com/python",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "viz",
+      "name": "Matplotlib",
+      "desc": "Python scientific visualization library. Fine-grained control over chart layout and styling. Publication-quality static output.",
+      "url": "https://matplotlib.org",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "python",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "viz",
+      "name": "Grafana",
+      "desc": "Open source metrics dashboarding. Connect to PostgreSQL, TimescaleDB, or InfluxDB for live model output monitoring and performance tracking.",
+      "url": "https://grafana.com",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-core",
+      "desc": "Python/TypeScript toolkit for sports data collection, odds comparison, and expected value calculation.",
+      "url": "https://github.com/ftwr-dev/ftwr-core",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "ftwr"
+      ],
+      "edge": "community",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-models",
+      "desc": "Statistical models implemented cleanly: Poisson, Elo, Bradley-Terry, Dixon-Coles. Theory documented alongside code. Sport-agnostic by design.",
+      "url": "https://github.com/ftwr-dev/ftwr-models",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "ftwr"
+      ],
+      "edge": "community",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-data-streams",
+      "desc": "Real-time data pipeline tools. Live odds streaming, match event feeds, and WebSocket connectors for time-critical analysis.",
+      "url": "https://github.com/ftwr-dev/ftwr-data-streams",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "ftwr"
+      ],
+      "edge": "community",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "community",
+      "name": "ftwr-arbitrage",
+      "desc": "Cross-market scanning and arbitrage detection. Sure-bet identification, value-bet flagging, and real-time monitoring. MIT licensed.",
+      "url": "https://github.com/ftwr-dev/ftwr-arbitrage",
+      "tags": [
+        "multi-sport",
+        "open-source",
+        "ftwr"
+      ],
+      "edge": "community",
+      "contributor": "@founding-steward",
+      "added": "2026-04-09",
+      "last_verified": "2026-04-23"
+    }
+  ]
+}
+</script>
+
 <script>
+// ---- CONSTANTS ----
+var STALENESS_DAYS = 180;
+var MS_PER_DAY = 86400000;
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+function daysSince(iso) {
+  if (!iso) return null;
+  var d = new Date(iso + 'T00:00:00Z');
+  if (isNaN(d.getTime())) return null;
+  return Math.floor((Date.now() - d.getTime()) / MS_PER_DAY);
+}
+
+// ---- JUMP NAV ----
+function renderJumpNav(CATEGORIES) {
+  var nav = document.getElementById('jump-nav');
+  if (!nav) return;
+  nav.innerHTML = '';
+  CATEGORIES.forEach(function (cat) {
+    var a = document.createElement('a');
+    a.className = 'jump-chip';
+    a.href = '#cat-' + cat.id;
+    a.innerHTML = '<span class="jump-num">' + escapeHtml(cat.num) + '</span>' + escapeHtml(cat.title);
+    nav.appendChild(a);
+  });
+}
+
+// ---- FEATURED STRIP ----
+function renderFeatured(TOOLS) {
+  var wrap = document.getElementById('featured-wrap');
+  var grid = document.getElementById('featured-grid');
+  if (!wrap || !grid) return;
+  var featured = TOOLS.filter(function (t) { return t.featured === true; });
+  if (featured.length === 0) {
+    wrap.classList.add('empty');
+    grid.innerHTML = '';
+    return;
+  }
+  wrap.classList.remove('empty');
+  grid.innerHTML = featured.map(function (t) {
+    var edgeLabel = ({ data: 'data', model: 'model', market: 'market', execution: 'execution', community: 'ftwr' })[t.edge] || t.edge;
+    var note = t.featured_note ? '<div class="featured-card-note">' + escapeHtml(t.featured_note) + '</div>' : '';
+    return (
+      '<a class="featured-card" href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener noreferrer">' +
+        '<div class="featured-card-top">' +
+          '<div class="featured-card-name">' + escapeHtml(t.name) + '</div>' +
+          '<div class="tool-edge ' + escapeHtml(t.edge) + '" style="width:auto;">' + escapeHtml(edgeLabel) + '</div>' +
+        '</div>' +
+        note +
+      '</a>'
+    );
+  }).join('');
+}
+
 // ---- RENDER ----
 function renderAll(CATEGORIES, TOOLS) {
   const body = document.getElementById('map-body');
@@ -499,21 +1583,25 @@ function renderAll(CATEGORIES, TOOLS) {
   document.getElementById('stat-open').textContent = TOOLS.filter(t => t.tags.includes('open-source')).length;
   document.getElementById('stat-free').textContent = TOOLS.filter(t => t.tags.includes('free') || t.tags.includes('open-source')).length;
 
+  renderJumpNav(CATEGORIES);
+  renderFeatured(TOOLS);
+
   CATEGORIES.forEach(cat => {
     const tools = TOOLS.filter(t => t.cat === cat.id);
     const section = document.createElement('section');
     section.className = 'cat-section';
     section.dataset.catId = cat.id;
+    section.id = 'cat-' + cat.id;
 
     section.innerHTML = `
       <div class="cat-header">
         <div class="cat-header-left">
-          <div class="cat-num">${cat.num}</div>
-          <h2 class="cat-title">${cat.title}</h2>
+          <div class="cat-num">${escapeHtml(cat.num)}</div>
+          <h2 class="cat-title">${escapeHtml(cat.title)}</h2>
         </div>
         <div class="cat-count"><span class="cat-count-n" data-cat-count="${cat.id}">${tools.length}</span> tools</div>
       </div>
-      <p class="cat-desc">${cat.desc}</p>
+      <p class="cat-desc">${escapeHtml(cat.desc)}</p>
       <div class="tool-list" data-cat-list="${cat.id}"></div>
     `;
 
@@ -528,22 +1616,36 @@ function renderAll(CATEGORIES, TOOLS) {
       a.dataset.desc = tool.desc.toLowerCase();
       a.dataset.cat = tool.cat;
       a.dataset.tags = tool.tags.join(' ');
+      a.dataset.added = tool.added || '';
+      a.dataset.verified = tool.last_verified || '';
 
       const edgeLabel = { data: 'data edge', model: 'model edge', market: 'market edge', execution: 'execution', community: 'ftwr' }[tool.edge] || tool.edge;
       const tagsHtml = tool.tags
         .filter(t => ['open-source', 'commercial', 'free', 'ftwr'].includes(t))
-        .map(t => `<span class="tool-tag ${t}">${t}</span>`)
+        .map(t => `<span class="tool-tag ${t}">${escapeHtml(t)}</span>`)
         .join('');
       const sportTagsHtml = tool.tags
         .filter(t => ['football', 'tennis', 'basketball', 'multi-sport', 'r', 'python'].includes(t))
-        .map(t => `<span class="tool-tag">${t}</span>`)
+        .map(t => `<span class="tool-tag">${escapeHtml(t)}</span>`)
         .join('');
+
+      // Trust-signal meta line: contributor · added · verified (with stale chip if applicable)
+      const age = daysSince(tool.last_verified);
+      const staleHtml = (age !== null && age > STALENESS_DAYS)
+        ? '<span class="stale-chip">stale</span>'
+        : '';
+      const metaBits = [];
+      if (tool.contributor) metaBits.push(escapeHtml(tool.contributor));
+      if (tool.added) metaBits.push('added ' + escapeHtml(tool.added));
+      if (tool.last_verified) metaBits.push('verified ' + escapeHtml(tool.last_verified));
+      const metaHtml = staleHtml + metaBits.join(' · ');
 
       a.innerHTML = `
         <div class="tool-edge ${tool.edge}">${edgeLabel}</div>
         <div class="tool-body">
-          <div class="tool-name">${tool.name}</div>
-          <div class="tool-desc">${tool.desc}</div>
+          <div class="tool-name">${escapeHtml(tool.name)}</div>
+          <div class="tool-desc">${escapeHtml(tool.desc)}</div>
+          <div class="tool-meta">${metaHtml}</div>
         </div>
         <div class="tool-tags">${sportTagsHtml}${tagsHtml}</div>
         <div class="tool-arrow">--></div>
@@ -556,11 +1658,40 @@ function renderAll(CATEGORIES, TOOLS) {
   });
 }
 
-// ---- FILTER ----
+// ---- FILTER + SORT ----
 let activeCat = 'all';
 let activeType = null;
+let activeSort = 'default';
 let searchQuery = '';
 let _categories = [];
+
+// Preserve the insertion ("default") order so we can restore it.
+const _originalOrder = new WeakMap();
+
+function sortRowsInList(list) {
+  var rows = Array.prototype.slice.call(list.querySelectorAll('.tool-row'));
+  if (rows.length === 0) return;
+
+  if (activeSort === 'default') {
+    rows.sort(function (a, b) {
+      return (_originalOrder.get(a) || 0) - (_originalOrder.get(b) || 0);
+    });
+  } else if (activeSort === 'added') {
+    rows.sort(function (a, b) {
+      return (b.dataset.added || '').localeCompare(a.dataset.added || '');
+    });
+  } else if (activeSort === 'verified') {
+    rows.sort(function (a, b) {
+      return (b.dataset.verified || '').localeCompare(a.dataset.verified || '');
+    });
+  } else if (activeSort === 'name') {
+    rows.sort(function (a, b) {
+      return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+    });
+  }
+
+  rows.forEach(function (row) { list.appendChild(row); });
+}
 
 function applyFilters() {
   let visibleTotal = 0;
@@ -568,6 +1699,8 @@ function applyFilters() {
   _categories.forEach(cat => {
     const section = document.querySelector(`[data-cat-id="${cat.id}"]`);
     if (!section) return;
+    const list = section.querySelector('.tool-list');
+    if (list) sortRowsInList(list);
     const rows = section.querySelectorAll('.tool-row');
     let sectionVisible = 0;
 
@@ -607,6 +1740,16 @@ function applyFilters() {
 
   const emptyState = document.getElementById('empty-state');
   emptyState.style.display = visibleTotal === 0 ? 'block' : 'none';
+}
+
+// Capture default insertion order once, after initial render.
+function captureOriginalOrder() {
+  document.querySelectorAll('.tool-list').forEach(function (list) {
+    var i = 0;
+    list.querySelectorAll('.tool-row').forEach(function (row) {
+      _originalOrder.set(row, i++);
+    });
+  });
 }
 
 // ---- EVENTS ----
@@ -650,30 +1793,54 @@ function bindControls() {
     searchQuery = e.target.value.toLowerCase().trim();
     applyFilters();
   });
+
+  // Sort
+  var sortSelect = document.getElementById('sort-select');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function (e) {
+      activeSort = e.target.value || 'default';
+      applyFilters();
+    });
+  }
 }
 
 // ---- BOOTSTRAP ----
-document.addEventListener('DOMContentLoaded', () => {
-  // Show loading state
-  document.getElementById('result-count').textContent = 'loading...';
+// Map data is embedded inline (see the <script type="application/json"
+// id="map-data"> block above). This lets the page render from any URL
+// scheme, including file://, offline, and any static host, with no network
+// fetch. The embedded block is kept in sync with landing/tools.json by
+// landing/scripts/sync-map-embed.py, which CI enforces on every PR.
+function loadMap() {
+  var el = document.getElementById('map-data');
+  if (!el) throw new Error('map-data block not found in map.html');
+  var raw = el.textContent || '';
+  if (!raw.trim()) throw new Error('map-data block is empty; run landing/scripts/sync-map-embed.py');
+  return JSON.parse(raw);
+}
 
-  fetch('tools.json')
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
-    .then(data => {
-      _categories = data.categories;
-      renderAll(data.categories, data.tools);
-      bindControls();
-      applyFilters();
-    })
-    .catch(err => {
-      console.error('Failed to load tools.json:', err);
-      document.getElementById('map-body').innerHTML =
-        '<div class="empty-state" style="display:block;">Failed to load tools. Open via a web server, not a file:// URL.</div>';
-      document.getElementById('result-count').textContent = '';
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('result-count').textContent = 'loading...';
+  try {
+    var data = loadMap();
+    _categories = data.categories;
+    renderAll(data.categories, data.tools);
+    captureOriginalOrder();
+    bindControls();
+    applyFilters();
+  } catch (err) {
+    console.error('Failed to parse embedded map data:', err);
+    document.getElementById('map-body').innerHTML =
+      '<div class="empty-state" style="display:block;text-align:left;max-width:640px;margin:3rem auto;line-height:1.6;">' +
+      '<strong>Map data could not be loaded.</strong><br/><br/>' +
+      'The embedded map-data block is missing or invalid: ' +
+      (err && err.message ? err.message : 'unknown') + '.<br/><br/>' +
+      'From the repo root, run:<br/><br/>' +
+      '<code style="display:inline-block;padding:0.5rem 0.75rem;background:var(--surface-container-high);">' +
+      'python3 landing/scripts/sync-map-embed.py' +
+      '</code>' +
+      '</div>';
+    document.getElementById('result-count').textContent = '';
+  }
 });
 </script>
 </body>

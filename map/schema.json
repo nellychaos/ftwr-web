@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ftwr.app/schemas/map-entry.json",
+  "title": "FTWR Map Entry",
+  "description": "The contract for a single entry in The Map. Authoritative reference for PR-driven contributions. Validated in CI on every PR.",
+  "type": "object",
+  "required": [
+    "cat",
+    "name",
+    "desc",
+    "url",
+    "tags",
+    "edge",
+    "contributor",
+    "added",
+    "last_verified"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "cat": {
+      "type": "string",
+      "description": "Map category (§01-§09). One of the fixed category IDs.",
+      "enum": [
+        "data",
+        "odds",
+        "models",
+        "edge",
+        "arbitrage",
+        "markets",
+        "python",
+        "viz",
+        "community"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "Tool or resource name as the project itself uses it.",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "desc": {
+      "type": "string",
+      "description": "Neutral description: what it does and what its constraints are. Under 200 characters.",
+      "minLength": 20,
+      "maxLength": 240
+    },
+    "url": {
+      "type": "string",
+      "description": "Canonical URL (homepage, repository, or primary documentation).",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Controlled tag vocabulary. New tags require an RFC or steward approval.",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "api",
+          "basketball",
+          "commercial",
+          "football",
+          "free",
+          "ftwr",
+          "multi-sport",
+          "open-source",
+          "python",
+          "r",
+          "tennis"
+        ]
+      }
+    },
+    "edge": {
+      "type": "string",
+      "description": "The edge type this entry addresses.",
+      "enum": [
+        "data",
+        "model",
+        "market",
+        "execution",
+        "community"
+      ]
+    },
+    "contributor": {
+      "type": "string",
+      "description": "Handle of the contributor who added or last substantively edited the entry. Must start with @.",
+      "pattern": "^@[a-z0-9][a-z0-9-]{1,38}$"
+    },
+    "added": {
+      "type": "string",
+      "description": "ISO date the entry was first added.",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "last_verified": {
+      "type": "string",
+      "description": "ISO date the entry was last confirmed to exist and behave as described. Entries older than 180 days are flagged for re-verification.",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier for code entries. Optional for non-code entries.",
+      "minLength": 2,
+      "maxLength": 60
+    },
+    "coi": {
+      "type": "string",
+      "description": "Conflict-of-interest disclosure if the contributor has a material interest in the tool. Free text. Required when present rather than optional: if there is a material interest, it must be disclosed.",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "sport": {
+      "type": "string",
+      "description": "Primary sport this entry concerns, if sport-specific. Omit for sport-agnostic entries.",
+      "minLength": 2,
+      "maxLength": 40
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "If true, the entry is surfaced in the 'Start Here' strip at the top of The Map. Use sparingly: featured entries should be canonical starting points, not promotional placements. Set by stewards."
+    },
+    "featured_note": {
+      "type": "string",
+      "description": "Short caption (under 120 chars) shown under the featured card explaining why this is a good starting point. Required when 'featured' is true; ignored otherwise.",
+      "minLength": 10,
+      "maxLength": 120
+    }
+  }
+}

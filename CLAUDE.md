@@ -2,7 +2,15 @@
 
 ## What This Is
 
-FTWR is an open source developer community and online persona around sports data intelligence, analytics, modelling, and arbitrage. The website is the public-facing front door at ftwr.app.
+FTWR is a community commons for sports data modelling. It curates tools, convenes discussion, and documents shared methods as public goods -- non-rival, non-excludable, MIT-licensed, anonymously stewarded. It is a map and a meeting hall, not a lab or a persona. The website at ftwr.app is the front door.
+
+The six public-good artifacts:
+- **The Map** (`ftwr-map`) -- curated, PR-driven directory of tools, datasets, papers
+- **Starters** (`ftwr-starters`) -- minimal runnable reference implementations of canonical methods
+- **RFCs** (`ftwr-rfcs`) -- numbered methodology proposals, discussed on the forum, merged by consensus
+- **Archive** (`ftwr-site`, this repo) -- the blog; explainers, digests, guest posts
+- **Forum** (`community.ftwr.app`) -- Discourse, Tier 1, where the commons actually happens
+- **Ledger** (`ftwr.app/ledger` + Open Collective) -- public accounting of donations and costs
 
 ## Project Documents
 
@@ -16,10 +24,23 @@ Read these before doing any design or development work:
 
 ```
 ftwr.app                    -- Landing page (static, this repo)
-blog.ftwr.app               -- Blog (Astro/Hugo, separate repo)
-ftwr.discourse.group        -- Community forum (Discourse free plan)
-github.com/ftwr-dev         -- GitHub org
+blog.ftwr.app               -- Archive (Astro, in ./blog)
+community.ftwr.app          -- Forum (Discourse paid hosting, Tier 1)
+github.com/ftwr-dev         -- Commons registry (map, starters, RFCs, site)
+opencollective.com/ftwr     -- Ledger / fiscal host
 ```
+
+## Voice
+
+Institutional, not personal. Curator, not builder. No first-person "we built." Use "added to The Map," "reviewed by @handle," "last verified YYYY-MM-DD." Bylines are handles, never real names. Anonymous stewardship is a feature: a commons does not need a face.
+
+## What FTWR Is Not
+
+- Not a tips service (no picks, no wagers, no "our model says bet this")
+- Not a proprietary toolmaker (FTWR does not compete with tools in The Map)
+- Not a persona (no founder to follow)
+- Not a business (no revenue, no growth targets)
+- Not a Discord (asynchronous, indexed, archival)
 
 ## Design System
 
@@ -82,3 +103,16 @@ Light mode only. No dark mode.
 - Do not create separate CSS/JS files for the landing page (keep it single-file)
 - Do not use placeholder or lorem ipsum text
 - Do not add monetization, pricing, or premium tier language anywhere
+- Do not write in first-person builder voice ("we built", "our model", "I made this")
+- Do not reference any real name, founder, or individual identity anywhere
+- Do not frame FTWR as a project, startup, or product -- it is a commons
+- Do not promote specific wagers, picks, or bet placements
+- Do not accept sponsorship, affiliate links, or paid placement in any surface
+
+## Aesthetic Leans (go further, not less)
+
+- Dewey-style numbering on durable artifacts: §01-§09 for Map sections, RFC-0001, Issue-#0042
+- Timestamps as first-class UI: `last-verified`, `entry-added`, `rfc-status` dates visible on every card
+- Contributor attribution on every tool, post, and entry -- handles link to forum profiles
+- Section names are nouns (Map, Archive, Ledger, Observatory, Index), not verbs
+- Spectral gradient (#006875 → #a900a9) is the one visual flourish; everything else stays quiet

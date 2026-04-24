@@ -1,6 +1,6 @@
-# FTWR -- 90-Day Marketing, Platform, and Content Plan
+# FTWR -- 90-Day Launch Plan
 
-This is the week-by-week execution plan for launching FTWR from nothing. It assumes one person doing everything, so the pacing is deliberately conservative. Better to ship consistently at a sustainable pace than to burn out by week 6 and go silent.
+Week-by-week execution plan for bringing the commons online. Assumes one anonymous steward doing everything, so pacing is deliberately conservative. The failure mode to avoid is not "going slow" -- it is stockpiling burnout in weeks 1-6 and going silent in weeks 7-12.
 
 The strategy plan covers the "what and why." This document covers the "when and how."
 
@@ -8,364 +8,336 @@ The strategy plan covers the "what and why." This document covers the "when and 
 
 ## Current State
 
-Nothing is live. No accounts, no content, no repos. The domain ftwr.app is registered (or will be). The Discourse forum at ftwr.discourse.group exists but is unconfigured. Everything else starts from scratch.
+Landing page at `ftwr.app` is live. The map at `ftwr.app/map.html` renders a 51-tool directory from `tools.json`. The blog scaffold exists at `blog/` (Astro) with one post in the commons voice. The Discourse forum exists at `ftwr.discourse.group`, unconfigured. No GitHub org repos are published yet. No Open Collective. No governance docs.
+
+Everything else starts from scratch, but the seed assets (landing, map, tools.json, manifesto post) are enough to anchor the commons framing from day one.
 
 ---
 
 ## Phase 1: Foundation (Weeks 1-3)
 
-The goal of Phase 1 is to build the infrastructure and stockpile enough content that when you go public, there's something real to find. Nobody should land on an empty GitHub org, an empty forum, or a blog with one post. The first impression needs to communicate that this is serious and already in motion.
+The goal of Phase 1 is to stand up the commons infrastructure and seed enough content that the first visitor sees a credible institution, not a side project. Nobody should land on an empty map, an empty forum, or an undocumented governance structure.
 
-### Week 1: Accounts and Infrastructure
+The steward's job in Phase 1 is not to publish original analysis. It is to build the scaffolding that lets contributors publish theirs.
 
-**Platform setup (do all of this before posting anything publicly):**
+### Week 1: Governance and Registry
 
-- Register the GitHub org (ftwr-dev). Set the org bio, avatar, and a one-line description. Do not create repos yet.
-- Register the X account. Set profile picture, banner, bio, and pinned tweet placeholder (don't start posting yet). Bio should read something like: "Sports data intelligence. Open source tooling. Going down the rabbit hole." Link to ftwr.app.
-- Create the subreddit (r/ftwr or r/followthewhiterabbit). Write the sidebar description, set rules mirroring the community principles from the brand guide, add relevant flair categories (Analysis, Tool, Discussion, Down the Rabbit Hole). Don't promote it yet.
-- Configure the Discourse forum: apply FTWR branding (light surface bg, teal accents per the brand guide), create the category structure (Announcements, The Rabbit Hole, Show Your Work, Models and Methods, Data Sources, Arbitrage, Code Help, Meta), write the welcome topic and community guidelines.
+**Publish the governance layer:**
 
-**Content production (not published yet, just stockpiled):**
+- Draft and commit `GOVERNANCE.md`, `CURATION.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `DISCLAIMER.md` at the `ftwr-dev` org level. These are short, plain-English documents that describe how decisions get made, how map entries are reviewed, how PRs are handled, and what the commons will and will not do.
+- Draft RFC-0001: the RFC process itself. Number format, lifecycle (draft → discussion → accepted/rejected/withdrawn), where discussion happens (forum thread per RFC), and what rough consensus means. Merging RFC-0001 is the first self-documenting act of governance.
+- Register the GitHub org (`ftwr-dev`). Set the org bio, avatar, and one-line description in the commons voice. Do not create proprietary repos -- there are none to create.
 
-- Write Blog Post 1: "What is FTWR?" -- a manifesto-style post explaining the project, the no-monetization stance, and what you're building. This becomes the canonical reference when people ask "what is this?"
-- Begin drafting Blog Post 2: a technical tutorial. Pick whichever is closest to ready in your head -- Poisson modelling, EV calculation, odds API integration, whatever. It needs to include working code.
+**Stand up The Map as a proper registry:**
 
-**Estimated time: 10-12 hours across the week.**
+- Spin out `tools.json` into a new repo `ftwr-map`. Define a JSON schema (or YAML-per-entry) that requires: category, name, description (neutral, under 200 chars), url, tags, contributor handle, last-verified date, and optional license/sport fields.
+- Write a PR template for map entries that requires the contributor handle and last-verified date. CI validates entries against the schema on every PR.
+- The landing map continues to load from The Map. Publishing The Map as its own repo lets PRs flow from contributors without touching the site repo.
 
-### Week 2: Code and Content Stockpile
+**Forum and funding:**
 
-**GitHub:**
+- Move Discourse to `community.ftwr.app` on the paid plan. Apply the light-mode brand tokens. Create the category structure from the strategy plan: Announcements, The Rabbit Hole, Show Your Work, Map, Methods & Models, Data Sources, Arbitrage & Edge, RFCs, Code Help, Meta.
+- Open a fiscal-host Open Collective at `opencollective.com/ftwr`. No donation drive yet -- just the infrastructure.
+- Draft the `ledger.html` page for the landing, even if empty. Commit it.
 
-- Create and push `ftwr-core` with real, working code. Even if it's small -- a clean Python package that pulls odds from a public API, calculates expected value, and runs a basic Poisson model. It has to actually work. Clean README with install instructions, a quickstart example, and a "contributing" section. MIT license. GitHub Actions CI running tests on push.
-- Create `ftwr-models` with at least one fully documented model implementation (Poisson is the natural starting point). Theory explanation in the README, code that runs, example output.
+**No public posting this week.** No X account yet, no announcements.
 
-**Content production:**
+Estimated time: 10-12 hours.
 
-- Finish Blog Post 2 (technical tutorial).
-- Write Blog Post 3: a case study or market analysis. Take a real upcoming fixture or event, run your model on it, show the output, explain where the model disagrees with the market and why. This is the "show your work" format that defines the brand.
-- Draft 5-7 X posts/threads you can schedule for the first week of posting. Mix of: one analytical thread (5-10 posts walking through a model output), a few standalone data viz posts, a code snippet post linking to GitHub.
+### Week 2: Starters and Seed Content
 
-**Estimated time: 12-15 hours across the week.**
+**Publish the first Starter:**
 
-### Week 3: Blog Deploy and Content Buffer
+- Create `ftwr-starters`. First entry: a Poisson goal model in under 100 lines of Python that runs on a sample dataset in under a minute. README cites the canonical Dixon-Coles paper and a reference implementation. The point is not to out-build anyone -- it is to lower activation energy for a new modeller to see a working example.
+- CI runs the starter's test on every push.
 
-**Blog:**
+**Seed the Archive:**
 
-- Deploy the blog at blog.ftwr.app. Static site (Astro or Hugo), source in the ftwr-blog repo, deployed on Vercel or Netlify. The blog design must match the brand guide: light surface background, JetBrains Mono for code and headings, Inter for body, teal/magenta accents, 0px border radius on everything.
-- Publish Blog Posts 1, 2, and 3. Having three posts live on day one means the blog looks established, not abandoned.
-- Set up RSS feed so new blog posts can auto-post to the Discourse forum.
+- The manifesto post (`what-is-ftwr.mdx`) is live. Draft Archive Post 2: "How The Map Works" -- a plain-language walkthrough of what The Map is, how entries are reviewed, what `last-verified` means, and how to submit a PR. This is the canonical link for every PR reviewer going forward.
+- Draft Archive Post 3: a method walkthrough based on the first Starter. "Poisson goal models in fifty lines" -- theory, runnable code, citations, honest limitations.
 
-**Landing page:**
+**Seed the Forum:**
 
-- Deploy the landing page at ftwr.app. (You mentioned handling website development separately, so this may happen on a different timeline. If the landing page isn't ready, a simple redirect to the blog is fine as a temporary measure.)
+- Post 4-6 real discussion topics as the steward. Not "welcome to the forum" -- actual content. Examples:
+  - "Map: which tools would you add to §03 Models & Methods?" (in Map)
+  - "RFC-0001 is open for discussion. What's missing?" (in RFCs)
+  - "Dixon-Coles vs base Poisson: when does the low-score correction matter?" (in Methods & Models)
+  - "Share your odds-data workflow: APIs, scrapers, quality checks" (in Data Sources)
+  - "What counts as a fair backtest?" (in Methods & Models, teed up for RFC-0002)
 
-**Forum seeding:**
+Estimated time: 10-12 hours.
 
-- Post 3-5 real discussion topics on the Discourse forum yourself. These should be genuine analysis, questions, or discussion starters -- not "welcome to the forum!" filler. Examples: a thread analyzing a specific market inefficiency, a question about model selection for a particular sport, a thread sharing a data source you've found useful. The forum should look like a place where real conversation already happens.
+### Week 3: Archive Launch and RFC-0001 Merge
 
-**Content buffer:**
+**Archive goes live:**
 
-- Write Blog Post 4 (publish next week).
-- Draft another 5-7 X posts/threads for the following week.
+- Deploy `blog.ftwr.app` with Posts 1-3 live on day one. A single-post archive reads as abandoned; three reads as established.
+- RSS feed wired. Discourse configured to auto-post new archive entries as forum threads in Announcements.
 
-**Estimated time: 10-12 hours across the week.**
+**Governance lands:**
+
+- Merge RFC-0001 after discussion settles. Write a short archive post digesting it. This is the first RFC digest in what will become a recurring format.
+- Draft RFC-0002: backtest protocol standards. Open it on the forum for discussion. Do not rush to merge -- the process is the product.
+
+**Landing refresh:**
+
+- Confirm the hero is in commons voice (done). Confirm the four terminal links point to Map, Forum, Archive, Registry. Confirm the map loads without the empty-state bug (fixed).
+- Add a "Ledger" nav link pointing to the placeholder page.
+
+**Handles and accounts:**
+
+- Register the X account under a neutral handle. No posting yet. Bio: "A commons for sports data modelling. Map, forum, archive, starters. MIT. Free." Link to `ftwr.app`.
+- Create the subreddit outpost. Sidebar in institutional voice, rules mirroring `CODE_OF_CONDUCT.md`, flair categories aligned to map sections. No posting yet.
+
+Estimated time: 8-10 hours.
 
 ---
 
 ## Phase 2: Soft Launch (Weeks 4-6)
 
-Phase 2 is when you start posting publicly on X. The goal is to build a small audience of the right people -- analytics-minded, builder-oriented -- and start routing them toward the blog, GitHub, and eventually the forum.
+Phase 2 opens the broadcast channels. The goal is not follower count -- it is discovering the first 20-30 people who recognise the commons for what it is and join the forum.
 
 ### Week 4: Go Live on X
 
-**X posting begins:**
+**First public posts:**
 
-- Start posting. Aim for one substantive post per day. "Substantive" means it contains data, code, analysis, or a genuine insight. Not "good morning sports twitter" filler.
-- Publish your first analytical thread (the 5-10 post format walking through a model or market read). These threads are the highest-leverage content on X because they get shared and bookmarked.
-- Pin a thread to your profile that explains what FTWR is, with links to the blog, GitHub, and forum.
+- Pin a thread that explains what FTWR is in five posts: (1) commons framing, (2) The Map, (3) starters and RFCs, (4) governance and funding, (5) how to contribute. Link to landing, forum, map.
+- Begin steady posting. Aim for 3-5 substantive posts per week, not daily. Institutional voice: "Map updated: 4 entries added to §02." "RFC-0002 is open for discussion." "Starter released: Poisson in fifty lines. Code and walkthrough in the Archive."
+- Publish Archive Post 4: a tool comparison. "Three odds APIs, same weekend, same markets" -- neutral, data-driven, each provider linked to its map entry.
 
-**Content cadence from this point forward:**
+**Ongoing cadence from this point:**
 
-- X: 1 substantive post per day, 5-7 days a week. Mix of standalone posts, threads, code snippets, and data viz. Engage in replies with other accounts in the sports analytics space.
-- Blog: 1 post per week (published on a consistent day -- Tuesday or Wednesday tend to perform well for technical content).
-- GitHub: at least one meaningful commit per week. Ship small, ship working. Each code update is also content (tweet it).
-- Forum: 1-2 new topics or replies per week to keep it active while the audience is still small.
+- X: 3-5 posts/week, institutional voice, every post links to Map / Archive / Forum / RFC where relevant.
+- Archive: 1 post/week, consistent day.
+- Map: at least one PR merged per week (self-reviewed initially, community-reviewed as contributors arrive).
+- Forum: 2-3 new topics or substantive replies per week. Respond to every post from a non-steward.
+- Ledger: publish first transaction log, even if it is just "domain renewal: $15."
 
-**Engagement strategy:**
+### Week 5: First Contributor Surfaces
 
-- Find 15-20 accounts in the sports analytics, quant betting, and data science spaces. Follow them, engage with their posts with substantive replies (not "great thread!"), quote-tweet with data-driven counter-takes when you have something real to add.
-- Do not @ people asking them to check out your project. Let the work speak. If your threads are good, the right people will find them.
+- Publish Archive Post 5: "Open problems in sports modelling." Frame five unsolved questions as invitations. Each one could become an RFC draft, a starter, or a Map addition. Cross-post to r/sportsbook and r/datascience with a forum link for discussion.
+- Merge RFC-0002 if discussion has settled. Publish the RFC digest as Archive Post 6.
+- Reach out (via forum DM or X reply, never cold DM) to any non-steward who has posted something substantive. Invite them to open a PR against `ftwr-map` or draft an RFC.
 
-**Publish Blog Post 4.**
+### Week 6: Checkpoint
 
-**Estimated time: 8-10 hours per week from here on out (the ongoing baseline).**
+**By the end of week 6:**
 
-### Week 5: Build Rhythm
+- 6+ archive posts live
+- Map has grown past the initial 51 entries (target: 60+) with at least one non-steward contributor
+- 2 RFCs merged, 1 in discussion
+- 1 starter published, second one drafted
+- 10+ forum topics with non-placeholder content
+- Ledger publicly showing at least the domain cost
 
-**X:**
-
-- Continue daily posting. By now you should have a feel for what gets engagement and what doesn't. Double down on whatever resonates.
-- Post the first "Down the Rabbit Hole" thread -- the signature format from the brand guide. Start with a simple observation, pull on the thread, and end somewhere surprising. Tag it with a consistent identifier so people recognize the series.
-- Share a code snippet from ftwr-core or ftwr-models with a "full code on GitHub" link. This is how you convert X followers into GitHub visitors.
-
-**Blog:**
-
-- Publish Blog Post 5. Ideally this is the strongest piece you've written -- something genuinely useful that could rank in search for a relevant query (e.g., "Poisson distribution football model Python," "expected value sports betting calculation," "odds API comparison").
-- Check that blog posts are being picked up by Google. Submit the sitemap to Google Search Console if you haven't already.
-
-**GitHub:**
-
-- Ship an update to ftwr-core or ftwr-models. Tweet the changelog.
-- Review any issues or stars. If someone has engaged with the repos, respond promptly. Early adopters remember how they were treated.
-
-**Forum:**
-
-- Add the forum link to your X bio (alongside the blog link).
-- If any X followers have shown genuine interest (not just likes, but replies and questions), DM them an invitation to the forum. Personal invitations from the founder carry weight.
-
-### Week 6: First Content Milestone
-
-**Content checkpoint:**
-
-By the end of week 6, you should have:
-
-- 6+ blog posts published
-- 30+ substantive X posts
-- 2+ GitHub repos with real code and clean documentation
-- 8-10 forum topics with genuine content
-- At least 2 "Down the Rabbit Hole" threads on X
-
-**If you're behind on any of these, this is the week to catch up before Phase 3.**
-
-**Reddit:**
-
-- Cross-post your best blog post to a relevant subreddit (r/sportsbook, r/datascience, or r/sportsbetting -- wherever the content fits most naturally). Do this once, see how it performs. If it gets traction, you can make this a regular thing. If it doesn't, don't force it.
-- Post it to r/ftwr as well to start giving the subreddit some life.
+If any of these are behind, this is the week to catch up before Phase 3. If the steward is behind because of time, cut X cadence first, then archive cadence. Never cut The Map or forum.
 
 ---
 
-## Phase 3: Community Activation (Weeks 7-12)
+## Phase 3: Contribution Drive (Weeks 7-12)
 
-Phase 3 is where the project either becomes a real community or stays a personal blog with some GitHub repos. The goal is to get other people contributing -- posting on the forum, opening issues on GitHub, sharing their own work.
+Phase 3 is where the commons either begins to function as one or remains a well-dressed solo project. The goal is to get other people contributing: merging map PRs, drafting RFCs, posting on the forum, submitting starters.
 
-### Week 7-8: Invite Contribution
+### Weeks 7-8: Invite Contribution Explicitly
 
-**GitHub:**
+**Map:**
 
-- Audit your repos and tag 3-5 issues as "good first issue." These should be genuinely approachable: documentation improvements, adding a new sport to an existing model, writing a test, fixing a clearly scoped bug. Not vague "build the whole feature" issues.
-- Write a CONTRIBUTING.md if you haven't already. Make it clear how someone goes from "interested" to "first PR merged."
-- Tweet about the good first issues. Frame it as an invitation: "If you've been curious about sports modelling, here are some ways to get your hands dirty."
+- Tag 5-10 "good first contribution" issues on `ftwr-map`: gaps in specific categories, entries that need their `last-verified` date refreshed, neutral descriptions that need a neutral rewrite.
+- Publish Archive Post 7: "How to add to The Map" -- a step-by-step walkthrough of opening a PR. Screenshots, not prose. Link it from The Map README and the forum.
 
 **Forum:**
 
-- Start a "Show Your Work" thread inviting people to share whatever they've been working on -- even if it's rough, even if it's just an idea. Lower the barrier. The first few people who post will set the tone.
-- Respond to every forum post. At this stage, the community is small enough that personal engagement matters enormously. If someone posts analysis, give real feedback. If someone asks a question, answer it thoroughly.
+- Open a Show Your Work thread inviting people to share their own analysis, models, or data pipelines. Tone: low barrier, even rough drafts welcome. The first three non-steward posters set the culture.
+- Respond to every forum post personally but in institutional voice -- "the commons appreciates this contribution," not "I loved this."
 
-**X:**
+**Starters:**
 
-- Continue the daily cadence. Start weaving in community references: "someone on the forum pointed out..." or "a contributor just shipped this to ftwr-core..." -- even if the community is tiny, narrating its activity makes it feel alive from the outside.
+- Publish a second starter: Elo ratings in under 100 lines, cited to Glickman. Archive post walks through it.
 
-**Blog:**
+### Weeks 9-10: First Community Drive
 
-- Publish Blog Posts 7 and 8. One of these should be a piece that directly invites participation: "5 open problems in sports modelling" or "things I wish existed in the FTWR toolkit." Frame unsolved problems as opportunities, not complaints.
+Run a time-boxed Map Drive. Two weeks. Goal: 20 new contributor-submitted map entries, each with an attribution and a verified date.
 
-### Week 9-10: Run a Community Challenge
+- Announce on X with a thread. Cross-post the announcement as a forum topic. Pin both.
+- Feature contributors in a weekly Archive digest ("Map Drive, Week 1: 8 entries added, thanks to @handle-1, @handle-2, @handle-3").
+- Do not promise any reward beyond attribution and a highlight in the Archive. A commons works when credit is the currency.
 
-**The challenge:**
+**Simultaneously:**
 
-Run a simple, time-boxed challenge. Something like: "Build a model for [specific sport or league] using ftwr-core. Post your approach and results on the forum. Best write-up gets featured on the blog and X."
+- Draft RFC-0003: map review cadence (how often entries get re-verified, how deprecations happen). Open for discussion.
+- Publish Archive Post 9: a guest post from the first non-steward willing to write one. Byline is their handle. If nobody volunteers, the drive itself becomes the post.
 
-**Why this works:**
+### Weeks 11-12: Assess, Document, Adjust
 
-- It gives people a concrete reason to try the tooling.
-- It generates forum content.
-- It surfaces people who are genuinely interested in building, not just lurking.
-- The "featured on the blog" reward costs you nothing but creates real incentive.
+**Honest metrics review:**
 
-**How to run it:**
-
-- Announce on X with a thread explaining the challenge, linking to the forum topic.
-- Create a dedicated forum topic for challenge submissions.
-- Cross-post to the subreddit.
-- Run it for 2 weeks. At the end, write a blog post featuring the best submissions and what you learned from them.
-- Be generous with credit. Name people, link to their work, highlight what was clever or novel about their approach.
-
-**Blog:**
-
-- Publish Blog Post 9 (could be the challenge announcement post itself).
-
-### Week 11-12: Assess and Adjust
-
-**Metrics review (be honest with yourself):**
-
-GitHub:
-- How many stars across repos? (Vanity, but directionally useful.)
-- Has anyone outside the project opened an issue or submitted a PR? This is the signal that matters.
-- Are the repos being cloned/forked? Check GitHub traffic analytics.
+Map:
+- How many PRs from non-steward contributors were merged?
+- How many unique contributor handles now have at least one map entry?
+- What percentage of entries have a `last-verified` date within the last 90 days?
 
 Forum:
-- How many registered members? How many have posted?
-- Are conversations happening that you didn't start? This is the critical milestone.
-- Are the trust levels promoting anyone? If nobody has reached Level 2, the community isn't active enough yet.
+- How many non-steward posters in the last 30 days?
+- Have any conversations happened between two non-steward accounts?
+- Has anyone reached Discourse Trust Level 2?
 
-Blog:
-- What's the total traffic? What's organic search traffic specifically?
-- Which posts get the most views? Which get the most time-on-page?
-- Is anything ranking in search yet?
+RFCs:
+- How many drafts exist? How many are merged? How many came from non-stewards?
 
-X:
-- Follower count is a secondary metric. Primary: are people in the sports analytics niche engaging? Are you getting replies and quote tweets from accounts that matter?
-- Are X posts driving traffic to the blog and GitHub? (Check referrer data.)
+Archive:
+- Which posts got organic search traffic?
+- Has anything been cited or linked by another site?
 
-**Adjust based on what you find:**
+Ledger:
+- Did Open Collective receive any donations? Even $5 is signal.
+- Are running costs covered by donations, or subsidised by the steward?
 
-- If X is working but the forum is dead: keep investing in X, reduce forum posting cadence, focus on converting X engagement into GitHub contributions instead.
-- If blog posts are getting search traffic: double down on SEO-friendly technical tutorials. This is your long-term compounding asset.
-- If GitHub is getting engagement but the blog isn't: your audience might be more developer than analyst. Lean into code-heavy content.
-- If nothing is working: be honest about whether the content quality is high enough. Read your own posts from a stranger's perspective. Is the analysis original? Is the code useful? Would you follow this account if you didn't run it?
+**Document and adjust:**
 
-**Content:**
-
-- Publish Blog Posts 10, 11 (and 12 if the challenge write-up is ready).
-- Write a "State of FTWR" post for the blog and forum. Be transparent about where things stand, what's working, what isn't, what's next. This kind of honesty builds trust and invites people to shape the direction.
+- Publish Archive Post 12: "State of the Commons, Day 90." Be transparent. What worked, what did not, what gets dropped, what gets doubled down on. This post invites the community to shape the direction.
+- If the ledger is funded, thank donors by handle on the Ledger page.
+- If a second steward candidate has emerged -- someone who has contributed PRs, drafted or discussed RFCs, and engaged consistently on the forum -- open an RFC proposing their addition to the steward pool. If nobody has reached that threshold, that is fine. It is a three-month-old commons.
 
 ---
 
 ## Weekly Time Budget (Ongoing from Week 4)
 
-This is what a sustainable solo week looks like. If it regularly takes more than 10 hours, something needs to be cut or simplified.
+The commons framing reduces sustained effort versus a builder persona, because there are no proprietary codebases to maintain. Target:
 
 | Activity | Hours/Week | Notes |
 |---|---|---|
-| X posting and engagement | 3-4 | 1 post/day + replies. Batch-write posts on one day if possible. |
-| Blog writing | 3-4 | 1 post/week. Write in 2 sessions: draft then edit. |
-| GitHub (code + maintenance) | 2-3 | 1 meaningful commit/week. Review any issues/PRs. |
-| Forum | 1 | Post 1-2 topics/replies. Respond to any activity. |
-| Reddit | 0.5 | Cross-post the week's best content if relevant. |
-| Total | ~10 | |
+| Map curation and PR review | 2 | Merge contributor PRs, refresh `last-verified` dates, categorise new entries |
+| Archive writing | 2-3 | 1 post/week, 2 sessions (draft, edit) |
+| Forum moderation and replies | 1-2 | Respond to everything, seed a new topic if quiet |
+| RFC drafting and discussion | 1 | Avg across weeks -- some weeks zero, some weeks intense |
+| X posting | 1 | 3-5 posts, batch-write Sunday |
+| Starters maintenance | 0.5 | As needed, minimal |
+| Ledger updates | 0.25 | When Open Collective receives a transaction |
+| **Total** | **~8** | |
 
-If you're spending more than 4 hours on X, you're over-investing in the broadcast channel relative to the assets that compound (blog, code). If you're spending less than 3 hours on the blog, the content engine will stall.
+If the steward consistently spends more than 10 hours, something is wrong. Most likely culprit: over-investing in X. Cut X before anything else.
 
 ---
 
 ## Content Pipeline
 
-### Blog Post Backlog (Suggested Topics for the First 12 Weeks)
+### Archive Post Backlog (First 12 Weeks)
 
-These are suggestions, not assignments. Write whatever you're most interested in or whatever is closest to ready. The only rule is that every post should contain either working code, real data analysis, or both.
+Every post teaches something or documents the commons. No picks, no first-person builder voice, no hype.
 
-1. "What is FTWR?" -- manifesto, mission, why this exists
-2. "Building a Poisson Model from Scratch" -- the canonical technical tutorial
-3. Market analysis / case study -- pick a real event, run the model, show the output
-4. "Expected Value Explained for Sports Bettors Who Can Code" -- foundational concept piece
-5. "Comparing Odds APIs" -- practical guide to data sources, what's free, what's paid, how to pull data
-6. "Introduction to Kelly Criterion" -- theory + code implementation
-7. "5 Open Problems in Sports Modelling" -- invites participation
-8. Data visualization walkthrough -- how to build the kind of charts FTWR uses, with code
-9. Community challenge announcement (or challenge results write-up)
-10. "Dixon-Coles: A Better Football Model" -- leveling up from basic Poisson
-11. Case study: "Where the Market Got It Wrong" -- retrospective on a real misprint
-12. "State of FTWR" -- transparency post on the first 90 days
+1. **What Is FTWR** -- manifesto (done, in commons voice)
+2. **How The Map Works** -- curation, attribution, review
+3. **Poisson Goal Models in Fifty Lines** -- first starter walkthrough
+4. **Three Odds APIs, Same Weekend** -- neutral tool comparison
+5. **Open Problems in Sports Modelling** -- invitation piece
+6. **RFC-0002 Digest: Backtest Protocols** -- governance in action
+7. **How to Add to The Map** -- step-by-step contribution guide
+8. **Elo Ratings in Fifty Lines** -- second starter walkthrough
+9. **Map Drive: Week 1 Digest** -- contributor highlights
+10. **Guest Post** (first non-steward author, byline by handle)
+11. **How the Ledger Works** -- transparency in action
+12. **State of the Commons, Day 90** -- honest retrospective
+
+### Forum Seeding Topics (First 3 Weeks)
+
+Align to Map and RFC categories. No "what are you building" framing -- instead, neutral discussion starters that a commons would convene.
+
+- "Map: what tools would you add to §03 Models & Methods?" (Map)
+- "RFC-0001 is open -- what's missing from the RFC process?" (RFCs)
+- "Dixon-Coles vs base Poisson: when does the low-score correction matter?" (Methods & Models)
+- "Share your odds-data workflow: APIs, scrapers, quality checks" (Data Sources)
+- "What counts as a fair backtest?" (Methods & Models, tees up RFC-0002)
+- "Arbitrage detection: state of the open-source tooling" (Arbitrage & Edge)
 
 ### X Content Formats (Rotation)
 
-Rotate through these formats to keep the feed varied. You don't need to plan every post in advance, but knowing the formats helps when you sit down to batch-write.
+Institutional voice. Every post links back to map, archive, forum, or RFC. No hot takes, no picks, no parasocial engagement.
 
-- **Analytical thread** (5-10 posts): walk through a model output, a market read, or a case study. Include charts/viz. 1-2 per week.
-- **Code snippet**: screenshot or inline code showing a useful function, with "full code on GitHub" link. 1-2 per week.
-- **Data visualization**: a chart, heatmap, or distribution that tells a story. Let the image do the work, keep the caption short. 1-2 per week.
-- **Down the Rabbit Hole**: the signature long-form thread. Start simple, go deep. 1 per week or every other week.
-- **Community highlight**: reshare something from the forum or a GitHub contribution. As needed once community activity starts.
-- **Contrarian take**: where the model disagrees with the market or consensus. Short, specific, backed by data. As the opportunity arises.
-
-### Forum Seeding Topics (First 3 Weeks, Before Community Arrives)
-
-You need to seed the forum with real content so it doesn't look empty when people first visit. These should be actual discussion starters, not placeholder text.
-
-- "Introducing FTWR -- what we're building and why" (pinned in Announcements)
-- "Which odds APIs are you using? Pros, cons, and gotchas" (Data Sources)
-- "Poisson vs Dixon-Coles for football: when does the complexity pay off?" (Models and Methods)
-- "How do you handle model calibration over time?" (Models and Methods)
-- "What's the most interesting arbitrage opportunity you've found recently?" (Arbitrage)
-- "Share your setup: languages, tools, data sources, and workflow" (Show Your Work)
+- **Map update.** "4 tools added to §02 this week. Review by @handle. Browse: ftwr.app/map"
+- **RFC announcement.** "RFC-0002 open for discussion. Topic: backtest protocol. Thread: community.ftwr.app/..."
+- **Starter release.** "Starter released: Poisson in fifty lines, cited, tested. Code + walkthrough: blog.ftwr.app/..."
+- **Archive post.** Standard link-with-summary.
+- **Contributor highlight.** "This week The Map gained entries from @handle-1, @handle-2, @handle-3. Thanks."
+- **Down the Rabbit Hole** (optional, no more than twice a month). Short institutional thread starting from one observation, pulling on it with references to map entries and archive posts.
 
 ---
 
-## Platform-Specific Launch Checklist
+## Launch Checklist
+
+### GitHub Org (ftwr-dev)
+
+- [ ] Org created, avatar and description in commons voice
+- [ ] `GOVERNANCE.md`, `CURATION.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `DISCLAIMER.md` committed
+- [ ] `ftwr-map` repo: schema, PR template, CI validation, initial entries migrated from `tools.json`
+- [ ] `ftwr-starters` repo: at least one runnable starter with tests
+- [ ] `ftwr-rfcs` repo: RFC template, RFC-0001 merged, RFC-0002 drafted
+
+### Archive (blog.ftwr.app)
+
+- [ ] Deployed, brand tokens applied, 0px radius enforced
+- [ ] 3+ posts live at public launch
+- [ ] RSS feed wired; Discourse auto-posts new entries as Announcements threads
+- [ ] Sitemap submitted to search
+
+### Forum (community.ftwr.app)
+
+- [ ] Moved to paid Discourse hosting under `community.ftwr.app`
+- [ ] Brand tokens applied
+- [ ] Categories created (Announcements, The Rabbit Hole, Show Your Work, Map, Methods & Models, Data Sources, Arbitrage & Edge, RFCs, Code Help, Meta)
+- [ ] Welcome topic in commons voice, linking to governance docs
+- [ ] 4-6 seed topics posted, all substantive
+- [ ] GitHub webhook integration (optional, can follow)
+
+### Landing (ftwr.app)
+
+- [ ] Hero in commons voice (done)
+- [ ] Terminal links: Map, Forum, Archive, Registry (done)
+- [ ] Map loads 51+ entries without errors (fixed)
+- [ ] Ledger nav link present, page exists (even if minimal)
+
+### Ledger (opencollective.com/ftwr)
+
+- [ ] Fiscal host selected and application submitted
+- [ ] Page live, even if balance is $0
+- [ ] First expense logged (domain renewal)
 
 ### X
 
-- [ ] Account created
-- [ ] Profile picture set (matches brand guide)
-- [ ] Banner set (light, minimal, spectral gradient or data viz)
-- [ ] Bio written (under 160 chars, includes ftwr.app link)
-- [ ] Pinned thread written and posted (what is FTWR, links to blog/GitHub/forum)
-- [ ] First 2 weeks of posts drafted or outlined
-
-### GitHub
-
-- [ ] Org created (ftwr-dev)
-- [ ] Org avatar and description set
-- [ ] ftwr-core repo created with working code, README, CI, license
-- [ ] ftwr-models repo created with at least one documented model
-- [ ] CONTRIBUTING.md in place
-- [ ] Issue templates created
-
-### Discourse Forum
-
-- [ ] Branding applied (light mode, teal accents, FTWR wordmark)
-- [ ] Categories created (all 8 from the category structure)
-- [ ] Welcome topic written and pinned
-- [ ] Community guidelines written and pinned
-- [ ] 5+ real discussion topics posted
-- [ ] GitHub webhook integration configured (optional, can be added later)
-- [ ] RSS feed from blog configured to auto-post new articles
-
-### Blog
-
-- [ ] Site deployed at blog.ftwr.app
-- [ ] Design matches brand guide (light mode, spectral palette, JetBrains Mono + Inter, 0px radius)
-- [ ] 3+ posts published before going public
-- [ ] RSS feed working
-- [ ] Sitemap submitted to Google Search Console
-- [ ] Analytics installed (Plausible or Umami -- privacy-respecting, no cookie banners needed)
+- [ ] Handle registered under neutral name
+- [ ] Profile picture, banner, bio in commons voice
+- [ ] Pinned thread explaining the commons (5 posts)
 
 ### Reddit
 
-- [ ] Subreddit created
-- [ ] Sidebar written with description and links
-- [ ] Rules set (mirrors community principles)
-- [ ] Post flair created (Analysis, Tool, Discussion, Down the Rabbit Hole)
-- [ ] 1-2 initial posts made
-
-### Landing Page (ftwr.app)
-
-- [ ] Deployed (or temporary redirect to blog in place)
-- [ ] Links to blog, forum, GitHub all working
-- [ ] Loads fast, matches brand guide
+- [ ] Subreddit created, sidebar in commons voice
+- [ ] Rules mirror `CODE_OF_CONDUCT.md`
+- [ ] Flair categories aligned to map sections
 
 ---
 
 ## What Success Looks Like at Day 90
 
-Be realistic. At 90 days with one person, you're not going to have thousands of followers or a thriving community. Here's what you should actually aim for:
+Realistic, not aspirational. A 90-day-old commons with one steward is a small thing. The question is whether it is a real thing.
 
-**Minimum viable success (the project is working):**
-- 8-12 blog posts published, at least some getting organic search traffic
-- 2-3 GitHub repos with real code that someone outside the project has cloned or starred
-- A forum with 10-30 registered members and at least a few threads you didn't start
-- An X account with a small but engaged following in the sports analytics niche (100-500 followers who actually interact)
-- A consistent publishing rhythm that feels sustainable
+**Minimum viable success (the commons is working):**
+
+- Map has 70+ entries, at least 5 from non-steward contributors
+- RFC-0001 and RFC-0002 merged; RFC-0003 in discussion
+- 2 starters published with passing tests
+- 12+ archive posts live, at least one getting organic search traffic
+- Forum has 20+ registered members, 5+ non-steward posters, at least one conversation between two non-stewards
+- Ledger shows at least one public donation cycle
 
 **Strong success (ahead of pace):**
-- Someone you've never met has submitted a PR to a FTWR repo
-- Forum conversations are happening without you driving them
-- A blog post is ranking on the first page of Google for a relevant search term
-- Another account in the space has shared or referenced FTWR content unprompted
-- You've run the community challenge and gotten at least 3-5 submissions
 
-**The one metric that matters most:** is anyone building with this? If someone outside your immediate circle has used ftwr-core to do their own analysis, or posted their own model on the forum, or contributed code -- the project is real. Everything else is leading indicators.
+- A non-steward has drafted an RFC that was discussed and merged or shaped by discussion
+- A guest post has been published in the Archive, credited by handle
+- An archive post is ranking on page 1 of Google for a relevant search term
+- At least one steward candidate has emerged (consistent PRs, RFC discussion, forum presence)
+- Map entries have been cited or linked from outside FTWR
+
+**The one signal that matters most:** has someone the steward has never met contributed to the commons? Map PR, starter contribution, RFC draft, or substantive forum answer -- any one of those, from a stranger, means FTWR is a commons. Zero of those after 90 days means it is still a well-designed solo project.
 
 ---
 
-*The rabbit hole doesn't build itself. But it only needs to go deep enough for the curious to follow.*
+*The commons does not build itself, and it does not need to be deep to be real. It needs to be open enough that the curious can walk in without asking.*

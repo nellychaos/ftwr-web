@@ -1,77 +1,69 @@
 ---
 title: "What Is FTWR"
-description: "An introduction to Follow the White Rabbit: open source sports data intelligence, built by builders, for builders. No tips. No paywalls. Just methods."
+description: "FTWR is a community commons for sports data modelling. A curated map of tools, a meeting hall for methods, a public archive of shared learning. Anonymously stewarded. MIT-licensed. Free forever."
 publishedDate: 2026-04-09
 author: "FTWR"
-tags: ["meta", "open-source", "community"]
+tags: ["meta", "commons", "governance"]
 category: "meta"
 ---
 
-Most people in sports analytics are selling something. Picks, courses, VIP channels, premium tiers. The incentives are clear: tell people what they want to hear, gate the good stuff behind a paywall, optimize for subscriber retention over honest analysis.
+Most of sports analytics is for sale. Picks, courses, VIP channels, premium tiers. The incentives are clear: tell people what they want to hear, gate the useful stuff, optimise for subscriber retention over honest analysis.
 
-FTWR exists because that model is broken.
+FTWR exists as the opposite shape. It is a commons.
 
-## The premise
+## What FTWR is
 
-Sports betting markets are inefficient. Not always, not everywhere, but often enough that systematic approaches can find edges the market misses. A mispriced line here. A stale model there. An overlooked data source that nobody else is pulling from.
+FTWR is a community-stewarded commons for sports data modelling. It curates tools, convenes discussion, and documents shared methods as public goods -- non-rival, non-excludable, MIT-licensed, anonymously stewarded. A map and a meeting hall, not a lab or a persona.
 
-The interesting question is never "what's the pick." It's "why does this edge exist, how long will it last, and can we build a system to find the next one?"
+The premise is simple. Modelling knowledge is fragmented across private Discords, dead blogs, paywalled courses, and a handful of academic papers that nobody implements. Good tools are scattered across GitHub with no index. A new modeller spends weeks finding what a community with shared memory could surface in minutes. FTWR is the shared memory.
 
-That's what FTWR is about.
+## The six artifacts
 
-## What we actually build
+FTWR ships six things. None are proprietary. All are owned by the commons.
 
-FTWR is an open source developer community. The core output is code, not content. Content explains the code. The code does the work.
+- **The Map** (`ftwr-map`) -- a curated, PR-driven directory of tools, datasets, papers, and models. Every entry has a category, a neutral description, a contributor handle, a last-verified date, and a link to the canonical source. If a new modeller ever asks "where do I start?", this is the first answer.
+- **The Starters** (`ftwr-starters`) -- minimal runnable reference implementations of canonical methods. Poisson goal models in fifty lines. Elo in fifty lines. Closing-line value, Kelly sizing, bootstrap backtests. Each one points at the canonical academic or industry implementation it is teaching. These are educational scaffolds, not proprietary tools.
+- **The RFCs** (`ftwr-rfcs`) -- numbered, dated methodology proposals. Backtest protocols, data quality standards, model evaluation criteria. Drafted by any contributor, discussed on the forum, merged when rough consensus emerges. Over time, a citable body of shared standards.
+- **The Archive** (this site) -- explainers, method walkthroughs, RFC digests, and guest posts credited by handle. The long-form record.
+- **The Forum** (`community.ftwr.app`) -- the meeting hall. Questions get answered. RFCs get debated. New contributors meet reviewers. Tier 1, not a satellite.
+- **The Ledger** -- every dollar that comes into FTWR through Open Collective and every dollar that goes out is published. Transparency instead of trust.
 
-**ftwr-core** is a Python and TypeScript toolkit for sports data collection, odds comparison, and expected value calculation. It is the anchor. If you want to pull odds from multiple bookmakers, calculate implied probabilities, or compute expected value on a market, this is where you start.
+## Why a commons
 
-**ftwr-models** is a collection of statistical models implemented cleanly with documentation explaining the theory behind each one. Poisson distributions for goal scoring. Elo ratings for team strength. Bradley-Terry for pairwise comparison. Dixon-Coles for correcting low-score bias. Every model is sport-agnostic by design.
+Individual edges erode. A model built alone hits a ceiling set by one person's time and blind spots. But the ability to *find* edges compounds when knowledge is pooled. Better indexes surface better tools. Better tools lower the activation energy for new modellers. More modellers produce more analysis, more critique, more methods -- which improves the index again.
 
-**ftwr-arbitrage** is cross-market scanning and arbitrage detection. Sure-bet identification, value-bet flagging, real-time monitoring. This is the part most people want but almost nobody open sources.
+The loop only works if every layer stays open. The moment any piece becomes proprietary -- a paywalled tutorial, a gated scanner, a "VIP" forum -- the compounding stops and the incentives invert. Contributors stop contributing when someone else is capturing the value. Readers become customers. The commons becomes a funnel.
 
-Everything is on [GitHub](https://github.com/ftwr-dev). Everything is MIT licensed. Fork it, break it, improve it, ship it.
+FTWR is built to avoid that failure mode by design. No paid tiers. No courses. No affiliate links. No sponsored entries in The Map. No consulting funnel. Infrastructure costs are funded transparently through Open Collective with a public ledger. The work itself stays free, forever.
 
-## Why open source
+## What FTWR is not
 
-Individual edges erode. You find a mispriced line, trade it, the market corrects. That edge is gone. Hoarding it behind a paywall only delays the inevitable.
+- Not a tips service. No picks, no wagers, no "the model says bet this." The archive and forum discuss methods and market structure, not specific bets.
+- Not a proprietary toolmaker. FTWR does not compete with the tools in The Map. It indexes and teaches; it does not ship original models under its own name.
+- Not a persona. There is no founder to follow. Follow the work.
+- Not a business. No revenue, no growth targets, no fundraising. Success is measured in contributors, not users.
+- Not a Discord. Asynchronous, indexed, archival.
 
-But the ability to *find* edges compounds. Better tools find edges faster. Better models identify inefficiencies earlier. Better data pipelines catch opportunities that manual analysis misses.
+## Anonymity and stewardship
 
-Open source compounds that rate of discovery. One person building alone hits a ceiling. A hundred people contributing tools, sharing methods, stress-testing each other's models -- that's a different game entirely.
+FTWR is anonymously stewarded as a matter of design, not convenience. A commons does not need a face. Wikipedia does not have a founder's headshot on the homepage.
 
-The community is the moat. Not gated content.
+Maintainers operate under rotating handles. Each handle has a forum profile and a GitHub identity; none are tied to real names, and all can be retired and replaced. The current steward pool is published. New maintainers are proposed via RFC and added by rough consensus. Decisions that affect the commons -- adding categories, changing curation policy, accepting or refusing funding -- happen in public. No backchannels.
 
-## How this is different
+Anonymity without documented process is opaque. Anonymity with documented process is institutional. FTWR is the second thing.
 
-There are no paid tiers. There will never be paid tiers. No premium channels, no courses, no affiliate links, no consulting funnel. The moment money enters the equation, incentives shift. You start optimizing for subscriber retention instead of honest analysis. You start gatekeeping code that should be open.
+## How to contribute
 
-The value of FTWR is the community itself: the shared tooling, the collective knowledge, the conversations between people who think carefully about these problems. That value compounds when it is open and free. It dies the moment you put a price on it.
-
-If the project needs infrastructure funding, that is a community conversation handled transparently through GitHub Sponsors or Open Collective. The work itself stays free and open.
-
-## The stack
-
-```
-Data Layer       Sports APIs, scrapers, PostgreSQL, Redis
-Processing       Python (pandas, scipy), TypeScript, Kafka
-Models           Poisson, Elo, Bradley-Terry, Dixon-Coles
-Output           Static blog, Discourse forum, GitHub repos
-```
-
-The technical architecture is described in detail in the strategy docs on GitHub. The short version: Python for modelling, TypeScript for real-time tooling, static sites for content, Discourse for community. No vendor lock-in on any critical piece.
-
-## How to get involved
-
-The simplest entry point is the [GitHub org](https://github.com/ftwr-dev). Browse the repos, read the code, open an issue if something is broken or unclear. If you want to contribute, look for issues tagged "good first issue."
-
-The [forum](https://ftwr.discourse.group) is where deeper discussion happens. Post your own analysis in Show Your Work. Ask questions in Code Help. Dive into methodology debates in Models and Methods.
-
-If you want to follow along, [@ftwr_](https://x.com/ftwr_) on X is the broadcast channel.
+- **Add to The Map.** Found a tool, dataset, or paper worth indexing? Open a PR against `ftwr-map` with the entry template. Every entry credits its contributor.
+- **Ship a Starter.** If a canonical method is missing a minimal reference implementation, propose one. Fifty lines that runs on sample data beats five hundred that runs on a private dataset.
+- **Draft an RFC.** Got a view on how backtests should be conducted, or what counts as a fair model comparison? Draft it. The process is the product.
+- **Answer on the Forum.** The single highest-leverage contribution is a good answer to a stranger's real question. Forum threads compound in search. A good answer becomes public infrastructure.
+- **Write for the Archive.** Guest posts are welcomed and credited by handle. Tool comparisons, method walkthroughs, market analysis -- if it teaches, it belongs.
 
 ## What comes next
 
-The 90-day plan is public. Weeks 1 through 3 are foundation: getting repos seeded with real working code, the forum configured, and the blog publishing. Weeks 4 through 6 are soft launch: daily posts on X, weekly blog posts, meaningful GitHub commits. Weeks 7 through 12 are community activation: good-first-issue tags, community challenges, featuring community work.
+The commons is early. The Map has its first entries. The forum has its first threads. RFC-0001, which codifies the RFC process itself, is the first piece of self-documenting governance.
 
-The single best signal at month 6: has anyone outside the project shipped code to an FTWR repo or shared original analysis on the forum? If yes, the community is real. If no, it is still a personal project with an audience.
+The single best signal at any point: has someone nobody has met contributed to the commons? If yes, it is real.
 
-Only one way to find out how deep the rabbit hole goes.
+How deep does the rabbit hole go? Only one way to find out -- together.

@@ -1,0 +1,53 @@
+name: Map validate
+
+on:
+  pull_request:
+    paths:
+      - "landing/tools.json"
+      - "landing/map.html"
+      - "landing/scripts/**"
+      - "map/**"
+      - ".github/workflows/map-validate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "landing/tools.json"
+      - "landing/map.html"
+      - "landing/scripts/**"
+      - "map/**"
+      - ".github/workflows/map-validate.yml"
+  # Monthly maintenance pass: flags entries with last_verified > 180 days.
+  schedule:
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+    inputs:
+      strict_staleness:
+        description: "Fail the run if any entry is stale (>180d since last_verified)"
+        required: false
+        default: "false"
+
+jobs:
+  validate:
+    name: Validate map entries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run map validator
+        run: |
+          python3 map/scripts/validate.py
+
+      - name: Check map.html embed is in sync with tools.json
+        run: |
+          python3 landing/scripts/sync-map-embed.py --check
+
+      - name: Run map validator (strict staleness, scheduled/manual only)
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.strict_staleness == 'true')
+        run: |
+          python3 map/scripts/validate.py --strict-staleness

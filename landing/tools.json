@@ -218,6 +218,21 @@
       "last_verified": "2026-04-23"
     },
     {
+      "cat": "data",
+      "name": "tennis_slam_pointbypoint (JeffSackmann)",
+      "desc": "Point-by-point data for every rally across all Grand Slams since 2011. Includes shot sequences, serve details, and rally length. Well-suited for live models and Bayesian approaches.",
+      "url": "https://github.com/JeffSackmann/tennis_slam_pointbypoint",
+      "tags": [
+        "tennis",
+        "open-source",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@ninedol",
+      "added": "2026-05-02",
+      "last_verified": "2026-05-02"
+    },
+    {
       "cat": "odds",
       "name": "The Odds API",
       "desc": "Real-time odds from 40+ bookmakers across 20+ sports. REST API with 500 free requests/month.",
@@ -304,6 +319,21 @@
       "contributor": "@founding-steward",
       "added": "2026-04-09",
       "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "models",
+      "name": "tennis_match_prediction (jgollub1)",
+      "desc": "Python: Live in-match win probability model using Elo ratings combined with serve and return statistics. Updates continuously during a match as points are played.",
+      "url": "https://github.com/jgollub1/tennis_match_prediction",
+      "tags": [
+        "tennis",
+        "open-source",
+        "python"
+      ],
+      "edge": "model",
+      "contributor": "@ninedol",
+      "added": "2026-05-02",
+      "last_verified": "2026-05-02"
     },
     {
       "cat": "models",

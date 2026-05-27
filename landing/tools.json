@@ -864,6 +864,20 @@
       "last_verified": "2026-04-23"
     },
     {
+      "cat": "viz",
+      "name": "Overthinking the NBA Draft",
+      "desc": "NBA Draft analysis workspace. War Room (customizable player card dashboard), Shot VZN (shot charts across 13 zones from ESPN coordinates), Chart Lab (custom charts from 250+ stats), Draft Sim (15+ years of GM tendency data), and Draft IQ (AI assistant). Beta.",
+      "url": "https://overthinkingthenba.com/draft/",
+      "tags": [
+        "basketball",
+        "free"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
+    },
+    {
       "cat": "community",
       "name": "ftwr-core",
       "desc": "Python/TypeScript toolkit for sports data collection, odds comparison, and expected value calculation.",

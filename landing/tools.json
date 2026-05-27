@@ -248,6 +248,21 @@
       "last_verified": "2026-05-27"
     },
     {
+      "cat": "data",
+      "name": "RotoWire",
+      "desc": "Fantasy sports data and analytics covering NFL, NBA, MLB, NHL, and more. Injury reports, starting lineups, depth charts, player projections, and DFS optimizer tools. Freemium -- core injury and lineup data accessible without payment.",
+      "url": "https://www.rotowire.com",
+      "tags": [
+        "multi-sport",
+        "free",
+        "commercial"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
+    },
+    {
       "cat": "odds",
       "name": "The Odds API",
       "desc": "Real-time odds from 40+ bookmakers across 20+ sports. REST API with 500 free requests/month.",
@@ -319,6 +334,21 @@
       "contributor": "@founding-steward",
       "added": "2026-04-09",
       "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "odds",
+      "name": "OpticOdds",
+      "desc": "Sports betting data infrastructure. Real-time odds from 200+ sportsbooks via push/pull/queue API feeds: main lines, alternates, props, outrights. Includes historical closing line data and an MCP connector for AI integration. Sub-second latency. Commercial, contact for pricing.",
+      "url": "https://opticodds.com",
+      "tags": [
+        "multi-sport",
+        "api",
+        "commercial"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
     },
     {
       "cat": "models",
@@ -673,6 +703,20 @@
       "contributor": "@founding-steward",
       "added": "2026-04-09",
       "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "markets",
+      "name": "Dawn",
+      "desc": "AI trading copilot for prediction markets. Converts natural language trading strategies into deployed code that executes automatically. Covers sports, elections, crypto, and other event markets. Commercial, no platform fees.",
+      "url": "https://dawn.ai",
+      "tags": [
+        "multi-sport",
+        "commercial"
+      ],
+      "edge": "execution",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
     },
     {
       "cat": "python",

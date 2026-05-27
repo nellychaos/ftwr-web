@@ -719,6 +719,22 @@
       "last_verified": "2026-05-27"
     },
     {
+      "cat": "markets",
+      "name": "Oddpool",
+      "desc": "Unified search and data platform aggregating Kalshi and Polymarket. Cross-venue market search across 700,000+ markets, historical orderbooks, real-time whale trade alerts, arbitrage detection, and live WebSocket feeds. Free tier includes 1,000 API requests/month.",
+      "url": "https://www.oddpool.com",
+      "tags": [
+        "multi-sport",
+        "api",
+        "free",
+        "commercial"
+      ],
+      "edge": "market",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
+    },
+    {
       "cat": "python",
       "name": "scipy.stats",
       "desc": "Distributions, statistical tests, continuous and discrete random variables. Includes Poisson, negative binomial, beta, and related distributions.",

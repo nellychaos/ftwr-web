@@ -233,6 +233,21 @@
       "last_verified": "2026-05-02"
     },
     {
+      "cat": "data",
+      "name": "The Stats API",
+      "desc": "Football data REST API covering 80+ competitions across 100+ countries. Match stats, xG, player data, squad information, and pre-match plus live odds from major bookmakers. 10 years of historical data. Paid plans from $50/month; 7-day free trial.",
+      "url": "https://www.thestatsapi.com",
+      "tags": [
+        "football",
+        "api",
+        "commercial"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
+    },
+    {
       "cat": "odds",
       "name": "The Odds API",
       "desc": "Real-time odds from 40+ bookmakers across 20+ sports. REST API with 500 free requests/month.",
@@ -481,6 +496,21 @@
       "contributor": "@founding-steward",
       "added": "2026-04-09",
       "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "edge",
+      "name": "Brier Score Calibration (Kaggle)",
+      "desc": "Kaggle notebook implementing Brier score calculation to evaluate the calibration of betting market probabilities against actual match outcomes. Demonstrates how to measure whether bookmaker odds are well-calibrated, not just whether they win.",
+      "url": "https://www.kaggle.com/code/bhavishsalia/evaluating-betting-odds-using-brier-scores",
+      "tags": [
+        "multi-sport",
+        "python",
+        "free"
+      ],
+      "edge": "model",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
     },
     {
       "cat": "edge",
@@ -739,6 +769,20 @@
       "contributor": "@founding-steward",
       "added": "2026-04-09",
       "last_verified": "2026-04-23"
+    },
+    {
+      "cat": "python",
+      "name": "nutmeg (withqwerty)",
+      "desc": "MCP-based toolkit for AI-assisted football data work. Resolves qualifier IDs, coordinate systems, and API endpoints across 16 data providers by consulting real documentation rather than relying on model training data. MIT licensed, beta.",
+      "url": "https://nutmeg.withqwerty.com",
+      "tags": [
+        "football",
+        "open-source"
+      ],
+      "edge": "data",
+      "contributor": "@founding-steward",
+      "added": "2026-05-27",
+      "last_verified": "2026-05-27"
     },
     {
       "cat": "viz",

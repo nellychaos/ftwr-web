@@ -1,0 +1,119 @@
+---
+title: "Closing Line Value: What It Measures and What It Doesn't"
+description: "CLV is the most reliable publicly available proxy for long-run model quality in sports betting markets. This post explains the mechanics, the assumptions, and the limits."
+publishedDate: 2026-05-20
+author: "@founding-steward"
+tags: ["clv", "model-evaluation", "market-efficiency", "edge-detection"]
+category: "model-documentation"
+---
+
+Closing Line Value is the single most cited measure of long-run model quality in sports betting markets. It is also frequently misunderstood, misapplied, and occasionally abused as a marketing claim. This post explains what CLV actually measures, why it works, what it requires to be meaningful, and where it breaks down.
+
+## The basic definition
+
+When you place a bet, you get a price. When the market closes -- at kick-off -- the bookmaker publishes a final price. The difference between your price and the closing price, expressed in probability terms after removing the bookmaker's margin, is your closing line value.
+
+If you bet at odds of 2.10 (implied probability: ~47.6%) and the closing price is 1.95 (implied probability: ~51.3%), you have positive CLV. You got a better price than the market's best estimate at close.
+
+Formally, for decimal odds $o_b$ (your bet price) and $o_c$ (closing price), and using a margin-removal method to get true probabilities $p_b$ and $p_c$:
+
+```
+CLV = p_c - p_b
+```
+
+Positive CLV means $p_c > p_b$: the market moved against you, toward shorter odds -- the market disagreed with you at bet time and came around by close.
+
+## Why closing price is the benchmark
+
+Pinnacle's closing price is the standard benchmark. The reasoning:
+
+1. **Pinnacle is the sharpest publicly accessible market.** It takes large bets from professional bettors and adjusts prices in response. By close, most exploitable mispricing has been corrected. The closing price is the market's best estimate after all available information has been priced in.
+
+2. **Closing prices are observable.** Unlike private exchange prices or smart-money signals, Pinnacle closing prices are publicly available (via OddsPortal and several API providers). The benchmark can be applied retroactively to any recorded bet.
+
+3. **Historical evidence.** Research on closing line efficiency (Kaunitz et al. 2017; Lisandro et al. 2019) consistently shows that strategies with positive closing line value outperform strategies that ignore it over large samples. CLV is predictive of long-run results in a way that short-term win rate is not.
+
+## The market efficiency assumption
+
+CLV works as a proxy for model quality because it assumes closing prices are efficient -- that they accurately reflect the true probability of the event. This assumption is approximately true in major markets (top football leagues, Grand Slam tennis, major league baseball) with high liquidity. It is much weaker in:
+
+- Minor leagues with low trading volume
+- Same-game parlays and complex combo bets
+- Niche prop markets
+- Markets that close well before the event
+
+In illiquid markets, the closing price can be wrong, which means positive CLV against that price is not strong evidence of model quality. The measure is only as reliable as the benchmark.
+
+## What CLV requires to be meaningful
+
+**Large samples.** CLV is a long-run measure. A sample of 30 bets with +2% average CLV is statistically meaningless. The standard rule of thumb is 1,000+ bets before drawing conclusions. With smaller samples, confidence intervals are wide enough to encompass both skill and luck.
+
+**Accurate bet recording.** CLV is calculated from the exact price at which each bet was placed. Rounded or reconstructed prices introduce noise. The calculation requires the actual decimal odds at time of bet, not an approximation.
+
+**A consistent margin-removal method.** Raw odds include bookmaker margin. You need to remove the margin before comparing bet price to closing price. Common methods:
+
+- **Multiplicative (proportional)**: distributes margin proportionally across all outcomes. Simple and unbiased for two-outcome markets.
+- **Power method (Shin)**: assumes the market contains a fraction of insider traders and adjusts accordingly. More complex but theoretically motivated.
+- **Additive**: subtracts equal probability from each outcome. Less common and less principled.
+
+The choice of method affects CLV calculations, particularly in markets with more than two outcomes. Pick one and apply it consistently.
+
+**Same-market comparison.** CLV should be measured against the same type of market where the bet was placed. Comparing a match-result bet to a totals closing price introduces noise.
+
+## What CLV does not measure
+
+**It does not measure profitability.** A positive CLV sample and a losing sample are compatible over short runs. Variance swamps signal for any reasonable sample size. CLV predicts long-run profitability in expectation; it does not guarantee short-run results.
+
+**It does not identify which part of the model is working.** If your model consistently beats Pinnacle's closing line on Asian Handicap markets in the Bundesliga, CLV tells you the model is finding edge somewhere in that space. It does not tell you whether the edge comes from better attack/defense parameters, better form weighting, better handling of motivation effects, or something else. CLV is a validator, not a debugger.
+
+**It does not work if you are moving the market.** If your bet size is large enough to influence Pinnacle's price, your closing line has been contaminated by your own action. This is not a problem for recreational or small-staking modellers, but it is a known limitation for anyone operating at meaningful scale.
+
+**It is not available on soft bookmakers.** Soft bookmakers (William Hill, Bet365, Ladbrokes) do not have efficient closing prices. Measuring CLV against a soft bookmaker's closing line is measuring noise, not market efficiency.
+
+## A working example
+
+A model is tested over 200 Premier League matches. For each match, it generates a win probability for the home team. The model records the Pinnacle opening price, the bet price (at time of placement), and the Pinnacle closing price.
+
+After margin removal, the average CLV across 200 bets is +1.8%. With a standard deviation of approximately 11% (typical for win markets), the standard error is 11% / sqrt(200) = 0.78%. The CLV is +1.8% / 0.78% = 2.3 standard errors above zero.
+
+That is a meaningful signal -- not conclusive over 200 bets, but enough to justify continuing to test rather than abandoning the model.
+
+## Implementation
+
+The vig-free functions in `penaltyblog` implement Power and multiplicative margin removal in Python. A minimal CLV calculator:
+
+```python
+def remove_margin_multiplicative(odds: list[float]) -> list[float]:
+    """Remove bookmaker margin using the multiplicative method."""
+    raw_probs = [1 / o for o in odds]
+    total = sum(raw_probs)
+    return [p / total for p in raw_probs]
+
+def clv(bet_odds: float, close_odds: list[float]) -> float:
+    """
+    Calculate CLV for a bet.
+    bet_odds: decimal odds at time of bet (e.g. 2.10)
+    close_odds: list of all closing odds for the market (e.g. [1.95, 2.05] for home/away)
+    Returns CLV as a probability difference (positive = good).
+    """
+    true_probs = remove_margin_multiplicative(close_odds)
+    # Identify which outcome the bet is on (lowest distance from bet_odds in the market)
+    # Simplified: assume bet is on outcome 0
+    close_prob = true_probs[0]
+    bet_prob = 1 / bet_odds
+    return close_prob - bet_prob
+```
+
+This is simplified for illustration. A production implementation handles multiple-outcome markets, tracks the specific outcome bet, and stores bet records for statistical analysis.
+
+The FTWR Map indexes several tools relevant to CLV work: Pinnacle API wrappers (§04), OddsPortal for historical closing lines (§02), and penaltyblog's vig-free utilities (§07).
+
+## Summary
+
+CLV is a reliable long-run proxy for model quality because it measures performance against an efficient market rather than against short-run variance. It requires large samples, accurate bet recording, consistent margin removal, and liquid markets with efficient closing prices. It does not measure profitability directly, does not identify what is working in a model, and breaks down in thin or illiquid markets.
+
+For modellers testing whether a pricing approach has real edge, consistent positive CLV over 1,000+ bets in major markets is the closest available signal to ground truth.
+
+---
+
+The Brier Score Calibration notebook (§04 on The Map) provides a complementary measure: whether your probabilities are well-calibrated, rather than whether your prices beat the market. Both tools address model quality from different angles and are most informative used together.

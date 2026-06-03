@@ -1,0 +1,78 @@
+---
+title: "State of The Map -- May 2026"
+description: "63 tools indexed across 9 categories. A digest of what has been added to the commons since launch, what is missing, and where contribution is most needed."
+publishedDate: 2026-05-27
+author: "@founding-steward"
+tags: ["meta", "map", "commons"]
+category: "meta"
+---
+
+The Map launched in April 2026 with an initial set of entries across nine categories. Seven weeks later it holds 63 tools. This post documents what has been indexed, where the gaps are, and what contributions would have the most value.
+
+## What has been indexed
+
+The nine categories and their current entry counts:
+
+| Section | Category | Entries |
+|---------|----------|---------|
+| §01 | Data Sources | 13 |
+| §02 | Odds & Markets | 7 |
+| §03 | Models & Methods | 9 |
+| §04 | Edge Detection | 6 |
+| §05 | Arbitrage & Scanning | 5 |
+| §06 | Prediction Markets | 7 |
+| §07 | Python Libraries | 7 |
+| §08 | Visualisation | 6 |
+| §09 | FTWR Community | 4 |
+
+### Notable additions since launch
+
+**Tennis data.** Three repositories by Jeff Sackmann now indexed: `tennis_atp`, `tennis_wta`, and `tennis_slam_pointbypoint`. The slam dataset is point-by-point across all Grand Slams since 2011 and is the most granular publicly available tennis dataset at that scope. `tennis_match_prediction` (jgollub1) adds a live in-match win probability model using Elo and serve/return statistics, contributed by @ninedol.
+
+**Prediction market tooling.** Oddpool aggregates Kalshi and Polymarket into a single search and data interface with historical orderbooks and arbitrage detection. Dawn converts natural language trading strategies into deployed execution code. Both indexed under §06.
+
+**Commercial odds infrastructure.** OpticOdds provides real-time odds from 200+ sportsbooks via a push/pull API with sub-second latency and historical closing line data. Indexed under §02 alongside the existing free-tier options.
+
+**NBA analytics.** Overthinking the NBA Draft indexed under §08: shot charts across 13 zones, a customisable player card dashboard, and a draft simulation tool built from 15 years of GM tendency data.
+
+**Calibration methodology.** A Kaggle notebook implementing Brier score calculation for evaluating betting market probability calibration added to §04. Brier scores measure whether probabilistic predictions are well-calibrated, not just whether they win -- a distinction that matters for model evaluation.
+
+## Where the gaps are
+
+### Baseball
+
+§01 has no MLB data sources. Baseball Reference and Retrosheet are the canonical starting points; neither is indexed. Statcast data via `pybaseball` belongs in §07. The absence is conspicuous given MLB's analytical depth.
+
+### American football
+
+NFL tracking data is indexed nowhere. nflfastR is the standard library for play-by-play data; it belongs in §07 or §03. PFF data and the NFL's official Next Gen Stats API are both missing from §02.
+
+### Rugby and cricket
+
+Cricinfo's Statsguru is a significant data source with no programmatic equivalent in the commons. ESPNcricinfo scraping libraries exist but are not indexed. Rugby Union and Rugby League have no entries at all.
+
+### Backtesting frameworks
+
+§04 has tools for measuring edge in real-time (CLV measurement, vig removal) but nothing about systematic backtesting -- how to construct a statistically sound historical test, how to avoid look-ahead bias, how to report results without overfitting. This is methodology, not a single tool, and it belongs in an RFC more than a Map entry. RFC-0002 is the natural home.
+
+### Academic papers
+
+The Map currently indexes only executable tools. The academic literature on sports modelling -- Dixon and Coles (1997), Rue and Salvesen (2000), Constantinou (2019), and others -- is not indexed. A §10 Papers category is worth considering if the commons reaches critical mass.
+
+## Contribution priorities
+
+The Map grows by PR. Every entry requires:
+
+1. A URL that resolves to the actual tool
+2. A neutral description (no marketing language, no superlatives)
+3. A category assignment
+4. A use-case justification: what specific problem does this solve?
+5. A conflict-of-interest disclosure if you have a financial interest in the tool
+
+The highest-value contributions right now are missing categories: MLB data pipelines, NFL play-by-play tooling, and backtesting methodology. Entries in these areas would address real gaps rather than extending already-covered ground.
+
+See [CONTRIBUTING.md](https://github.com/nellychaos/ftwr-web/blob/main/CONTRIBUTING.md) for the full process.
+
+---
+
+The next digest will be published when The Map crosses 100 entries. The number is arbitrary; the milestone is not.
